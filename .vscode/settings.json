@@ -1,0 +1,29 @@
+{
+    "[html]": {
+      "editor.formatOnSave":true,
+      "editor.formatOnPaste": true
+    },
+    "[typescript]": {
+      "editor.formatOnSave": true,
+      "editor.formatOnPaste": true
+    },
+    "[markdown]": {
+      "editor.formatOnSave": true,
+      "editor.wordWrap": "on",
+      "editor.renderWhitespace": "all",
+      "editor.acceptSuggestionOnEnter": "off"
+    },
+
+    "workbench.colorCustomizations": {
+      "activityBar.activeBorder": "#fcff34",
+      "activityBar.border": "#fcff34",
+      "activityBarTop.activeBackground": "#fcff34",
+      "activityBarTop.activeBorder": "#fcff34",
+      "activityBarTop.foreground": "#fcff34",
+      "activityBar.activeFocusBorder": "#fcff34",
+      "activityBarTop.inactiveForeground": "#fcff34",
+      "activityBarTop.dropBorder": "#fcff34",
+      "tab.activeBorderTop": "#fcff34"
+    }
+  }
+  
