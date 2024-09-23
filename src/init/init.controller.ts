@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Res, UseFilters } from '@nestjs/common';
+import { Controller, Get, Res } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { DecodedIdToken } from 'firebase-admin/auth';
 import { AppHttpCode } from 'src/common/app-enums';
