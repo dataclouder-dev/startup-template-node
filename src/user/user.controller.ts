@@ -2,7 +2,9 @@ import { Controller } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { IUser, UserEntity } from './user.entity';
 import { Model } from 'mongoose';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('user')
 @Controller('api/user')
 export class UserController {
   constructor(

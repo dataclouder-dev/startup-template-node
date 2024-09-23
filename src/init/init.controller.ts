@@ -1,9 +1,11 @@
 import { Body, Controller, Get, Post, Res, UseFilters } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { DecodedIdToken } from 'firebase-admin/auth';
 import { AppHttpCode } from 'src/common/app-enums';
 import { DecodedToken } from 'src/common/token.decorator';
 import { UserService } from 'src/user/user.service';
 
+@ApiTags('init')
 @Controller('api/init/user')
 export class InitController {
   constructor(private readonly userService: UserService) {}
