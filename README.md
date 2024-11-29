@@ -1,10 +1,8 @@
-
 ## Description
 
-Scaffolding de dataclouder 
+Scaffolding de dataclouder
 
-* User API
-
+- User API
 
 ## Project setup
 
@@ -40,7 +38,9 @@ $ npm run test:cov
 
 ## Scaffolding
 
-1) Adapt the user model. 
-2) Prepare environment variables. 
+1. Adapt the user model.
+2. Prepare environment variables.
 
+### Remove Modules.
 
+If you dont need a module, remove it, deleting the folder and the import from the app.module.ts file.

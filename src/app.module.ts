@@ -6,6 +6,8 @@ import { ConfigModule, ConfigType } from '@nestjs/config';
 import envVariables from './config/environment';
 import { InitModule } from './init/init.module';
 import { UserModule } from './user/user.module';
+import { ConversationAiModule } from './conversation-ai/conversation-ai.module';
+
 
 @Module({
   imports: [
@@ -23,8 +25,9 @@ import { UserModule } from './user/user.module';
 
     InitModule,
     UserModule,
+    ConversationAiModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }
