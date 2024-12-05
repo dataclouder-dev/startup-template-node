@@ -12,16 +12,6 @@ export interface Conversation {
   updatedAt: Date;
 }
 
-
-
-export enum ConversationType {
-  LearningExample = 'learningExample',
-  Scenario = 'scenario',
-  WordReflection = 'wordReflection',
-  Lesson = 'lesson',
-}
-
-
 export enum ChatRole {
   System = 'system',
   User = 'user',
@@ -73,3 +63,102 @@ export class ChatMessage {
   voice?: string;
 }
 
+
+export interface CharaCard {
+  name: string;
+  description: string;
+  scenario: string;
+  first_mes: string;
+  creator_notes: string;
+  mes_example: string;
+  alternate_greetings: string[];
+  tags: string[];
+  system_prompt: string;
+  post_history_instructions: string;
+}
+
+export interface CharacterCardDC {
+  spec: 'chara_card_v2';
+  spec_version: '2_v_dc';
+  data: {
+    name: string;
+    description: string;
+    // personality: string; not needed
+    scenario: string;
+    first_mes: string;
+    creator_notes: string;
+    mes_example: string;
+    alternate_greetings: string[];
+    tags: string[];
+    system_prompt: string;
+    post_history_instructions: string;
+    character_version: string;
+    extensions: Record<string, any>;
+    appearance: string; // height, build, hairColor, hairStyle, eyeColor, skinTone, distinctiveMarks, clothing style, currentOutfit
+  };
+}
+
+export enum TextEngines {
+  Plantext = 'plantext',
+  MarkdownMultiMessages = 'markdownMultiMessages',
+  MarkdownSSML = 'markdownSSML',
+}
+
+
+export enum ConversationType {
+  General = 'general',
+  Reflection = 'reflection',
+  LearningExample = 'learningExample',
+  Challenge = 'challenge',
+}
+
+export interface IConversation {
+  isPublic: any;
+  _id: any;
+  id: string;
+  card: CharacterCardDC;
+  title: string;
+  image: any;
+  voice: string;
+  secondaryVoice: string;
+  isPublished: boolean;
+  authorId: string;
+  authorEmail: string;
+  takenCount: number;
+  lang: string;
+  textEngine: TextEngines;
+  ConversationType: ConversationType;
+}
+
+
+export interface IConversationCard {
+  version: string;
+  id: string;
+  title: string;
+
+  assets: {
+    image: any;
+  };
+  characterCard: CharacterCardDC;
+
+  textEngine: TextEngines;
+  conversationType: ConversationType;
+  lang: string;
+
+  tts: {
+    voice: string;
+    secondaryVoice: string;
+    speed: string;
+    speedRate: number;
+  };
+
+  metaApp: {
+    isPublished: boolean;
+    isPublic: any;
+    authorId: string;
+    authorEmail: string;
+    createdAt: Date;
+    updatedAt: Date;
+    takenCount: number;
+  };
+}

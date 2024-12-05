@@ -1,0 +1,37 @@
+POST http://localhost:8080/api/conversation-ai/save
+Content-Type: application/json
+
+{
+    "version": "1.0",
+    "id": "conv123",
+    "title": "Sample Conversation 2",
+    "characterCard": {},
+    "textEngine": "plantext",
+    "conversationType": "challenge",
+    "lang": "en",
+    "tts": {
+        "voice": "default",
+        "secondaryVoice": "alternate",
+        "speed": "normal",
+        "speedRate": 1.0
+    },
+    "metaApp": {
+        "isPublished": true,
+        "isPublic": true,
+        "authorId": "user123",
+        "authorEmail": "user@example.com",
+        "createdAt": "2023-12-25T12:00:00Z",
+        "updatedAt": "2023-12-25T12:00:00Z",
+        "takenCount": 0
+    }
+}
+
+
+
+###
+GET http://localhost:8080/api/conversation-ai/conversations
+Content-Type: application/json
+
+###
+GET http://localhost:8080/api/conversation-ai/conversation/674cc5555b6cd95e78e3854c
+Content-Type: application/json
