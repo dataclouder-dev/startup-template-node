@@ -5,14 +5,31 @@ import * as textToSpeech from '@google-cloud/text-to-speech';
 // import { AudioSpeed, VoiceCode } from '../core/app-enums';
 import { AudioSpeed, GoogleVoiceHQOptions, GoogleVoiceOptions, SynthAudioOptions, VoiceCode } from './tts.classes';
 import { AppException } from 'src/common/app-exception';
+import { Injectable } from '@nestjs/common';
 // import { GoogleVoiceHQOptions, GoogleVoiceOptions } from '../core/app-constants';
 // import { AppException } from '../core/exception';
 
-export class TextToSpeechService {
+@Injectable()
+export class TTSService {
   private client: textToSpeech.TextToSpeechClient;
 
   constructor() {
-    this.client = new textToSpeech.TextToSpeechClient();
+    try {
+      // If you're using a service account key file, you can explicitly specify it:
+      // const keyFilename = process.env.GOOGLE_APPLICATION_CREDENTIALS;
+      // this.client = new textToSpeech.TextToSpeechClient({ keyFilename });
+
+      // Or use application default credentials:
+      this.client = new textToSpeech.TextToSpeechClient({
+        projectId: process.env.GOOGLE_CLOUD_PROJECT,
+      });
+    } catch (error) {
+      console.error('Error initializing Text-to-Speech client:', error);
+      // throw new AppException(
+      //   'Failed to initialize Text-to-Speech client. Please ensure Google Cloud credentials are properly configured.',
+      //   error
+      // );
+    }
   }
 
   // Converts get_speech function
@@ -21,7 +38,7 @@ export class TextToSpeechService {
     voiceName?: VoiceCode,
     options?: SynthAudioOptions,
     lang: string = 'en',
-    isSsml: boolean = false,
+    isSsml: boolean = false
   ): Promise<{ audioContent: Buffer; voiceName: string }> {
     console.log('Voice name:', voiceName, 'Options:', options, 'Lang:', lang, 'is_ssml:', isSsml);
 
@@ -29,12 +46,12 @@ export class TextToSpeechService {
     let languageCode: string;
 
     if (!voiceName) {
-      const voiceOptions = GoogleVoiceHQOptions.filter((voice) => voice.lang.includes(lang));
+      const voiceOptions = GoogleVoiceHQOptions.filter(voice => voice.lang.includes(lang));
       const voiceData = voiceOptions[Math.floor(Math.random() * voiceOptions.length)];
       selectedVoiceName = voiceData.id;
       languageCode = voiceData.lang;
     } else {
-      const voice = GoogleVoiceOptions.find((item) => item.id === voiceName);
+      const voice = GoogleVoiceOptions.find(item => item.id === voiceName);
       if (!voice) {
         throw new AppException({ error_message: `Voice ${voiceName} not found` });
       }
@@ -91,7 +108,7 @@ export class TextToSpeechService {
     const voices = response.voices?.sort((a, b) => a.name.localeCompare(b.name)) || [];
 
     console.log(` Voices: ${voices.length} `.padStart(60, '-').padEnd(60, '-'));
-    voices.forEach((voice) => {
+    voices.forEach(voice => {
       const languages = voice.languageCodes?.join(', ') || '';
       const name = voice.name;
       const gender = voice.ssmlGender;

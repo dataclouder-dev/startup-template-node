@@ -1,8 +1,18 @@
 ## Description
 
-Scaffolding de dataclouder
+Scaffolding de dataclouder Nest API
 
-- User API
+The main porpuse of this project is used as template to accelerate backend of the dataclouder frontend template.
+
+- Is highly attached to google cloud services, but removing modules you get rid of everything.
+
+### How to get starting
+
+suposing you know how to run the project.
+
+- Adapt the user model.
+- check the .env.example, remove the .example from name file and add environment variables
+- Add google cloud credentials, create new folder called .cred.
 
 ## Project setup
 
@@ -35,11 +45,6 @@ $ npm run test:e2e
 # test coverage
 $ npm run test:cov
 ```
-
-## Scaffolding
-
-1. Adapt the user model.
-2. Prepare environment variables.
 
 ### Remove Modules.
 

@@ -39,3 +39,12 @@ export interface VoiceOption {
   gender?: string;
   exampleUrl?: string;
 }
+
+export class TTSDto {
+  text: string;
+  ssml: string;
+  voice: string;
+  speed: AudioSpeed;
+  speedRate: number;
+  generateTranscription: boolean;
+}

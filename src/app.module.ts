@@ -7,7 +7,7 @@ import envVariables from './config/environment';
 import { InitModule } from './init/init.module';
 import { UserModule } from './user/user.module';
 import { ConversationAiModule } from './conversation-ai/conversation-ai.module';
-
+import { TestModule } from './test/test.module';
 
 @Module({
   imports: [
@@ -26,8 +26,9 @@ import { ConversationAiModule } from './conversation-ai/conversation-ai.module';
     InitModule,
     UserModule,
     ConversationAiModule,
+    TestModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}

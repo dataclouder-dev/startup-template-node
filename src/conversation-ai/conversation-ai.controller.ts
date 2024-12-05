@@ -4,11 +4,16 @@ import { ConversationDTO } from './dto/create-conversation.dto';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { ChatMessageDict } from './interfaces/conversation.interface';
 import { Conversation, ConversationDocument } from './entities/conversation.entity';
+import { TTSDto } from './tts/tts.classes';
+import { TTSService } from './tts/tts-service';
 
 @ApiTags('conversation-ai')
 @Controller('api/conversation-ai')
 export class ConversationAiController {
-  constructor(private readonly conversationAiService: ConversationAiService) { }
+  constructor(
+    private readonly conversationAiService: ConversationAiService,
+    private readonly ttsService: TTSService
+  ) {}
 
   @Post('/conversation')
   @ApiOperation({ summary: 'Save a new conversation' })
@@ -29,6 +34,15 @@ export class ConversationAiController {
     return response;
   }
 
+  @Post('/tts')
+  @ApiOperation({ summary: 'Continue the conversation' })
+  @ApiResponse({ status: 200, description: 'Return the conversation.' })
+  async getTTS(@Body() tts: TTSDto): Promise<ChatMessageDict> {
+    console.log('tts', tts);
+    this.ttsService.getSpeech('hola');
+    return tts as any;
+  }
+
   @Get('/conversation')
   @ApiOperation({ summary: 'Get all conversations' })
   @ApiResponse({ status: 200, description: 'Return all conversations.' })
@@ -36,7 +50,6 @@ export class ConversationAiController {
     console.log('getConversations');
     return this.conversationAiService.getConversations();
   }
-
 
   @Get('/conversation/:id')
   @ApiOperation({ summary: 'Get a conversation by ID' })
@@ -58,6 +71,4 @@ export class ConversationAiController {
   async deleteConversationById(@Param('id') id: string): Promise<ConversationDocument> {
     return this.conversationAiService.deleteConversationById(id);
   }
-
-
 }
