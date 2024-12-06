@@ -1,6 +1,6 @@
 // import { IsString, IsNotEmpty, IsOptional } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
-import { ChatMessage, ConversationType } from '../interfaces/conversation.interface';
+import { ChatMessage, ConversationType } from '../clases/conversation.interface';
 
 export class CreateConversationDto {
   @ApiProperty({
@@ -13,7 +13,6 @@ export class CreateConversationDto {
     description: 'The user ID associated with the conversation',
     example: 'user123',
   })
-
   userId: string;
 
   @ApiProperty({

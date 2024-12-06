@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { ConversationType, TextEngines, IConversationCard, CharacterCardDC } from '../interfaces/conversation.interface';
+import { ConversationType, TextEngines, IConversationCard, CharacterCardDC } from '../clases/conversation.interface';
 
 export type ConversationDocument = Conversation & Document;
 
@@ -63,13 +63,11 @@ export class Conversation implements IConversationCard {
     takenCount: number;
   };
 
-
   @Prop()
   createdAt: Date;
 
   @Prop()
   updatedAt: Date;
-
 }
 
 export const ConversationSchema = SchemaFactory.createForClass(Conversation);

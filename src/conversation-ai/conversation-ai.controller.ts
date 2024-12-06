@@ -2,7 +2,7 @@ import { Controller, Post, Body, Get, Param, Delete, Patch, Put } from '@nestjs/
 import { ConversationAiService } from './conversation-ai.service';
 import { ConversationDTO } from './dto/create-conversation.dto';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { ChatMessageDict } from './interfaces/conversation.interface';
+import { ChatMessageDict } from './clases/conversation.interface';
 import { Conversation, ConversationDocument } from './entities/conversation.entity';
 import { TTSDto } from './tts/tts.classes';
 import { TTSService } from './tts/tts-service';

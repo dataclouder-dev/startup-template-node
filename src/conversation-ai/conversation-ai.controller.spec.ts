@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { ConversationAiController } from './conversation-ai.controller';
 import { ConversationAiService } from './conversation-ai.service';
 import { Conversation, ConversationDocument } from './entities/conversation.entity';
-import { TextEngines } from './interfaces/conversation.interface';
+import { TextEngines } from './clases/conversation.interface';
 
 describe('ConversationAiController', () => {
   let controller: ConversationAiController;
@@ -55,9 +55,7 @@ describe('ConversationAiController', () => {
       const errorMessage = 'Failed to save conversation';
       mockConversationService.saveConversation.mockRejectedValue(new Error(errorMessage));
 
-      await expect(controller.saveConversation(mockConversation as Conversation))
-        .rejects
-        .toThrow(errorMessage);
+      await expect(controller.saveConversation(mockConversation as Conversation)).rejects.toThrow(errorMessage);
     });
   });
 });

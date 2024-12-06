@@ -46,7 +46,6 @@ export class ChatMessageDict {
   metadata?: any;
 }
 
-
 export class ChatMessage {
   content: string; // Contenido del mensaje en el formato que venga.
   role: ChatRole; // Assistant | User
@@ -63,7 +62,6 @@ export class ChatMessage {
   voice?: string;
 }
 
-
 export interface CharaCard {
   name: string;
   description: string;
@@ -75,6 +73,13 @@ export interface CharaCard {
   tags: string[];
   system_prompt: string;
   post_history_instructions: string;
+}
+
+export interface Appearance {
+  physicalDescription: string; // height, build, hairColor, hairStyle, eyeColor, skinTone,
+  outfit: string; // clothing style, currentOutfit
+  objects: string;
+  quirks: string; //distinctiveMarks
 }
 
 export interface CharacterCardDC {
@@ -94,7 +99,7 @@ export interface CharacterCardDC {
     post_history_instructions: string;
     character_version: string;
     extensions: Record<string, any>;
-    appearance: string; // height, build, hairColor, hairStyle, eyeColor, skinTone, distinctiveMarks, clothing style, currentOutfit
+    appearance: Appearance;
   };
 }
 
@@ -103,7 +108,6 @@ export enum TextEngines {
   MarkdownMultiMessages = 'markdownMultiMessages',
   MarkdownSSML = 'markdownSSML',
 }
-
 
 export enum ConversationType {
   General = 'general',
@@ -129,7 +133,6 @@ export interface IConversation {
   textEngine: TextEngines;
   ConversationType: ConversationType;
 }
-
 
 export interface IConversationCard {
   version: string;
