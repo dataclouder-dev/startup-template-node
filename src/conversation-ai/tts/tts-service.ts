@@ -9,6 +9,14 @@ import { Injectable } from '@nestjs/common';
 // import { GoogleVoiceHQOptions, GoogleVoiceOptions } from '../core/app-constants';
 // import { AppException } from '../core/exception';
 
+export interface TTSOptions {
+  voiceName: string;
+  text: string;
+  options: SynthAudioOptions;
+  lang: string;
+  isSsml: boolean;
+}
+
 @Injectable()
 export class TTSService {
   private client: textToSpeech.TextToSpeechClient;
@@ -18,11 +26,14 @@ export class TTSService {
       // If you're using a service account key file, you can explicitly specify it:
       // const keyFilename = process.env.GOOGLE_APPLICATION_CREDENTIALS;
       // this.client = new textToSpeech.TextToSpeechClient({ keyFilename });
-
+      debugger;
+      console.log('GOOGLE_APPLICATION_CREDENTIALS', process.env.GOOGLE_CLOUD_PROJECT_ID);
       // Or use application default credentials:
-      this.client = new textToSpeech.TextToSpeechClient({
-        projectId: process.env.GOOGLE_CLOUD_PROJECT,
-      });
+      this.client = new textToSpeech.TextToSpeechClient();
+
+      // this.client = new textToSpeech.TextToSpeechClient({
+      //   projectId: process.env.GOOGLE_CLOUD_PROJECT_ID,
+      // });
     } catch (error) {
       console.error('Error initializing Text-to-Speech client:', error);
       // throw new AppException(
@@ -33,39 +44,33 @@ export class TTSService {
   }
 
   // Converts get_speech function
-  async getSpeech(
-    text: string,
-    voiceName?: VoiceCode,
-    options?: SynthAudioOptions,
-    lang: string = 'en',
-    isSsml: boolean = false
-  ): Promise<{ audioContent: Buffer; voiceName: string }> {
-    console.log('Voice name:', voiceName, 'Options:', options, 'Lang:', lang, 'is_ssml:', isSsml);
+  async getSpeech(tts: TTSOptions): Promise<{ audioContent: Buffer; voiceName: string }> {
+    console.log('Voice name:', tts.voiceName, 'Options:', tts.options, 'Lang:', tts.lang, 'is_ssml:', tts.isSsml);
 
     let selectedVoiceName: string;
     let languageCode: string;
 
-    if (!voiceName) {
-      const voiceOptions = GoogleVoiceHQOptions.filter(voice => voice.lang.includes(lang));
+    if (!tts.voiceName) {
+      const voiceOptions = GoogleVoiceHQOptions.filter(voice => voice.lang.includes(tts.lang));
       const voiceData = voiceOptions[Math.floor(Math.random() * voiceOptions.length)];
       selectedVoiceName = voiceData.id;
       languageCode = voiceData.lang;
     } else {
-      const voice = GoogleVoiceOptions.find(item => item.id === voiceName);
+      const voice = GoogleVoiceOptions.find(item => item.id === tts.voiceName);
       if (!voice) {
-        throw new AppException({ error_message: `Voice ${voiceName} not found` });
+        throw new AppException({ error_message: `Voice ${tts.voiceName} not found` });
       }
-      selectedVoiceName = voiceName;
+      selectedVoiceName = tts.voiceName;
       languageCode = voice.lang;
     }
 
     let speakingRate = 1;
-    if (options && !selectedVoiceName.includes('Journey')) {
-      speakingRate = options.speed_rate && options.speed_rate > 0 ? options.speed_rate : this.getSpeedRate(options?.speed);
+    if (tts.options && !selectedVoiceName.includes('Journey')) {
+      speakingRate = tts.options.speed_rate && tts.options.speed_rate > 0 ? tts.options.speed_rate : this.getSpeedRate(tts.options?.speed);
     }
 
     const request: textToSpeech.protos.google.cloud.texttospeech.v1.ISynthesizeSpeechRequest = {
-      input: isSsml ? { ssml: text } : { text: text },
+      input: tts.isSsml ? { ssml: tts.text } : { text: tts.text },
       voice: {
         languageCode: languageCode,
         name: selectedVoiceName,

@@ -39,7 +39,7 @@ export class ConversationAiController {
   @ApiResponse({ status: 200, description: 'Return the conversation.' })
   async getTTS(@Body() tts: TTSDto): Promise<ChatMessageDict> {
     console.log('tts', tts);
-    this.ttsService.getSpeech('hola');
+    this.ttsService.getSpeech({ voiceName: tts.voice, text: tts.text, options: {}, lang: null, isSsml: tts.ssml });
     return tts as any;
   }
 

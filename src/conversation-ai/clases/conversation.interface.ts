@@ -105,6 +105,7 @@ export interface CharacterCardDC {
 
 export enum TextEngines {
   Plantext = 'plantext',
+  SimpleText = 'simpleText',
   MarkdownMultiMessages = 'markdownMultiMessages',
   MarkdownSSML = 'markdownSSML',
 }
