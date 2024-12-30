@@ -1,5 +1,6 @@
 // src/services/text-to-speech.service.ts
 import * as textToSpeech from '@google-cloud/text-to-speech';
+
 // import { creds } from '../resources/environment';
 // import { SynthAudioOptions } from '../core/app-models';
 // import { AudioSpeed, VoiceCode } from '../core/app-enums';
@@ -23,23 +24,22 @@ export class TTSService {
 
   constructor() {
     try {
-      // If you're using a service account key file, you can explicitly specify it:
+      // Explicitly specify the credentials file path
       // const keyFilename = process.env.GOOGLE_APPLICATION_CREDENTIALS;
-      // this.client = new textToSpeech.TextToSpeechClient({ keyFilename });
-      debugger;
-      console.log('GOOGLE_APPLICATION_CREDENTIALS', process.env.GOOGLE_CLOUD_PROJECT_ID);
-      // Or use application default credentials:
-      this.client = new textToSpeech.TextToSpeechClient();
 
-      // this.client = new textToSpeech.TextToSpeechClient({
-      //   projectId: process.env.GOOGLE_CLOUD_PROJECT_ID,
-      // });
+      // if (!keyFilename) {
+      //   throw new Error('GOOGLE_APPLICATION_CREDENTIALS environment variable is not set');
+      // }
+      console.log('Initializing Text-to-Speech client');
+
+      this.client = new textToSpeech.TextToSpeechClient();
     } catch (error) {
       console.error('Error initializing Text-to-Speech client:', error);
-      // throw new AppException(
-      //   'Failed to initialize Text-to-Speech client. Please ensure Google Cloud credentials are properly configured.',
-      //   error
-      // );
+      throw new AppException({
+        error_message: 'Failed to initialize Text-to-Speech client',
+        explanation: 'Please ensure Google Cloud credentials are properly configured.',
+        exception: error,
+      });
     }
   }
 
@@ -76,7 +76,7 @@ export class TTSService {
         name: selectedVoiceName,
       },
       audioConfig: {
-        audioEncoding: 'LINEAR16',
+        audioEncoding: 'MP3', // Change to MP3
         speakingRate: speakingRate,
       },
     };

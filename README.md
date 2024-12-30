@@ -50,8 +50,31 @@ If you dont need a module, remove it, deleting the folder and the import from th
 
 ### How to deploy
 
-highly recommended doble check is working on local. that means your variables env are working.
+highly recommended doble check is working on local. that means your variables env are working. Hidhly recommended check that docker is working locally.
+
+#### How run run docker locally?
+
+    docker build -t dataclouder-node-server .
+    docker run -p 8080:8080 dataclouder-node-server
+
+WIP set .env first it should take the id for the project
+
+is important to run script inside the folder becouse the relative paths.
+
+`cd deploy_scripts`
 
 Run deploy.sh
 
 Will automate all the process, enable apis and set variables
+
+#### Current flow for deploy
+
+1. make sure you have access to the account you want to deploy
+
+`gcloud auth login`
+
+2. make sure you already enable services needed. check script
+
+3. Change variables in script to add the project id
+
+4. run script and wait untuil deploy is already served

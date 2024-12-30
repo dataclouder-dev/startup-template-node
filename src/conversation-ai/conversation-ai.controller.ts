@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get, Param, Delete, Patch, Put } from '@nestjs/common';
+import { Controller, Post, Body, Get, Param, Delete, Patch, Put, Res } from '@nestjs/common';
 import { ConversationAiService } from './conversation-ai.service';
 import { ConversationDTO } from './dto/create-conversation.dto';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
@@ -6,6 +6,8 @@ import { ChatMessageDict } from './clases/conversation.interface';
 import { Conversation, ConversationDocument } from './entities/conversation.entity';
 import { TTSDto } from './tts/tts.classes';
 import { TTSService } from './tts/tts-service';
+// Import FastifyReply from fastify
+import { FastifyReply } from 'fastify';
 
 @ApiTags('conversation-ai')
 @Controller('api/conversation-ai')
@@ -35,12 +37,24 @@ export class ConversationAiController {
   }
 
   @Post('/tts')
-  @ApiOperation({ summary: 'Continue the conversation' })
-  @ApiResponse({ status: 200, description: 'Return the conversation.' })
-  async getTTS(@Body() tts: TTSDto): Promise<ChatMessageDict> {
+  @ApiOperation({ summary: 'Generate TTS audio' })
+  @ApiResponse({ status: 200, description: 'Return the TTS audio.' })
+  async getTTS(@Body() tts: TTSDto, @Res({ passthrough: true }) res: FastifyReply): Promise<any> {
     console.log('tts', tts);
-    this.ttsService.getSpeech({ voiceName: tts.voice, text: tts.text, options: {}, lang: null, isSsml: tts.ssml });
-    return tts as any;
+    const { audioContent, voiceName } = await this.ttsService.getSpeech({
+      voiceName: tts.voice,
+      text: tts.text,
+      options: {},
+      lang: null,
+      isSsml: tts.ssml,
+    });
+
+    res.header('Content-Type', 'audio/mpeg');
+    res.header('Content-Disposition', `attachment; filename="${voiceName}.mp3"`);
+    res.header('Content-Length', audioContent.length);
+    res.header('transcription', 'This is a transcription');
+
+    return audioContent;
   }
 
   @Get('/conversation')
