@@ -6,13 +6,13 @@ import { firstValueFrom } from 'rxjs';
 import { HttpService } from '@nestjs/axios';
 import config from 'src/config/environment';
 import { AppException } from './app-exception';
-import { AppAuthClaims } from './app-classes';
+import { AppAuthClaims } from 'src/user/user.class';
 
 @Injectable()
 export class FirebaseService {
   constructor(
     private httpService: HttpService,
-    @Inject(config.KEY) private configService: ConfigType<typeof config>, // private configService: ConfigType<typeof environment>,
+    @Inject(config.KEY) private configService: ConfigType<typeof config> // private configService: ConfigType<typeof environment>,
   ) {
     console.log('Initializing Firebase App');
     initializeApp({ credential: applicationDefault() });
@@ -45,7 +45,7 @@ export class FirebaseService {
       const user = await getAuth().getUserByEmail(email);
       const claims = (user.customClaims || {}) as AppAuthClaims;
       return claims;
-    } catch (_error) {
+    } catch (error) {
       throw new AppException({ error_message: 'User not found', explanation: 'No se encontró el usario o sus permisos' });
     }
   }

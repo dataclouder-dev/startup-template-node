@@ -19,20 +19,6 @@ export enum PermissionType {
   Conversation = 'conversation',
 }
 
-export enum RolType {
-  Admin = 'admin',
-  Teacher = 'teacher',
-  Tester = 'tester',
-}
-
 export type PermissionClaim = Record<PermissionType, { exp: Date; num: number }>;
 
-export type SubscriptionClaim = { type: PlanType; exp?: number };
-
-export type RolClaim = Record<RolType, any>;
-
-export interface AppAuthClaims {
-  plan: SubscriptionClaim;
-  permissions: PermissionClaim;
-  roles: RolClaim;
-}
+export type SubscriptionClaim = { type: PlanType; exp?: Date };
