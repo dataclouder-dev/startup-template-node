@@ -3,15 +3,6 @@ export interface Message {
   content: string;
 }
 
-export interface Conversation {
-  id: string;
-  messages?: Message[];
-  userId: string;
-  context?: Record<string, any>;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
 export enum ChatRole {
   System = 'system',
   User = 'user',
@@ -62,19 +53,6 @@ export class ChatMessage {
   voice?: string;
 }
 
-export interface CharaCard {
-  name: string;
-  description: string;
-  scenario: string;
-  first_mes: string;
-  creator_notes: string;
-  mes_example: string;
-  alternate_greetings: string[];
-  tags: string[];
-  system_prompt: string;
-  post_history_instructions: string;
-}
-
 export interface Appearance {
   physicalDescription: string; // height, build, hairColor, hairStyle, eyeColor, skinTone,
   outfit: string; // clothing style, currentOutfit
@@ -115,24 +93,6 @@ export enum ConversationType {
   Reflection = 'reflection',
   LearningExample = 'learningExample',
   Challenge = 'challenge',
-}
-
-export interface IConversation {
-  isPublic: any;
-  _id: any;
-  id: string;
-  card: CharacterCardDC;
-  title: string;
-  image: any;
-  voice: string;
-  secondaryVoice: string;
-  isPublished: boolean;
-  authorId: string;
-  authorEmail: string;
-  takenCount: number;
-  lang: string;
-  textEngine: TextEngines;
-  ConversationType: ConversationType;
 }
 
 export interface IConversationCard {

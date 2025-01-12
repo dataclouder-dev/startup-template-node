@@ -3,8 +3,9 @@ import { InjectModel } from '@nestjs/mongoose';
 import { UserEntity } from './user.entity';
 import { Model } from 'mongoose';
 import { FirebaseService } from '../common/firebase.service';
-import { AppAuthClaims, IUser, PermissionClaim, PlanType, RolClaim } from './user.class';
 import { DecodedIdToken } from 'firebase-admin/auth';
+import { AppAuthClaims, PermissionClaim, PlanType, RolClaim } from 'src/dc-claims-module/clams.class';
+import { IUser } from './user.class';
 
 @Injectable()
 export class UserService {
@@ -52,5 +53,18 @@ export class UserService {
     // this.notifierService.notifyUserPlan(data);
 
     return userSaved;
+  }
+
+  public async deleteUser(userId: string): Promise<any> {
+    const users = await this.userModel.deleteOne({ id: userId }).exec();
+
+    await this.firebaseService.deleteUser(userId);
+    return users;
+  }
+
+  public async updateUser(userId: string, user: Partial<IUser>): Promise<any> {
+    const userUpdated = await this.userModel.findOneAndUpdate({ id: userId }, { $set: user }, { new: true }).lean().exec();
+    // new return document after update, if false return before update
+    return userUpdated;
   }
 }

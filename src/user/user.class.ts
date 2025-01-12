@@ -1,42 +1,9 @@
-export enum PlanType {
-  Basic = 'basic',
-  Follower = 'follower',
-  Premium = 'premium',
-  Beta = 'beta',
-}
-
-export const PlanLevel = {
-  [PlanType.Basic]: { level: 1 },
-  [PlanType.Follower]: { level: 2 },
-  [PlanType.Beta]: { level: 3 },
-  [PlanType.Premium]: { level: 4 },
-};
-
-export enum PermissionType {
-  Vocabulary = 'vocabulary',
-  LearningExampleRequest = 'leRequest',
-  Conversation = 'conversation',
-}
-
-export enum RolType {
-  Admin = 'admin',
-}
-
-export type PermissionClaim = Record<PermissionType, { exp: Date; num: number }>;
-
-export type SubscriptionClaim = { type: PlanType; exp?: Date };
-
-export type RolClaim = Record<RolType, any>;
-
-export interface AppAuthClaims {
-  plan: SubscriptionClaim;
-  permissions: PermissionClaim;
-  roles?: RolClaim;
-}
+import { AppAuthClaims } from 'src/dc-claims-module/clams.class';
 
 export class PersonalData {
   firstname: string;
   lastname: string;
+  nickname: string;
   gender: string;
   birthday: Date;
 }
@@ -48,4 +15,19 @@ export interface IUser {
   personalData: Partial<PersonalData>;
   claims: AppAuthClaims;
   authStrategy: string;
+  conversationSettings: IConversationSettings;
+}
+
+export interface IConversationSettings {
+  realTime: boolean;
+  repeatRecording: boolean;
+  fixGrammar: boolean;
+  superHearing: boolean;
+  voice: string;
+  autoTranslate: boolean;
+  highlightWords: boolean;
+  modelName: string;
+  provider: string;
+  speed: string;
+  speedRate: number; // Temporal only 0 to 100.
 }

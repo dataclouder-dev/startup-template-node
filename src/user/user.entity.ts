@@ -1,10 +1,14 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { Document } from 'mongoose';
-import { AppAuthClaims, IUser, PersonalData } from './user.class';
+import { IConversationSettings, IUser, PersonalData } from './user.class';
+import { AppAuthClaims } from 'src/dc-claims-module/clams.class';
 
 @Schema({ collection: 'users' })
 export class UserEntity extends Document implements IUser {
-  @Prop({ type: mongoose.Schema.Types.ObjectId, required: false, auto: true })
+  @Prop({ type: mongoose.Schema.Types.ObjectId, required: true, auto: true })
+  _id: string;
+
+  @Prop({ type: mongoose.Schema.Types.String, required: false })
   id: string;
 
   @Prop({ type: mongoose.Schema.Types.String, required: false })
@@ -21,6 +25,9 @@ export class UserEntity extends Document implements IUser {
 
   @Prop({ type: mongoose.Schema.Types.Mixed, required: false })
   personalData: PersonalData;
+
+  @Prop({ type: mongoose.Schema.Types.Mixed, required: false })
+  conversationSettings: IConversationSettings;
 }
 
 export const UserSchema = SchemaFactory.createForClass(UserEntity);

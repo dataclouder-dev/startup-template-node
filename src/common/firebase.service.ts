@@ -6,7 +6,7 @@ import { firstValueFrom } from 'rxjs';
 import { HttpService } from '@nestjs/axios';
 import config from 'src/config/environment';
 import { AppException } from './app-exception';
-import { AppAuthClaims } from 'src/user/user.class';
+import { AppAuthClaims } from 'src/dc-claims-module/clams.class';
 
 @Injectable()
 export class FirebaseService {
