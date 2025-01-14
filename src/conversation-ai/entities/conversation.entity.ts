@@ -1,16 +1,19 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Document, Schema as MongooseSchema } from 'mongoose';
 import { ConversationType, TextEngines, IConversationCard, CharacterCardDC } from '../clases/conversation.interface';
 
 export type ConversationDocument = Conversation & Document;
 
 @Schema({ timestamps: true })
 export class Conversation implements IConversationCard {
-  @Prop({ required: false })
-  version: string;
+  @Prop({ type: MongooseSchema.Types.ObjectId, auto: true })
+  _id: MongooseSchema.Types.ObjectId;
+
+  @Prop()
+  id: string;
 
   @Prop({ required: false })
-  id: string;
+  version: string;
 
   @Prop({ required: false })
   title: string;
@@ -71,3 +74,10 @@ export class Conversation implements IConversationCard {
 }
 
 export const ConversationSchema = SchemaFactory.createForClass(Conversation);
+
+ConversationSchema.pre('save', function (next) {
+  if (this.isNew) {
+    this.id = this._id.toString();
+  }
+  next();
+});

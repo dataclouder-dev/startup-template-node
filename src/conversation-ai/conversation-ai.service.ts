@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import Groq from 'groq-sdk';
 import { ChatCompletionMessageParam } from 'groq-sdk/resources/chat/completions';
-import { ChatMessageDict, ChatRole } from './clases/conversation.interface';
+import { ChatMessageDict, ChatRole, IConversationCard } from './clases/conversation.interface';
 import { Conversation, ConversationDocument } from './entities/conversation.entity';
 import { ObjectId } from 'mongodb';
 
@@ -65,7 +65,11 @@ export class ConversationAiService {
     }
   }
 
-  async saveConversation(conversation: Conversation): Promise<ConversationDocument> {
+  async saveConversation(conversation: IConversationCard): Promise<ConversationDocument> {
+    if (!conversation['_id']) {
+      delete conversation['_id'];
+    }
+
     const newConversation = new this.conversationModel(conversation);
     return newConversation.save();
   }
