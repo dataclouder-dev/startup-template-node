@@ -12,6 +12,6 @@ import config from '../config/environment';
   imports: [MongooseModule.forFeature([{ name: UserEntity.name, schema: UserSchema }]), HttpModule, ConfigModule.forFeature(config)],
   controllers: [UserController],
   providers: [UserService, FirebaseService],
-  exports: [UserService],
+  exports: [UserService, FirebaseService],
 })
 export class UserModule {}

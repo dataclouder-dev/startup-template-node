@@ -8,6 +8,7 @@ import { InitModule } from './init/init.module';
 import { UserModule } from './user/user.module';
 import { ConversationAiModule } from './conversation-ai/conversation-ai.module';
 import { TestModule } from './test/test.module';
+import { AdminModule } from './admin/admin.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { TestModule } from './test/test.module';
     UserModule,
     ConversationAiModule,
     TestModule,
+    AdminModule,
   ],
   controllers: [AppController],
   providers: [AppService],

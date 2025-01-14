@@ -67,4 +67,9 @@ export class UserService {
     // new return document after update, if false return before update
     return userUpdated;
   }
+
+  public async updateUserByEmail(email: string, user: Partial<IUser>): Promise<any> {
+    const results = await this.userModel.updateOne({ email: email }, { $set: user }).lean().exec();
+    return results;
+  }
 }

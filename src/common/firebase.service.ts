@@ -45,7 +45,8 @@ export class FirebaseService {
       const user = await getAuth().getUserByEmail(email);
       const claims = (user.customClaims || {}) as AppAuthClaims;
       return claims;
-    } catch (error) {
+    } catch (error: any) {
+      console.log('error', error);
       throw new AppException({ error_message: 'User not found', explanation: 'No se encontró el usario o sus permisos' });
     }
   }

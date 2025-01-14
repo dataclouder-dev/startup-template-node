@@ -78,3 +78,15 @@ Will automate all the process, enable apis and set variables
 3. Change variables in script to add the project id
 
 4. run script and wait untuil deploy is already served
+
+### Manual deploy
+
+gcloud builds submit --tag gcr.io/$PROJECT_ID/$IMAGE_NAME ../.
+
+gcloud run deploy $SERVICE_NAME --image gcr.io/$PROJECT_ID/$IMAGE_NAME --platform managed --region $REGION --allow-unauthenticated
+
+### Example Deploy
+
+gcloud builds submit --tag gcr.io/dataclouder-dev/node-app-image .
+
+gcloud run deploy node-web-service --image gcr.io/dataclouder-dev/node-app-image --platform managed --region us-central1 --allow-unauthenticated
