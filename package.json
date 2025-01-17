@@ -9,6 +9,7 @@
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
+    "update:dc": "npm install @dataclouder/conversation-card-nestjs@latest",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
@@ -20,13 +21,14 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+    "@dataclouder/conversation-card-nestjs": "^0.0.22",
     "@fastify/static": "^7.0.4",
     "@google-cloud/text-to-speech": "^5.7.0",
     "@nestjs/axios": "^3.0.0",
     "@nestjs/common": "^10.0.0",
     "@nestjs/config": "^3.1.1",
     "@nestjs/core": "^10.0.0",
-    "@nestjs/mongoose": "^10.0.10",
+    "@nestjs/mongoose": "^10.1.0",
     "@nestjs/platform-express": "^10.0.0",
     "@nestjs/platform-fastify": "^10.2.7",
     "@nestjs/swagger": "^7.1.14",
@@ -35,7 +37,7 @@
     "google-auth-library": "^9.2.0",
     "groq-sdk": "^0.8.0",
     "mongodb": "^6.9.0",
-    "mongoose": "^8.6.3",
+    "mongoose": "^8.9.5",
     "openai": "^4.78.1",
     "reflect-metadata": "^0.2.0",
     "rxjs": "^7.8.1"
