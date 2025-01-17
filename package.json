@@ -9,7 +9,7 @@
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
-    "update:dc": "npm install @dataclouder/conversation-card-nestjs@latest",
+    "update:dc": "npm install @dataclouder/lessons-nestjs@latest @dataclouder/conversation-card-nestjs@lates",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "@dataclouder/conversation-card-nestjs": "^0.0.22",
+    "@dataclouder/lessons-nestjs": "^0.0.2",
     "@fastify/static": "^7.0.4",
     "@google-cloud/text-to-speech": "^5.7.0",
     "@nestjs/axios": "^3.0.0",

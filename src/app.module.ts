@@ -13,6 +13,7 @@ import { AdminModule } from './admin/admin.module';
 // import { ConversationCardsModule } from '@dataclouder/conversation-card-nestjs/dist/libs/conversation-cards/src/conversation-cards.module';
 
 import { ConversationCardsModule } from '@dataclouder/conversation-card-nestjs';
+import { LessonsModule } from '@dataclouder/lessons-nestjs';
 @Module({
   imports: [
     ConfigModule.forRoot({ load: [envVariables], isGlobal: true }),
@@ -32,6 +33,7 @@ import { ConversationCardsModule } from '@dataclouder/conversation-card-nestjs';
     TestModule,
     AdminModule,
     ConversationCardsModule,
+    LessonsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
