@@ -45,7 +45,7 @@ steps:
         "deploy",
         "node-server",
         "--region=us-central1",
-        "--image=${_REPOSITORY_FOLDER}/$REPO_NAME:$BRANCH_NAME$TAG_NAME",
+        "--image=${_ARTIFACT_REPOSITORY}/$REPO_NAME:$BRANCH_NAME$TAG_NAME",
         "--platform=managed",
         "--allow-unauthenticated",
       ]

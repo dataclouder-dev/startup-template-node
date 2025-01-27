@@ -131,7 +131,7 @@ Pending...
 3. Grant github access, select the repository and accept conditions
 4. Add seetings for the trigger to your needs
 5. Optional: Add permissions to the service account, Logs Writer, Cloud Run Admin or log only default logs
-6. Add the repository in artifact registry
+6. Add the repository in artifact registry (recommended add policies to remove old versions)
 
 ### Example Deployment Command
 
