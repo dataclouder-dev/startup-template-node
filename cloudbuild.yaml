@@ -27,15 +27,15 @@ steps:
         echo "Service Account: $SERVICE_ACCOUNT"
         echo ""
         echo "=== Image that will be built ==="
-        echo "Image: us-central1-docker.pkg.dev/$PROJECT_ID/images/$REPO_NAME:$BRANCH_NAME$TAG_NAME"
+        echo "Image: ${_ARTIFACT_REPOSITORY}/$REPO_NAME:$BRANCH_NAME$TAG_NAME"
 
   - id: building-docker-image
     name: gcr.io/cloud-builders/docker
-    args: ["build", "-t", "us-central1-docker.pkg.dev/$PROJECT_ID/images/$REPO_NAME:$BRANCH_NAME$TAG_NAME", "."]
+    args: ["build", "-t", "${_ARTIFACT_REPOSITORY}/$REPO_NAME:$BRANCH_NAME$TAG_NAME", "."]
   
   - id: pushing-image-to-repo
     name: gcr.io/cloud-builders/docker
-    args: ["push", "us-central1-docker.pkg.dev/$PROJECT_ID/images/$REPO_NAME:$BRANCH_NAME$TAG_NAME"]
+    args: ["push", "${_ARTIFACT_REPOSITORY}/$REPO_NAME:$BRANCH_NAME$TAG_NAME"]
   
   - id: deploying-container-to-cloud-run
     name: gcr.io/cloud-builders/gcloud-slim
@@ -45,10 +45,15 @@ steps:
         "deploy",
         "node-server",
         "--region=us-central1",
-        "--image=us-central1-docker.pkg.dev/$PROJECT_ID/images/$REPO_NAME:$BRANCH_NAME$TAG_NAME",
+        "--image=${_REPOSITORY_FOLDER}/$REPO_NAME:$BRANCH_NAME$TAG_NAME",
         "--platform=managed",
         "--allow-unauthenticated",
       ]
+
+# Add substitutions section
+substitutions:
+  _ARTIFACT_REPOSITORY: us-central1-docker.pkg.dev/$PROJECT_ID/images
+  
 
 options:
   logging: CLOUD_LOGGING_ONLY
