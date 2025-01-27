@@ -1,92 +1,146 @@
-## Description
+# Dataclouder Template Node Backend 🤖
 
-Scaffolding de dataclouder Nest API The main porpuse of this project is used as template to accelerate backend of the dataclouder frontend template.
+Warning: Work in progress, not ready for production.
 
-- Is highly attached to google cloud services, but removing modules you get rid of everything.
+## Description 📝
 
-### How to get starting
+A NestJS-based backend API template designed to power AI learning and conversation applications. This project serves as the backend infrastructure for an interactive platform that demonstrates advanced AI conversation features and Ionic mobile development.
 
-Suposing you know how to run the project.
+🎯 Key Features:
 
-- Adapt the user model.
-- check the .env.example, remove the .example from name file and add environment variables
-- Add google cloud credentials, create new folder called .cred.
+- AI conversation management
+- Google Cloud Services integration
+- Scalable architecture for learning applications
+- Ready-to-use authentication system
 
-## Project setup
+> 💡 Note: While the project is tightly integrated with Google Cloud services, these modules can be easily removed if not needed.
+
+## Getting Started 🚀
+
+### Prerequisites
+
+- Node.js installed
+- Google Cloud account (for cloud features)
+- Basic knowledge of NestJS
+
+### Initial Setup
+
+1. Clone the repository
+2. Configure your environment:
+   - Copy `.env.example` to `.env`
+   - Add your environment variables
+   - Create `.cred` folder and add Google Cloud credentials
+3. Customize the user model for your needs
+
+## Development 💻
+
+### Install Dependencies
 
 ```bash
-$ npm install
+npm install
 ```
 
-## Compile and run the project
+### Run the Project
 
 ```bash
-# development
-$ npm run start
+# Development mode
+npm run start
 
-# watch mode
-$ npm run start:dev
+# Watch mode (recommended for development)
+npm run start:dev
 
-# production mode
-$ npm run start:prod
+# Production mode
+npm run start:prod
 ```
 
-## Run tests
+### Testing 🧪
 
 ```bash
-# unit tests
-$ npm run test
+# Unit tests
+npm run test
 
-# e2e tests
-$ npm run test:e2e
+# End-to-end tests
+npm run test:e2d
 
-# test coverage
-$ npm run test:cov
+# Test coverage
+npm run test:cov
 ```
 
-### Remove Modules.
+## Customization 🛠️
 
-If you dont need a module, remove it, deleting the folder and the import from the app.module.ts file.
+### Module Management
 
-### How to deploy
+You can remove unnecessary modules by:
 
-highly recommended doble check is working on local. that means your variables env are working. Hidhly recommended check that docker is working locally.
+1. Deleting the module folder
+2. Removing the import from `app.module.ts`
 
-#### How run run docker locally?
+## Deployment 🌐
 
-    docker build -t dataclouder-node-server .
-    docker run -p 8080:8080 dataclouder-node-server
+### Local Docker Testing
 
-WIP set .env first it should take the id for the project
+Before deploying, test locally with Docker:
 
-is important to run script inside the folder becouse the relative paths.
+```bash
+docker build -t ai-learning-backend .
+docker run -p 8080:8080 ai-learning-backend
+```
 
-`cd deploy_scripts`
+### Cloud Deployment
 
-Run deploy.sh
+#### Automated Deployment
 
-Will automate all the process, enable apis and set variables
+1. Navigate to deploy scripts:
+   ```bash
+   cd deploy_scripts
+   ```
+2. Run the deployment script:
+   ```bash
+   ./deploy.sh
+   ```
 
-#### Current flow for deploy
+#### Manual Deployment Steps
 
-1. make sure you have access to the account you want to deploy
+1. Authenticate with Google Cloud:
 
-`gcloud auth login`
+   ```bash
+   gcloud auth login
+   ```
 
-2. make sure you already enable services needed. check script
+2. Submit the build:
 
-3. Change variables in script to add the project id
+   ```bash
+   gcloud builds submit --tag gcr.io/$PROJECT_ID/$IMAGE_NAME
+   ```
 
-4. run script and wait untuil deploy is already served
+3. Deploy to Cloud Run:
+   ```bash
+   gcloud run deploy $SERVICE_NAME \
+     --image gcr.io/$PROJECT_ID/$IMAGE_NAME \
+     --platform managed \
+     --region $REGION \
+     --allow-unauthenticated
+   ```
 
-### Manual deploy
+### Automated Deployment With Cloud Build
 
-gcloud builds submit --tag gcr.io/$PROJECT_ID/$IMAGE_NAME ../.
+Pending...
 
-gcloud run deploy $SERVICE_NAME --image gcr.io/$PROJECT_ID/$IMAGE_NAME --platform managed --region $REGION --allow-unauthenticated
+### Example Deployment Command
 
-### Example Deploy
+```bash
+gcloud builds submit --tag gcr.io/ai-learning-dev/node-app-image .
+gcloud run deploy ai-learning-service \
+  --image gcr.io/ai-learning-dev/node-app-image \
+  --platform managed \
+  --region us-central1 \
+  --allow-unauthenticated
+```
 
-gcloud builds submit --tag gcr.io/dataclouder-dev/node-app-image .
+## Contributing 🤝
 
-gcloud run deploy node-web-service --image gcr.io/dataclouder-dev/node-app-image --platform managed --region us-central1 --allow-unauthenticated
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License 📄
+
+MIT License
