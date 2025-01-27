@@ -88,17 +88,6 @@ docker run -p 8080:8080 ai-learning-backend
 
 ### Cloud Deployment
 
-#### Automated Deployment
-
-1. Navigate to deploy scripts:
-   ```bash
-   cd deploy_scripts
-   ```
-2. Run the deployment script:
-   ```bash
-   ./deploy.sh
-   ```
-
 #### Manual Deployment Steps
 
 1. Authenticate with Google Cloud:
@@ -107,24 +96,23 @@ docker run -p 8080:8080 ai-learning-backend
    gcloud auth login
    ```
 
-2. Submit the build:
+2. Submit the build: i recommend this the first time so you can understand the process and validate everything.
 
    ```bash
-   gcloud builds submit --tag gcr.io/$PROJECT_ID/$IMAGE_NAME
+   make gcp-enable-services
+   make build-push
+   make deploy-service
    ```
 
-3. Deploy to Cloud Run:
+3. Next time you can just run:
+
    ```bash
-   gcloud run deploy $SERVICE_NAME \
-     --image gcr.io/$PROJECT_ID/$IMAGE_NAME \
-     --platform managed \
-     --region $REGION \
-     --allow-unauthenticated
+   make deploy
    ```
 
 ### Automated Deployment With Cloud Build
 
-Pending...
+Note: before try to automate the deployment, i highly recommend do one manual deployment to check if everything is working. specially becouse for every cloud run service, variables need to be set first time, consicutive times no need.
 
 1. Fork the repository
 2. Go to cloud build and create a new trigger
