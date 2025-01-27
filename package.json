@@ -9,7 +9,7 @@
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
-    "update:dc": "npm install @dataclouder/lessons-nestjs@latest @dataclouder/conversation-card-nestjs@lates",
+    "update:dc": "npm install @dataclouder/lessons-nestjs@latest @dataclouder/conversation-card-nestjs@latest",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
@@ -21,8 +21,9 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
-    "@dataclouder/conversation-card-nestjs": "^0.0.22",
-    "@dataclouder/lessons-nestjs": "^0.0.2",
+    "@dataclouder/conversation-card-nestjs": "^0.0.27",
+    "@dataclouder/lessons-nestjs": "^0.0.10",
+    "@dataclouder/storage-uploader": "^0.0.13",
     "@fastify/static": "^7.0.4",
     "@google-cloud/text-to-speech": "^5.7.0",
     "@nestjs/axios": "^3.0.0",
