@@ -52,7 +52,7 @@ steps:
 
 # Add substitutions section
 substitutions:
-  _ARTIFACT_REPOSITORY: us-central1-docker.pkg.dev/$PROJECT_ID/images
+  _ARTIFACT_REPOSITORY: us-central1-docker.pkg.dev/${PROJECT_ID}/images
   
 
 options:
