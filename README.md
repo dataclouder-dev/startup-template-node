@@ -126,6 +126,12 @@ docker run -p 8080:8080 ai-learning-backend
 
 Pending...
 
+1. Fork the repository
+2. Go to cloud build and create a new trigger
+3. Grant github access, select the repository and accept conditions
+4. Add seetings for the trigger to your needs
+5. Optional: Add permissions to the service account, Logs Writer, Cloud Run Admin or log only default logs
+
 ### Example Deployment Command
 
 ```bash
