@@ -40,3 +40,6 @@ deploy-service:
 
 make update-dc:
 	npm run update:dc
+
+make update-all:
+	ncu -u
