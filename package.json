@@ -21,7 +21,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
-    "@dataclouder/conversation-card-nestjs": "^0.0.27",
+    "@dataclouder/conversation-card-nestjs": "^0.0.28",
     "@dataclouder/lessons-nestjs": "^0.0.10",
     "@dataclouder/storage-uploader": "^0.0.13",
     "@fastify/static": "^7.0.4",

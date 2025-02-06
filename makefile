@@ -37,3 +37,6 @@ deploy-service:
 		--set-env-vars "$${ENV_VARS}"
 	@echo "Deployment complete! You can check the status using:"
 	@echo "gcloud run services describe $(SERVICE_NAME) --region $(REGION)"
+
+make update-dc:
+	npm run update:dc
