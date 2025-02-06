@@ -132,6 +132,14 @@ gcloud run deploy ai-learning-service \
   --allow-unauthenticated
 ```
 
+### Clone and Reuse template for new projects
+
+```bash
+git clone https://github.com/adamofig/dataclouder-template-node [new-project-name]
+cd [new-project-name]
+npm install
+```
+
 ## Contributing 🤝
 
 Contributions are welcome! Please feel free to submit a Pull Request.

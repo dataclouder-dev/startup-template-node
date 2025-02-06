@@ -1,5 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { join } from 'path';
 import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
 import { AllExceptionsHandler } from './common/exception-hanlder.filter';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
