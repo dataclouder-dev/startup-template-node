@@ -140,6 +140,14 @@ cd [new-project-name]
 npm install
 ```
 
+### Unistall what you don't need
+
+```bash
+npm uninstall @dataclouder/conversation-card-nestjs @dataclouder/lessons-nestjs @dataclouder/storage-uploader
+```
+
+remove module from app module. you are ready to go.
+
 ## Contributing 🤝
 
 Contributions are welcome! Please feel free to submit a Pull Request.
