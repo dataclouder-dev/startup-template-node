@@ -20,7 +20,7 @@ import { join } from 'path';
     MongoDBModule.forRoot(),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'public'),
-      serveRoot: '/static/',
+      serveRoot: '/public/',
       serveStaticOptions: {
         index: false,
       },

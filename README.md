@@ -82,8 +82,8 @@ You can remove unnecessary modules by:
 Before deploying, test locally with Docker:
 
 ```bash
-docker build -t ai-learning-backend .
-docker run -p 8080:8080 ai-learning-backend
+docker build -t dc-template-node .
+docker run -p 8080:8080 dc-template-node
 ```
 
 ### Cloud Deployment
@@ -96,13 +96,15 @@ docker run -p 8080:8080 ai-learning-backend
    gcloud auth login
    ```
 
-2. Submit the build: i recommend this the first time so you can understand the process and validate everything.
+2. Submit the build: i recommend use the make commands i created to automate, but you can use manual gcloud commands if you have the knowledge.
 
-   ```bash
-   make gcp-enable-services
-   make build-push
-   make deploy-service
-   ```
+- First set environments in makefile or .env, you can leave IMAGE_NAME, REGION, SERVICE_NAME, but PROJECT_ID is uniqui to your project
+
+  ```bash
+  make gcp-enable-services # will ask to enable bill on GCP this is required to deploy
+  make build-push #
+  make deploy-service
+  ```
 
 3. Next time you can just run:
 

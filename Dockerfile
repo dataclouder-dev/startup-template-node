@@ -7,7 +7,7 @@ RUN npm run build
 # main purpose is to run npm run and get dist folder
 
 
-FROM node:20 AS build_node_modules
+FROM node:22 AS build_node_modules
 ENV NODE_ENV production
 WORKDIR /usr/src/app
 COPY . .
@@ -16,13 +16,15 @@ RUN npm ci --only=production
 
 
 # Copy dist folder and node_modules to production image
-FROM node:20-alpine AS production
+FROM node:22-alpine AS production
 ENV NODE_ENV production
 USER node
 WORKDIR /usr/src/app
 COPY --chown=node:node --from=build_node_modules /usr/src/app/node_modules /usr/src/app/node_modules
 COPY --chown=node:node --from=build /usr/src/app/dist /usr/src/app/dist
-# only for local test copy .env and .credentials to add variables
+COPY --chown=node:node --from=build /usr/src/app/public /usr/src/app/public
+
+# Note: for local test copy .env and .credentials to add variables
 # COPY --chown=node:node --from=build /usr/src/app/.env /usr/src/app/.env
 # COPY --chown=node:node --from=build /usr/src/app/.credentials /usr/src/app/.credentials
 CMD [ "node", "dist/main.js" ]
