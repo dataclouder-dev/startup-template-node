@@ -47,10 +47,6 @@ export class UserService {
     const newUser = new this.userModel(user);
     const userSaved = await newUser.save();
     this.firebaseService.setClaims(userSaved.id, claims);
-    // this.userMetadataService.createUserMetadata(userSaved);
-
-    // const data = { email: userSaved.email, name: userSaved.personalData.firstname, plan: PlanType.Basic, source: 'signup' };
-    // this.notifierService.notifyUserPlan(data);
 
     return userSaved;
   }
