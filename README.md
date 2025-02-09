@@ -83,7 +83,7 @@ Before deploying, test locally with Docker:
 
 ```bash
 docker build -t dc-template-node .
-docker run -p 8080:8080 dc-template-node
+docker run -p 8080:8080 --env-file ./.env dc-template-node
 ```
 
 ### Cloud Deployment

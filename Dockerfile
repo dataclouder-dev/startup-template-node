@@ -1,4 +1,4 @@
-FROM node:20 AS build
+FROM node:22 AS build
 WORKDIR /usr/src/app
 COPY . .
 RUN npm ci
@@ -24,7 +24,4 @@ COPY --chown=node:node --from=build_node_modules /usr/src/app/node_modules /usr/
 COPY --chown=node:node --from=build /usr/src/app/dist /usr/src/app/dist
 COPY --chown=node:node --from=build /usr/src/app/public /usr/src/app/public
 
-# Note: for local test copy .env and .credentials to add variables
-# COPY --chown=node:node --from=build /usr/src/app/.env /usr/src/app/.env
-# COPY --chown=node:node --from=build /usr/src/app/.credentials /usr/src/app/.credentials
 CMD [ "node", "dist/main.js" ]
