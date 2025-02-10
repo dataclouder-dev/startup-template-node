@@ -68,6 +68,12 @@ npm run test:cov
 
 ## Customization 🛠️
 
+## User and Firebase
+
+You can handle users easialy, create google credentials, for Gcp service, firebase included, and save in .cred/keys.json, check .env.example for variables you may need.
+
+GOOGLE_APPLICATION_CREDENTIALS=./.cred/keys.json
+
 ### Module Management
 
 You can remove unnecessary modules by:

@@ -17,6 +17,8 @@ gcp-enable-services:
 	gcloud config set project $(PROJECT_ID)
 	gcloud services enable run.googleapis.com
 	gcloud services enable cloudbuild.googleapis.com
+	gcloud services enable artifactregistry.googleapis.com
+
 
 # Build the Docker image and push to Google Container Registry Note gcr.io is the default artifact registry for docker now. can be expensive. better creaet a local one.
 build-push:
