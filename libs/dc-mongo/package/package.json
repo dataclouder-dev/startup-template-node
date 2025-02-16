@@ -1,15 +1,15 @@
 {
     "name": "@dataclouder/dc-mongo",
-    "version": "0.0.6",
+    "version": "0.0.5",
     "description": "NestJS library for mongo",
-    "main": "./dist/index.js",
-    "types": "./dist/index.d.ts",
+    "main": "../../dist/libs/dc-mongo/index.js",
+    "types": "../../dist/libs/dc-mongo/index.d.ts",
     "files": [
-        "dist"
+        "../../dist/libs/dc-mongo/mongo-db"
     ],
     "scripts": {
         "build": "tsc -p tsconfig.lib.json",
-        "clean": "rm -rf dist",
+        "clean": "rm -rf ../../dist/libs/dc-mongo",
         "publish:npm": "npm run clean && npm run build && npm version patch && npm publish"
     },
     "keywords": [
