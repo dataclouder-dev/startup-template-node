@@ -1,12 +1,16 @@
 import { DynamicModule, Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { MongoService } from './mongo.service';
 
-@Module({})
-export class MongoDBModule {
+@Module({
+  providers: [MongoService],
+  exports: [MongoService],
+})
+export class DCMongoDBModule {
   static forRoot(): DynamicModule {
     return {
-      module: MongoDBModule,
+      module: DCMongoDBModule,
       imports: [
         ConfigModule.forRoot(),
         MongooseModule.forRootAsync({

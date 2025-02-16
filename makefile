@@ -45,3 +45,6 @@ update-dc:
 
 update-all:
 	ncu -u
+
+publish-mongo:
+	npm run publish:mongo

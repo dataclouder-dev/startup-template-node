@@ -1,0 +1,31 @@
+{
+    "name": "@dataclouder/dc-mongo",
+    "version": "0.0.2",
+    "description": "NestJS library for mongo",
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "build": "tsc -p tsconfig.lib.json",
+        "clean": "rm -rf dist",
+        "publish:npm": "npm run clean && npm run build && npm version patch && npm publish"
+    },
+    "keywords": [
+        "nestjs",
+        "library",
+        "mongo"
+    ],
+    "author": "dataclouder",
+    "license": "MIT",
+    "peerDependencies": {
+        "@nestjs/common": ">=10.0.0",
+        "@nestjs/core": ">=10.0.0",
+        "rxjs": ">=7.0.0",
+        "mongoose": ">=8.0.0"
+    },
+    "publishConfig": {
+        "access": "public"
+    }
+}

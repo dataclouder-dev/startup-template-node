@@ -3,6 +3,18 @@
   "collection": "@nestjs/schematics",
   "sourceRoot": "src",
   "compilerOptions": {
-    "deleteOutDir": true
+    "deleteOutDir": true,
+    "webpack": true
+  },
+  "projects": {
+    "dc-mongo": {
+      "type": "library",
+      "root": "libs/dc-mongo",
+      "entryFile": "index",
+      "sourceRoot": "libs/dc-mongo/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/dc-mongo/tsconfig.lib.json"
+      }
+    }
   }
 }

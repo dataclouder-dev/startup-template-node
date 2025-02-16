@@ -16,6 +16,14 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "paths": {
+      "@dataclouder/dc-mongo": [
+        "libs/dc-mongo/src"
+      ],
+      "@dataclouder/dc-mongo/*": [
+        "libs/dc-mongo/src/*"
+      ]
+    }
   }
 }
