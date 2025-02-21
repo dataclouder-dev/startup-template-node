@@ -13,6 +13,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { DCMongoDBModule } from '@dataclouder/dc-mongo';
 import { GenericModule } from './generic/generic.module';
+import { NotionModule } from '@dataclouder/notion';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { GenericModule } from './generic/generic.module';
     AdminModule,
     ConversationCardsModule,
     LessonsV2Module,
+    NotionModule,
   ],
   controllers: [AppController],
 })
