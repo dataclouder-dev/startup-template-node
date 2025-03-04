@@ -2,8 +2,8 @@ const { readdirSync, statSync, renameSync, readFileSync, writeFileSync } = requi
 const { join } = require('path');
 
 const directory = './';
-const oldName = 'generic';
-const newName = 'videoGenerator'; // Replace this with your desired name
+const oldName = 'newComponent';
+const newName = 'newComponent'; // Replace this with your desired name
 
 
 const newNameCapitalized = newName.charAt(0).toUpperCase() + newName.slice(1);
@@ -15,17 +15,20 @@ function renameFiles(dir) {
         const filePath = join(dir, file);
         const stats = statSync(filePath);
 
-        if (stats.isDirectory() && file.toLowerCase().includes(oldName.toLowerCase())) {
-            // Rename directories containing the old name
-            const newDirName = file.replace(new RegExp(oldName, 'gi'), newName);
-            const newDirPath = join(dir, newDirName);
-            try {
-                renameSync(filePath, newDirPath);
-                console.log(`Renamed directory: ${file} → ${newDirName}`);
-                // Continue renaming inside the new directory
-                renameFiles(newDirPath);
-            } catch (err) {
-                console.error(`Error renaming directory ${file}:`, err);
+        if (stats.isDirectory()) {
+            // Always continue renaming inside the directory
+            renameFiles(filePath);
+
+            if (file.toLowerCase().includes(oldName.toLowerCase())) {
+                // Rename directories containing the old name
+                const newDirName = file.replace(new RegExp(oldName, 'gi'), newName);
+                const newDirPath = join(dir, newDirName);
+                try {
+                    renameSync(filePath, newDirPath);
+                    console.log(`Renamed directory: ${file} → ${newDirName}`);
+                } catch (err) {
+                    console.error(`Error renaming directory ${file}:`, err);
+                }
             }
         } else if (stats.isFile()) {
             // Read the file content

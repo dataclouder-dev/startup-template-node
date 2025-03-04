@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { GenericEntity, GenericDocument } from './schema.entity';
-import { CreateGenericDto, UpdateGenericDto } from './models/generic.models';
+import { GenericEntity, GenericDocument } from '../schemas/schema.entity';
+import { CreateGenericDto, UpdateGenericDto } from '../models/generic.models';
 import { FiltersConfig, IQueryResponse, MongoService } from '@dataclouder/dc-mongo';
 
 @Injectable()

@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { GenericController } from './controllers/generic.controller';
-import { GenericService } from './generic.service';
-import { GenericEntity, GenericSchema } from './schema.entity';
+import { GenericService } from './services/generic.service';
+import { GenericEntity, GenericSchema } from './schemas/schema.entity';
 import { DCMongoDBModule } from '@dataclouder/dc-mongo';
 
 @Module({
