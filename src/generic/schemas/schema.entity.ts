@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { IGeneric } from './generic.models';
+import { IGeneric } from './models/generic.models';
 import * as mongoose from 'mongoose';
 export type GenericDocument = GenericEntity & Document;
 

@@ -32,6 +32,7 @@ deploy-service:
 	echo "Environment Variables to be deployed:"; \
 	echo "$${ENV_VARS}" | tr ',' '\n'; \
 	gcloud run deploy $(SERVICE_NAME) \
+		--project $(PROJECT_ID) \
 		--image gcr.io/$(PROJECT_ID)/$(IMAGE_NAME) \
 		--platform managed \
 		--region $(REGION) \
