@@ -18,6 +18,19 @@ export class GenericService {
     return await createdGeneric.save();
   }
 
+  async save(createGenericDto: any) {
+    // TODO: test not sure if this is correct
+    const id = createGenericDto.id || createGenericDto._id;
+    if (id) {
+      return this.update(id, createGenericDto);
+    } else {
+      delete createGenericDto._id;
+      delete createGenericDto.id;
+      const createdTask = new this.genericModel(createGenericDto);
+      return createdTask.save();
+    }
+  }
+
   async queryUsingFiltersConfig(filterConfig: FiltersConfig): Promise<IQueryResponse> {
     return await this.mongoService.queryUsingFiltersConfig(filterConfig, this.genericModel);
   }

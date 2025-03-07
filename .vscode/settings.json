@@ -27,8 +27,13 @@
     "activityBar.activeFocusBorder": "#ffaa00",
     "activityBarTop.inactiveForeground": "#ffaa00",
     "activityBarTop.dropBorder": "#ffaa00",
-    "tab.activeBorderTop": "#ffaa00"
+    "tab.activeBorderTop": "#ffaa00",
+    "scrollbar.shadow": "#ffe6006e",
+    "scrollbarSlider.background": "#ffe60040",
+    "tab.border": "#ffaa00"
   },
+  "editor.scrollbar.verticalScrollbarSize": 7,
+  "editor.scrollbar.horizontalScrollbarSize": 7,
   "angular-schematics.schematicsDefaultOptions": {
     "angular-*": {
       "externalTemplate": true

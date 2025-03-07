@@ -1,3 +1,6 @@
+// 1) How to use: cd to the folder where the script is located and run the script with node script_change.js
+// 2) Dont forget to change the oldName and newName variables
+// 3) Manually import the Module and change path in app.module.ts
 const { readdirSync, statSync, renameSync, readFileSync, writeFileSync } = require('fs');
 const { join } = require('path');
 
