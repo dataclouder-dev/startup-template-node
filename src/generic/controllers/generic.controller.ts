@@ -3,7 +3,7 @@ import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { GenericService } from '../services/generic.service';
 import { CreateGenericDto, UpdateGenericDto } from '../models/generic.models';
 import { GenericEntity } from '../schemas/schema.entity';
-import { FiltersConfig, IQueryResponse } from '@dataclouder/dc-mongo';
+import { FiltersConfig, IQueryResponse } from 'libs/nest-mongo/src';
 
 @ApiTags('newComponent')
 @Controller('api/newComponents')

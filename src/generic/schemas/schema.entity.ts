@@ -1,12 +1,12 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import * as mongoose from 'mongoose';
-import { addIdAfterSave } from '@dataclouder/dc-mongo';
+import { addIdAfterSave } from 'libs/nest-mongo/src';
 import { IGeneric } from '../models/generic.models';
-export type NewComponentDocument = NewComponentEntity & Document;
+export type GenericDocument = GenericEntity & Document;
 
 @Schema({ collection: 'generic', timestamps: true })
-export class NewComponentEntity implements IGeneric {
+export class GenericEntity implements IGeneric {
   @Prop({ type: mongoose.Schema.Types.ObjectId, required: false })
   id: string;
   @Prop({ required: true })
@@ -22,6 +22,6 @@ export class NewComponentEntity implements IGeneric {
   img: string;
 }
 
-export const NewComponentSchema = SchemaFactory.createForClass(NewComponentEntity);
+export const GenericSchema = SchemaFactory.createForClass(GenericEntity);
 
-addIdAfterSave(NewComponentSchema);
+addIdAfterSave(GenericSchema);

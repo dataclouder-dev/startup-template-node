@@ -3,7 +3,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { GenericController } from './controllers/generic.controller';
 import { GenericService } from './services/generic.service';
 import { GenericEntity, GenericSchema } from './schemas/schema.entity';
-import { DCMongoDBModule } from '@dataclouder/dc-mongo';
+import { DCMongoDBModule } from '@dataclouder/nest-mongo';
 
 @Module({
   imports: [MongooseModule.forFeature([{ name: GenericEntity.name, schema: GenericSchema }]), DCMongoDBModule],

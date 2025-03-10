@@ -1,7 +1,7 @@
 {
-    "name": "@dataclouder/dc-mongo",
-    "version": "0.0.8",
-    "description": "NestJS library for mongo",
+    "name": "@dataclouder/nest-google-cloud",
+    "version": "0.1.11",
+    "description": "NestJS library for google cloud storage and other google cloud services",
     "main": "./dist/index.js",
     "types": "./dist/index.d.ts",
     "files": [
@@ -15,15 +15,15 @@
     "keywords": [
         "nestjs",
         "library",
-        "mongo"
+        "google cloud",
+        "google cloud storage"
     ],
     "author": "dataclouder",
     "license": "MIT",
     "peerDependencies": {
         "@nestjs/common": ">=10.0.0",
         "@nestjs/core": ">=10.0.0",
-        "rxjs": ">=7.0.0",
-        "mongoose": ">=8.0.0"
+        "@google-cloud/storage": ">=7.15.0"
     },
     "publishConfig": {
         "access": "public"

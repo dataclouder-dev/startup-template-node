@@ -11,7 +11,9 @@
     "^.+\\.(t|j)s$": "ts-jest"
   },
   "moduleNameMapper": {
-    "@dataclouder/dc-mongo": "<rootDir>/../libs/dc-mongo/src",
-    "@dataclouder/dc-mongo/(.*)": "<rootDir>/../libs/dc-mongo/src/$1"
+    "@dataclouder/nest-mongo": "<rootDir>/../libs/nest-mongo/src",
+    "@dataclouder/nest-mongo/(.*)": "<rootDir>/../libs/nest-mongo/src/$1",
+    "@dataclouder/nest-google-cloud": "<rootDir>/../libs/nest-google-cloud/src",
+    "@dataclouder/nest-google-cloud/(.*)": "<rootDir>/../libs/nest-google-cloud/src/$1"
   }
 }

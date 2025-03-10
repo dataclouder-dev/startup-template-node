@@ -11,7 +11,7 @@ import { ConversationCardsModule } from '@dataclouder/conversation-card-nestjs';
 import { LessonsV2Module } from '@dataclouder/lessons-nestjs';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
-import { DCMongoDBModule } from '@dataclouder/dc-mongo';
+import { DCMongoDBModule } from 'libs/nest-mongo/src';
 import { GenericModule } from './generic/generic.module';
 import { NotionModule } from '@dataclouder/notion';
 

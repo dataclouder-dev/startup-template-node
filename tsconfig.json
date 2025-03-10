@@ -18,11 +18,17 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": true,
     "paths": {
-      "@dataclouder/dc-mongo": [
-        "libs/dc-mongo/src"
+      "@dataclouder/nest-mongo": [
+        "libs/nest-mongo/src"
       ],
-      "@dataclouder/dc-mongo/*": [
-        "libs/dc-mongo/src/*"
+      "@dataclouder/nest-mongo/*": [
+        "libs/nest-mongo/src/*"
+      ],
+      "@dataclouder/nest-google-cloud": [
+        "libs/nest-google-cloud/src"
+      ],
+      "@dataclouder/nest-google-cloud/*": [
+        "libs/nest-google-cloud/src/*"
       ]
     }
   }
