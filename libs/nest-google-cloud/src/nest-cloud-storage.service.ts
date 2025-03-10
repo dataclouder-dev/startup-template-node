@@ -56,6 +56,53 @@ export class CloudStorageService {
   }
 
   /**
+   * Removes all files present in an object
+   * @param obj The object to search through
+   * @returns Promise with removal results
+   */
+  public async removeAllStorageFilesPresentInObject(obj: any): Promise<any> {
+    const pathsObjects = this.findAllObjectsWithPaths(obj);
+    console.log('Removing items from storage: ', pathsObjects.length);
+    const promises = pathsObjects.map(obj => this.deleteStorageFile(obj.bucket, obj.path));
+    try {
+      return await Promise.all(promises);
+    } catch (error) {
+      console.error('Error removing items from storage: ', error);
+      return null;
+    }
+  }
+
+  /**
+   * Recursively finds all objects that contain a 'path' property, used with CloudStorageData Object Type
+   * @param obj The object to search through
+   * @returns Array of objects that contain a path property
+   */
+  findAllObjectsWithPaths(obj: any): any[] {
+    if (!obj) return [];
+
+    const objectsWithPaths: any[] = [];
+
+    const search = (current: any) => {
+      if (!current || typeof current !== 'object') return;
+
+      if (current.path && typeof current.path === 'string') {
+        objectsWithPaths.push(current);
+      }
+
+      // Search arrays
+      if (Array.isArray(current)) {
+        current.forEach(item => search(item));
+      } else {
+        // Search object properties
+        Object.values(current).forEach(value => search(value));
+      }
+    };
+
+    search(obj);
+    return objectsWithPaths;
+  }
+
+  /**
    * Gets a file from a Google Cloud Storage bucket
    * @param bucketName - The name of the bucket
    * @param fileName - The name of the file to get

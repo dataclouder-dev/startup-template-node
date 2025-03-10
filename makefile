@@ -49,3 +49,6 @@ update-all:
 
 publish-mongo:
 	npm run publish:mongo
+
+publish-google-cloud:
+	npm run publish:google-cloud
