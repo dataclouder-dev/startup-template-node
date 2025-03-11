@@ -1,12 +1,12 @@
 import { Body, Controller, Param, Get, Post, Put, Delete, HttpStatus, HttpCode } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { GenericService } from '../services/generic.service';
-import { CreateGenericDto, UpdateGenericDto } from '../models/generic.models';
-import { GenericEntity } from '../schemas/schema.entity';
+import { CreateGenericDto, IGeneric, UpdateGenericDto } from '../models/generic.models';
+import { GenericEntity } from '../schemas/generic.schema';
 import { FiltersConfig, IQueryResponse } from 'libs/nest-mongo/src';
 
-@ApiTags('newComponent')
-@Controller('api/newComponents')
+@ApiTags('generic')
+@Controller('api/generic')
 export class GenericController {
   constructor(private readonly genericService: GenericService) {}
 
@@ -27,8 +27,8 @@ export class GenericController {
   @Post()
   @ApiOperation({ summary: 'Create a new newComponent item' })
   @ApiResponse({ status: 201, description: 'The item has been successfully created.', type: GenericEntity })
-  async create(@Body() createGenericDto: CreateGenericDto): Promise<GenericEntity> {
-    return await this.genericService.create(createGenericDto);
+  async create(@Body() createGenericDto: IGeneric): Promise<GenericEntity> {
+    return await this.genericService.save(createGenericDto);
   }
 
   @Post('query')

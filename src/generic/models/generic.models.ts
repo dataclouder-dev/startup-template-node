@@ -1,11 +1,12 @@
 import { ApiProperty, PartialType } from '@nestjs/swagger';
 
 export interface IGeneric {
-  id: string;
-  name: string;
-  description: string;
-  content: string;
-  img: string;
+  _id?: string;
+  id?: string;
+  name?: string;
+  description?: string;
+  content?: string;
+  img?: string;
 }
 
 export class CreateGenericDto {

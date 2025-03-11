@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { GenericEntity, GenericDocument } from '../schemas/schema.entity';
-import { CreateGenericDto, UpdateGenericDto } from '../models/generic.models';
+import { GenericEntity, GenericDocument } from '../schemas/generic.schema';
+import { CreateGenericDto, IGeneric, UpdateGenericDto } from '../models/generic.models';
 import { FiltersConfig, IQueryResponse, MongoService } from 'libs/nest-mongo/src';
 
 @Injectable()
@@ -18,15 +18,15 @@ export class GenericService {
     return await createdGeneric.save();
   }
 
-  async save(createGenericDto: any) {
+  async save(generic: IGeneric) {
     // TODO: test not sure if this is correct
-    const id = createGenericDto.id || createGenericDto._id;
+    const id = generic.id || generic._id;
     if (id) {
-      return this.update(id, createGenericDto);
+      return this.update(id, generic);
     } else {
-      delete createGenericDto._id;
-      delete createGenericDto.id;
-      const createdTask = new this.genericModel(createGenericDto);
+      delete generic._id;
+      delete generic.id;
+      const createdTask = new this.genericModel(generic);
       return createdTask.save();
     }
   }
