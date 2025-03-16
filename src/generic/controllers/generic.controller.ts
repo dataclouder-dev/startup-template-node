@@ -41,8 +41,8 @@ export class GenericController {
   @Put(':id')
   @ApiOperation({ summary: 'Update a newComponent item' })
   @ApiResponse({ status: 200, description: 'The item has been successfully updated.', type: GenericEntity })
-  async update(@Param('id') id: string, @Body() updateGenericDto: UpdateGenericDto): Promise<GenericEntity> {
-    return await this.genericService.update(id, updateGenericDto);
+  async update(@Param('id') id: string, @Body() partialUpdates: Partial<IGeneric>): Promise<GenericEntity> {
+    return await this.genericService.partialUpdate(id, partialUpdates);
   }
 
   @Delete(':id')

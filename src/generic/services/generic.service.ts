@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { GenericEntity, GenericDocument } from '../schemas/generic.schema';
 import { CreateGenericDto, IGeneric, UpdateGenericDto } from '../models/generic.models';
-import { FiltersConfig, IQueryResponse, MongoService } from 'libs/nest-mongo/src';
+import { FiltersConfig, IQueryResponse, MongoService } from '@dataclouder/nest-mongo';
 
 @Injectable()
 export class GenericService {
@@ -43,8 +43,19 @@ export class GenericService {
     return await this.genericModel.findById(id).exec();
   }
 
-  async update(id: string, updateGenericDto: UpdateGenericDto): Promise<GenericEntity> {
-    return await this.genericModel.findByIdAndUpdate(id, updateGenericDto, { new: true }).exec();
+  async update(id: string, genericUpdates: IGeneric): Promise<GenericEntity> {
+    return await this.genericModel.findByIdAndUpdate(id, genericUpdates, { new: true }).exec();
+  }
+
+  /**
+   * Updates only the properties that are present in the update object
+   * @param id The ID of the entity to update
+   * @param partialUpdates Object containing only the properties to update
+   * @returns The updated entity
+   */
+  async partialUpdate(id: string, partialUpdates: Partial<IGeneric>): Promise<GenericEntity> {
+    // Use $set operator to only update the fields provided in partialUpdates
+    return await this.genericModel.findByIdAndUpdate(id, { $set: partialUpdates }, { new: true }).exec();
   }
 
   async remove(id: string): Promise<void> {

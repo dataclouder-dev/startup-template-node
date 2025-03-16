@@ -10,8 +10,12 @@
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\" \"libs/**/*.ts\"",
     "start": "nest start",
     "update:dc": "npm install @dataclouder/lessons-nestjs@latest @dataclouder/conversation-card-nestjs@latest",
-    "build:mongo": "cd libs/nest-mongo && npm run build && npm version patch && cp package.json ../../dist/libs/nest-mongo/",
-    "publish:mongo": "cd libs/nest-mongo && npm run publish:npm && cd ../../",
+
+    "remove:mongo": "rm -rf dist/libs/nest-mongo && echo 'removed dist/libs/nest-mongo'",
+    "patch:mongo": "cd libs/nest-mongo && npm version patch && echo 'patched nest-mongo'",
+    "build:mongo": "cd libs/nest-mongo && npm run build && npm version patch && cp package.json ../../dist/libs/nest-mongo/ && echo 'built nest-mongo'",
+    "publish:mongo": "npm run build:mongo && cd ./dist/libs/nest-mongo && npm publish && echo 'published nest-mongo'",
+    "build-publish:mongo": "npm run remove:mongo && npm run patch:mongo && npm run build:mongo && npm publish:mongo",
 
     "build:google-cloud": "cd libs/nest-google-cloud && npm run build && npm version patch && cp package.json ../../dist/libs/nest-google-cloud/",
     "publish:google-cloud": "npm run build:google-cloud && cd ./dist/libs/nest-google-cloud && npm publish",

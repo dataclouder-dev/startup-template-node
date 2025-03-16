@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import * as mongoose from 'mongoose';
-import { addIdAfterSave } from 'libs/nest-mongo/src';
+import { addIdAfterSave } from '@dataclouder/nest-mongo';
 import { IGeneric } from '../models/generic.models';
 export type GenericDocument = GenericEntity & Document;
 
