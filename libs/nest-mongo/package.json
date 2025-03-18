@@ -1,6 +1,6 @@
 {
     "name": "@dataclouder/nest-mongo",
-    "version": "0.1.26",
+    "version": "0.1.27",
     "description": "NestJS library for mongo data manipulation and connection",
     "main": "./dist/index.js",
     "types": "./dist/index.d.ts",

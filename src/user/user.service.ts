@@ -7,6 +7,10 @@ import { DecodedIdToken } from 'firebase-admin/auth';
 import { AppAuthClaims, PermissionClaim, PlanType, RolClaim } from 'src/dc-claims-module/clams.class';
 import { IUser } from './user.class';
 
+/**
+ * Service for managing user data and authentication
+ * Provides methods for user registration, retrieval, updates, and deletion
+ */
 @Injectable()
 export class UserService {
   constructor(
@@ -14,16 +18,32 @@ export class UserService {
     private firebaseService: FirebaseService
   ) {}
 
+  /**
+   * Finds a user by their email address
+   * @param email - The email address of the user to find
+   * @returns Promise resolving to the user data or null if not found
+   */
   public async findUserByEmail(email: string): Promise<any> {
     const user = await this.userModel.findOne({ email: email }).lean();
     return user;
   }
 
+  /**
+   * Finds a user by their ID
+   * @param id - The ID of the user to find
+   * @returns Promise resolving to the user data or null if not found
+   */
   public async findUserById(id: string): Promise<Partial<IUser>> {
     const user = await this.userModel.findOne({ id: id }).lean().exec();
     return user;
   }
 
+  /**
+   * Registers a new user using a decoded Firebase token
+   * Sets up basic claims and creates a user record in the database
+   * @param token - The decoded Firebase ID token containing user information
+   * @returns Promise resolving to the newly created user
+   */
   public async registerWithToken(token: DecodedIdToken): Promise<any> {
     const claims: AppAuthClaims = { plan: { type: PlanType.Basic }, permissions: {} as PermissionClaim, roles: {} as RolClaim };
 
@@ -51,6 +71,11 @@ export class UserService {
     return userSaved;
   }
 
+  /**
+   * Deletes a user from both the database and Firebase
+   * @param userId - The ID of the user to delete
+   * @returns Promise resolving to the deletion result
+   */
   public async deleteUser(userId: string): Promise<any> {
     const users = await this.userModel.deleteOne({ id: userId }).exec();
 
@@ -58,12 +83,24 @@ export class UserService {
     return users;
   }
 
+  /**
+   * Updates a user's information by their ID
+   * @param userId - The ID of the user to update
+   * @param user - Partial user object containing the fields to update
+   * @returns Promise resolving to the updated user
+   */
   public async updateUser(userId: string, user: Partial<IUser>): Promise<any> {
     const userUpdated = await this.userModel.findOneAndUpdate({ id: userId }, { $set: user }, { new: true }).lean().exec();
     // new return document after update, if false return before update
     return userUpdated;
   }
 
+  /**
+   * Updates a user's information by their email address
+   * @param email - The email of the user to update
+   * @param user - Partial user object containing the fields to update
+   * @returns Promise resolving to the update result
+   */
   public async updateUserByEmail(email: string, user: Partial<IUser>): Promise<any> {
     const results = await this.userModel.updateOne({ email: email }, { $set: user }).lean().exec();
     return results;
