@@ -50,5 +50,15 @@ update-all:
 publish-mongo:
 	npm run publish:mongo
 
+
+start:
+	npm run start:dev
+
+merge-upstream:
+	git fetch upstream
+	git checkout main
+	git merge upstream/main
+	
+
 publish-google-cloud:
 	npm run publish:google-cloud

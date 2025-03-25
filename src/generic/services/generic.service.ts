@@ -3,7 +3,8 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { GenericEntity, GenericDocument } from '../schemas/generic.schema';
 import { CreateGenericDto, IGeneric, UpdateGenericDto } from '../models/generic.models';
-import { FiltersConfig, IQueryResponse, MongoService } from '@dataclouder/nest-mongo';
+import { FiltersConfig, findAllObjectsWithPaths, flattenObject, IQueryResponse, MongoService } from '@dataclouder/nest-mongo';
+import { CloudStorageService } from '@dataclouder/nest-google-cloud';
 
 /**
  * Service for managing generic entities in the database
@@ -14,7 +15,8 @@ export class GenericService {
   constructor(
     @InjectModel(GenericEntity.name)
     private genericModel: Model<GenericDocument>,
-    private mongoService: MongoService
+    private mongoService: MongoService,
+    private cloudStorageService: CloudStorageService
   ) {}
 
   /**
@@ -80,6 +82,7 @@ export class GenericService {
    * @returns A promise that resolves to the updated entity
    */
   async update(id: string, genericUpdates: IGeneric): Promise<GenericEntity> {
+    // by default update only updates what is present in updateObject so not overriding exisiting properties unless you pass them, if you pass with null also override
     return await this.genericModel.findByIdAndUpdate(id, genericUpdates, { new: true }).exec();
   }
 
@@ -90,8 +93,10 @@ export class GenericService {
    * @returns The updated entity
    */
   async partialUpdate(id: string, partialUpdates: Partial<IGeneric>): Promise<GenericEntity> {
-    // Use $set operator to only update the fields provided in partialUpdates
-    return await this.genericModel.findByIdAndUpdate(id, { $set: partialUpdates }, { new: true }).exec();
+    // Convert nested objects to dot notation eg. { "video.captions.remotion": captions.captions }
+    // This way you can only remove properties that are present in the update object
+    const flattenedUpdates = flattenObject(partialUpdates);
+    return await this.genericModel.findByIdAndUpdate(id, { $set: flattenedUpdates }, { new: true }).exec();
   }
 
   /**
@@ -100,6 +105,10 @@ export class GenericService {
    * @returns A promise that resolves when the entity has been removed
    */
   async remove(id: string): Promise<void> {
-    await this.genericModel.findByIdAndDelete(id).exec();
+    const obj = await this.genericModel.findByIdAndDelete(id).exec();
+    // Note this part is important if you have storage files you want to delete.
+    const pathsObjects = findAllObjectsWithPaths(obj);
+    const promises = pathsObjects.map(obj => this.cloudStorageService.deleteStorageFile(obj.bucket, obj.path));
+    await Promise.all(promises);
   }
 }
