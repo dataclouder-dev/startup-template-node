@@ -28,7 +28,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
-    "@dataclouder/nest-agent-cards": "^0.1.4",
+    "@dataclouder/nest-agent-cards": "^0.1.5",
     "@dataclouder/nest-google-cloud": "^0.1.12",
     "@dataclouder/nest-lessons": "^0.1.3",
     "@dataclouder/nest-mongo": "^0.1.28",
