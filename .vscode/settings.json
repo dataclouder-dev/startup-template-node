@@ -30,9 +30,7 @@
     "tab.activeBorderTop": "#ffaa00",
     "scrollbar.shadow": "#ffe6006e",
     "scrollbarSlider.background": "#ffe60040",
-    "tab.border": "#ffaa00",
-    "panel.border": "#ffaa00",
-    "sideBar.border": "#ffaa00"
+    "tab.border": "#ffaa00"
   },
   "editor.scrollbar.verticalScrollbarSize": 7,
   "editor.scrollbar.horizontalScrollbarSize": 7,

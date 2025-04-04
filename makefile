@@ -1,10 +1,11 @@
 include .env
 
-# Variables for deployment
-PROJECT_ID ?= dataclouder-dev
-IMAGE_NAME ?= node-app-image
+# Variables for deployment replace [startup-template] for your project name
+PROJECT_NAME ?= dataclouder-dev
+PROJECT_ID ?= $(PROJECT_NAME)
+IMAGE_NAME ?= $(PROJECT_NAME)-node-image
+SERVICE_NAME ?= $(PROJECT_NAME)-node-server
 REGION ?= us-central1
-SERVICE_NAME ?= node-server
 
 .PHONY: deploy gcp-enable-services build-push deploy-service
 

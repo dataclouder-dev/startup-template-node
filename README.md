@@ -1,6 +1,9 @@
 # Dataclouder Template Node Backend 🤖
 
-Warning: Work in progress, not ready for production.
+This repository is the main backend for the startup template. For reference implementations, check out our other templates:
+
+- [DataClouder Angular Template](https://github.com/dataclouder-dev/startup-template-angular)
+- [DataClouder Node Template](https://github.com/dataclouder-dev/startup-template-node)
 
 ## Description 📝
 
@@ -17,11 +20,15 @@ A NestJS-based backend API template designed to power AI learning and conversati
 
 ## Getting Started 🚀
 
-### Prerequisites
+Clone the Project git clone https://github.com/dataclouder-dev/startup-template-node [your-project-name] or use the button on github right top corner CREATE TEMPLATE
 
-- Node.js installed
-- Google Cloud account (for cloud features)
-- Basic knowledge of NestJS
+## ✅ Prerequisites
+
+- node >= 22.0.0
+- Make >= 3.0.0 (Optional but highly recommended)
+- Docker (Optional)
+- Google Cloud credentials and environment variables
+- MongoDB credentials
 
 ### Initial Setup
 

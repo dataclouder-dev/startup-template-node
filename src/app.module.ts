@@ -13,6 +13,7 @@ import { join } from 'path';
 import { DCMongoDBModule } from 'libs/nest-mongo/src';
 import { GenericModule } from './generic/generic.module';
 import { NotionModule } from '@dataclouder/notion';
+import { LessonsModule } from '@dataclouder/nest-lessons';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { NotionModule } from '@dataclouder/notion';
     AdminModule,
     AgentCardsModule,
     NotionModule,
+    LessonsModule,
   ],
   controllers: [AppController],
 })
