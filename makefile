@@ -56,9 +56,20 @@ start:
 	npm run start:dev
 
 merge-upstream:
+	@echo "Fetching and merging updates from upstream repository..."
+	@if ! git config remote.upstream.url > /dev/null; then \
+		echo "Adding upstream remote..."; \
+		git remote add upstream https://github.com/dataclouder-dev/startup-template-node.git; \
+	fi
 	git fetch upstream
 	git checkout main
-	git merge upstream/main
+	@echo "Merging upstream/main into local main branch..."
+	git merge upstream/main --allow-unrelated-histories || { \
+		echo "Merge conflicts detected. Please resolve conflicts and complete the merge manually."; \
+		echo "After resolving conflicts, commit changes and push to origin."; \
+		exit 1; \
+	}
+
 	
 
 publish-google-cloud:

@@ -27,7 +27,7 @@ Clone the Project git clone https://github.com/dataclouder-dev/startup-template-
 - node >= 22.0.0
 - Make >= 3.0.0 (Optional but highly recommended)
 - Docker (Optional)
-- Google Cloud credentials and environment variables
+- Google Cloud credentials and environment variables- Service account credentials go to: https://console.cloud.google.com/iam-admin/serviceaccounts?project=[your-project-id]
 - MongoDB credentials
 
 ### Initial Setup
