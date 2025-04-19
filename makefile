@@ -14,7 +14,7 @@ deploy: build-push deploy-service
 
 # Enable required Google Cloud services
 gcp-enable-services:
-	@echo "Enabling required services for $(PROJECT_ID)..."
+	@echo "🚀 Enabling required services for $(PROJECT_ID)...🔧"
 	gcloud config set project $(PROJECT_ID)
 	gcloud services enable run.googleapis.com
 	gcloud services enable cloudbuild.googleapis.com
