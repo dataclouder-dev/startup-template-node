@@ -6,3 +6,9 @@ export class CloudModel {
   fileSize: number;
   fileUrl: string;
 }
+
+export interface DataStorage {
+  path: string;
+  bucket: string;
+  url: string;
+}

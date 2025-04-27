@@ -1,6 +1,6 @@
 {
     "name": "@dataclouder/nest-google-cloud",
-    "version": "0.1.12",
+    "version": "0.1.13",
     "description": "NestJS library for google cloud storage and other google cloud services",
     "main": "./dist/index.js",
     "types": "./dist/index.d.ts",

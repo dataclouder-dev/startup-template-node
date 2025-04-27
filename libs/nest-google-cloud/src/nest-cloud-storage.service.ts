@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Storage } from '@google-cloud/storage';
+import { DataStorage } from './models/cloud.model';
 
 @Injectable()
 export class CloudStorageService {
@@ -39,6 +40,64 @@ export class CloudStorageService {
         });
       });
 
+      stream.end(fileBuffer);
+    });
+  }
+
+  /**
+   * Uploads a file to a Google Cloud Storage bucket and makes it public
+   * @param bucketName - The name of the bucket
+   * @param fileName - The name to give the file in storage
+   * @param fileBuffer - The file content as a Buffer
+   * @param contentType - Optional MIME type of the file
+   * @param metadata - Optional metadata for the file
+   * @returns Promise with bucket, path, and public URL
+   */
+  public async uploadFileAndMakePublic(
+    bucketName: string,
+    fileName: string,
+    fileBuffer: Buffer,
+    contentType?: string,
+    metadata?: { [key: string]: any }
+  ): Promise<DataStorage> {
+    const bucket = this.storage.bucket(bucketName);
+    const file = bucket.file(fileName);
+
+    // Set metadata if provided
+    if (metadata) {
+      // The Node.js client requires metadata to be nested under 'metadata' key
+      await file.setMetadata({ metadata });
+    }
+
+    return new Promise((resolve, reject) => {
+      const stream = file.createWriteStream(
+        // Pass contentType in options if provided
+        contentType ? { contentType } : undefined
+      );
+
+      stream.on('error', err => {
+        reject(err);
+      });
+
+      stream.on('finish', async () => {
+        try {
+          // Make the file public
+          await file.makePublic();
+          console.log(`gs://${bucketName}/${fileName} uploaded and made public`);
+
+          // Resolve with the required information
+          resolve({
+            bucket: bucketName,
+            path: file.name, // file.name is the path within the bucket
+            url: file.publicUrl(), // Get the public URL
+          });
+        } catch (makePublicError) {
+          // Reject if making public fails
+          reject(makePublicError);
+        }
+      });
+
+      // End the stream with the file buffer
       stream.end(fileBuffer);
     });
   }
