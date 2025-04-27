@@ -9,11 +9,11 @@ import { UserService } from './user.service';
 import { AppHttpCode } from 'src/common/app-enums';
 import { IUser } from './user.class';
 import { AllExceptionsHandler } from 'src/common/exception-hanlder.filter';
-import { AppGuard, AuthGuard } from 'src/common/all.guards';
+// import { AppGuard, AuthGuard } from 'src/common/all.guards';
 
 @ApiTags('user')
 @ApiBearerAuth()
-@UseGuards(AppGuard, AuthGuard)
+// @UseGuards(AppGuard, AuthGuard)
 @Controller('api/user')
 @UseFilters(AllExceptionsHandler)
 export class UserController {

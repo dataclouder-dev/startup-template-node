@@ -1,19 +1,23 @@
-import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
+import { forwardRef, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+
+import { AgentCardsModule } from '@dataclouder/nest-agent-cards';
+import { NestAuthModule } from '@dataclouder/nest-auth';
+// import { NotionModule } from '@dataclouder/notion';
+import { LessonsModule } from '@dataclouder/nest-lessons';
+import { NestCoreModule } from '@dataclouder/nest-core';
+
+import { AppController } from './app.controller';
 import envVariables from './config/environment';
 import { InitModule } from './init/init.module';
 import { UserModule } from './user/user.module';
 import { TestModule } from './test/test.module';
 import { AdminModule } from './admin/admin.module';
 
-import { AgentCardsModule } from '@dataclouder/nest-agent-cards';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { DCMongoDBModule } from 'libs/nest-mongo/src';
 import { GenericModule } from './generic/generic.module';
-import { NotionModule } from '@dataclouder/notion';
-import { LessonsModule } from '@dataclouder/nest-lessons';
 
 @Module({
   imports: [
@@ -27,13 +31,16 @@ import { LessonsModule } from '@dataclouder/nest-lessons';
         index: false,
       },
     }),
-    InitModule,
-    UserModule,
+    // InitModule,
+    // UserModule,
+    NestCoreModule,
     TestModule,
-    AdminModule,
-    AgentCardsModule,
-    NotionModule,
+    // AdminModule,
+    // NestAuthModule,
+    // AgentCardsModule,
+    // NotionModule,
     LessonsModule,
+    // NestAuthModule,
   ],
   controllers: [AppController],
 })

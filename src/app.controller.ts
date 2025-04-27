@@ -1,5 +1,4 @@
-import { Controller, Get, Header, Res } from '@nestjs/common';
-import { Response } from 'express';
+import { Controller, Get, Header, HttpCode } from '@nestjs/common';
 import { join } from 'path';
 
 @Controller()
@@ -7,8 +6,9 @@ export class AppController {
   constructor() {}
 
   @Get('favicon.ico')
-  getFavicon(@Res() response: Response) {
-    return response.status(204).send();
+  @HttpCode(204)
+  getFavicon() {
+    // No return needed, @HttpCode handles the status
   }
 
   @Get()

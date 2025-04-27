@@ -3,21 +3,20 @@ import { ApiBearerAuth, ApiTags, ApiOperation } from '@nestjs/swagger';
 
 import { AllExceptionsHandler } from 'src/common/exception-hanlder.filter';
 import { UserClaimsDto } from './admin.dto';
-import { FirebaseService } from 'src/common/firebase.service';
-import { UserService } from 'src/user/user.service';
-import { AppAuthClaims } from 'src/dc-claims-module/clams.class';
+// import { FirebaseService } from 'src/common/firebase.service';
+// import { UserService } from 'src/user/user.service';
 import { AdminService } from './admin.service';
-import { AdminGuard, AppGuard, AuthGuard } from 'src/common/all.guards';
+// import { AdminGuard, AppGuard, AuthGuard } from 'src/common/all.guards';
+import { AppAuthClaims, FirebaseService } from '@dataclouder/nest-auth';
 
 @ApiTags('admin')
 @ApiBearerAuth()
-@UseGuards(AppGuard, AuthGuard, AdminGuard)
+// @UseGuards(AppGuard, AuthGuard, AdminGuard)
 @Controller('api/admin')
 @UseFilters(AllExceptionsHandler)
 export class AdminController {
   constructor(
     private readonly firebaseService: FirebaseService,
-    private userService: UserService,
     private adminService: AdminService
   ) {}
 

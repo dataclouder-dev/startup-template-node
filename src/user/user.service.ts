@@ -1,10 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+
 import { UserEntity } from './user.entity';
 import { Model } from 'mongoose';
-import { FirebaseService } from '../common/firebase.service';
+
+import { FirebaseService, AppAuthClaims, PermissionClaim, PlanType, RolClaim } from '@dataclouder/nest-auth';
+
 import { DecodedIdToken } from 'firebase-admin/auth';
-import { AppAuthClaims, PermissionClaim, PlanType, RolClaim } from 'src/dc-claims-module/clams.class';
 import { IUser } from './user.class';
 
 /**
