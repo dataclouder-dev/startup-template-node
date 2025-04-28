@@ -14,10 +14,10 @@ import { NestAuthModule } from '@dataclouder/nest-auth'; // Added import
     MongooseModule.forFeature([{ name: UserEntity.name, schema: UserSchema }]),
     HttpModule,
     ConfigModule.forFeature(config),
-    // NestAuthModule,
+    NestAuthModule,
   ],
-  controllers: [],
+  controllers: [UserController],
   providers: [UserService], // Removed FirebaseService
-  exports: [], // Removed FirebaseService
+  exports: [UserService], // Removed FirebaseService
 })
 export class UserModule {}

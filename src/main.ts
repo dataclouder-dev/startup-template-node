@@ -16,6 +16,12 @@ async function bootstrap() {
   });
   app.useGlobalFilters(new AllExceptionsHandler());
 
+  app.enableCors({
+    origin: true, // Or specify your frontend origin like 'http://localhost:4200'
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+  });
+
   const config = new DocumentBuilder()
     .setTitle('scaffolddataclouder APIs')
     .setDescription('Documentación de las APIs de scaffolddataclouder')
@@ -26,7 +32,6 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);
 
-  app.enableCors();
   const port = 8080;
   await app.listen(port, '0.0.0.0');
   console.log('Server is running on port ' + port);
