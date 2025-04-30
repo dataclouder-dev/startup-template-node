@@ -32,7 +32,7 @@
     "@dataclouder/nest-auth": "^0.0.7",
     "@dataclouder/nest-core": "^0.0.10",
     "@dataclouder/nest-google-cloud": "^0.1.13",
-    "@dataclouder/nest-lessons": "^0.1.20",
+    "@dataclouder/nest-lessons": "^0.1.21",
     "@dataclouder/nest-mongo": "^0.1.28",
     "@dataclouder/nest-vertex": "^0.0.6",
     "@dataclouder/notion": "^0.0.4",
