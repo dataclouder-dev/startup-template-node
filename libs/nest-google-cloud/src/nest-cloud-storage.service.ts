@@ -1,6 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { Storage } from '@google-cloud/storage';
+import * as sharp from 'sharp';
 import { DataStorage } from './models/cloud.model';
+
+export interface UploadWebpImageOptions {
+  bucketName?: string; // Made optional
+  fileName: string;
+  imageBuffer: Buffer;
+  resizeWidth?: number;
+  contentType?: string;
+  metadata?: { [key: string]: any }; // Optional metadata for the file
+}
 
 @Injectable()
 export class CloudStorageService {
@@ -42,6 +52,36 @@ export class CloudStorageService {
 
       stream.end(fileBuffer);
     });
+  }
+
+  /**
+   * Uploads an image file to a Google Cloud Storage bucket after converting it to WebP format.
+   * resizeWidth: for vertical use 600, and whatever in the middle, 800 ,for horizontal use 1000
+   * @param options - Options for uploading the WebP image.
+   * @returns Promise with DataStorage object containing bucket, path, and public URL.
+   */
+  public async uploadWebpImage(options: UploadWebpImageOptions): Promise<DataStorage> {
+    const {
+      bucketName: providedBucketName, // Renamed to avoid conflict
+      fileName,
+      imageBuffer,
+      resizeWidth = 1000,
+      contentType = 'image/webp',
+      metadata,
+    } = options;
+
+    const bucketToUse = providedBucketName || process.env.STORAGE_BUCKET;
+
+    if (!bucketToUse) {
+      throw new Error('Bucket name must be provided either in options or as STORAGE_BUCKET environment variable.');
+    }
+
+    const webpBuffer = await sharp(imageBuffer)
+      .resize(resizeWidth) // Resize to a specified width
+      .webp({ quality: 85 }) // Convert to WebP with specified quality
+      .toBuffer();
+
+    return this.uploadFileAndMakePublic(bucketToUse, fileName, webpBuffer, contentType, metadata);
   }
 
   /**
