@@ -18,6 +18,8 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { DCMongoDBModule } from 'libs/nest-mongo/src';
 import { GenericModule } from './generic/generic.module';
+import { NestWhisperModule } from '@dataclouder/nest-whisper';
+import { NestVertexModule } from '@dataclouder/nest-vertex';
 
 @Module({
   imports: [
@@ -31,16 +33,14 @@ import { GenericModule } from './generic/generic.module';
         index: false,
       },
     }),
-    // InitModule,
     UserModule,
     NestCoreModule,
     TestModule,
-    // AdminModule,
-    // NestAuthModule,
     AgentCardsModule,
-    // NotionModule,
     LessonsModule,
-    // NestAuthModule,
+    NestVertexModule,
+    NestAuthModule,
+    NestWhisperModule,
   ],
   controllers: [AppController],
 })

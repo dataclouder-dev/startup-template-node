@@ -57,7 +57,7 @@ export class GenericController {
   @Post('query')
   @ApiOperation({ summary: 'Create a new newComponent item' })
   @ApiResponse({ status: 201, description: 'The item has been successfully created.', type: GenericEntity })
-  async query(@Body() filterConfig: FiltersConfig): Promise<IQueryResponse> {
+  async query(@Body() filterConfig: FiltersConfig): Promise<IQueryResponse<GenericEntity>> {
     return await this.genericService.queryUsingFiltersConfig(filterConfig);
   }
 

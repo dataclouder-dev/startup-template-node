@@ -12,10 +12,10 @@ export class FiltersConfig {
   returnProps?: Record<string, boolean>;
 }
 
-export interface IQueryResponse {
+export interface IQueryResponse<T> {
   count: number;
   page: number;
-  rows: any[];
+  rows: T[];
   rowsPerPage: number;
   skip: number;
 }
@@ -25,7 +25,7 @@ export class MongoService {
   constructor(@InjectConnection() private readonly connection: Connection) {}
 
   //   Note for every filter use this method in next servics.
-  async queryUsingFiltersConfig(filterConfig: FiltersConfig, modelEntity: Model<any>): Promise<IQueryResponse> {
+  async queryUsingFiltersConfig<T>(filterConfig: FiltersConfig, modelEntity: Model<T>): Promise<IQueryResponse<T>> {
     // Calculate pagination
     const page = filterConfig.page;
     const limit = filterConfig.rowsPerPage;
@@ -44,7 +44,10 @@ export class MongoService {
       query.sort(filterConfig.sort);
     }
     // Get total count and results in parallel
-    const [count, entities] = await Promise.all([filterConfig.text ? 0 : modelEntity.countDocuments(filters), query.lean().exec()]);
+    const [count, entities] = await Promise.all([
+      filterConfig.text ? 0 : modelEntity.countDocuments(filters),
+      query.lean().exec() as unknown as T[],
+    ]);
 
     return { count, page, rows: entities, rowsPerPage: limit, skip };
   }

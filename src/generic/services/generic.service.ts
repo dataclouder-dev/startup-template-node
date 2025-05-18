@@ -54,7 +54,7 @@ export class GenericService {
    * @param filterConfig - Configuration object for filtering, sorting, and pagination
    * @returns A promise that resolves to a query response containing results and metadata
    */
-  async queryUsingFiltersConfig(filterConfig: FiltersConfig): Promise<IQueryResponse> {
+  async queryUsingFiltersConfig(filterConfig: FiltersConfig): Promise<IQueryResponse<GenericEntity>> {
     return await this.mongoService.queryUsingFiltersConfig(filterConfig, this.genericModel);
   }
 

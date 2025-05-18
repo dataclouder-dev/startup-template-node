@@ -5,6 +5,7 @@ import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify
 import { AllExceptionsHandler } from './common/exception-hanlder.filter';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ConsoleLogger } from '@nestjs/common';
+import multipart from '@fastify/multipart'; // Import the multipart plugin
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter(), {
@@ -14,6 +15,9 @@ async function bootstrap() {
       colors: true,
     }),
   });
+
+  app.register(multipart);
+
   app.useGlobalFilters(new AllExceptionsHandler());
 
   app.enableCors({
