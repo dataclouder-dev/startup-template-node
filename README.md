@@ -20,15 +20,29 @@ A NestJS-based backend API template designed to power AI learning and conversati
 
 ## Getting Started 🚀
 
-Clone the Project git clone https://github.com/dataclouder-dev/startup-template-node [your-project-name] or use the button on github right top corner CREATE TEMPLATE
+Clone the Project
+
+`git clone https://github.com/dataclouder-dev/startup-template-node [your-project-name]`
+
+or use the button on github right top corner CREATE TEMPLATE
 
 ## ✅ Prerequisites
 
 - node >= 22.0.0
 - Make >= 3.0.0 (Optional but highly recommended)
 - Docker (Optional)
-- Google Cloud credentials and environment variables- Service account credentials go to: https://console.cloud.google.com/iam-admin/serviceaccounts?project=[your-project-id]
+- Env File, rename .env.example to .env and add your environment variables
+- Google Cloud credentials and environment variables- Service account credentials go to:
+  - If you created a firebase project you already have the Google Cloud, got to the link https://console.cloud.google.com/iam-admin/serviceaccounts?project=[your-project-id] and create a service account
+  - Give Editor Permissions (Unless you know what you are doing then give minimal privileges) and download the json file
+  - Copy in .cred/keys.json
 - MongoDB credentials
+  - Get the mongo variables, will be easy if you extract from conection string and copy in .env
+  - example mongodb+srv://admin:MyPass1234@cluster0.5q5kdhg.mongodb.net/my_db_name
+  - MONGO_USER=admin
+  - MONGO_PASS=MyPass1234
+  - MONGO_HOST=cluster0.5q5kdhg.mongodb.net
+  - MONGO_DB=my_db_name
 
 ### Initial Setup
 

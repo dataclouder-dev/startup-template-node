@@ -20,6 +20,7 @@ import { DCMongoDBModule } from 'libs/nest-mongo/src';
 import { GenericModule } from './generic/generic.module';
 import { NestWhisperModule } from '@dataclouder/nest-whisper';
 import { NestVertexModule } from '@dataclouder/nest-vertex';
+import { NestUsersModule } from '@dataclouder/nest-users';
 
 @Module({
   imports: [
@@ -41,6 +42,7 @@ import { NestVertexModule } from '@dataclouder/nest-vertex';
     NestVertexModule,
     NestAuthModule,
     NestWhisperModule,
+    NestUsersModule,
   ],
   controllers: [AppController],
 })
