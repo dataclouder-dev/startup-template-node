@@ -20,7 +20,7 @@ export class GenericController {
    */
   @Get()
   @ApiOperation({ summary: 'Get all newComponent items' })
-  @ApiResponse({ status: 200, description: 'Return all newComponent items.', type: [GenericEntity] })
+  @ApiResponse({ status: 200, description: 'Return all newComponent items.' })
   async findAll(): Promise<GenericEntity[]> {
     return await this.genericService.findAll();
   }
@@ -32,7 +32,7 @@ export class GenericController {
    */
   @Get(':id')
   @ApiOperation({ summary: 'Get a newComponent item by id' })
-  @ApiResponse({ status: 200, description: 'Return the newComponent item.', type: GenericEntity })
+  @ApiResponse({ status: 200, description: 'Return the newComponent item.' })
   async findOne(@Param('id') id: string): Promise<GenericEntity> {
     return await this.genericService.findOne(id);
   }
@@ -44,7 +44,7 @@ export class GenericController {
    */
   @Post()
   @ApiOperation({ summary: 'Create a new newComponent item' })
-  @ApiResponse({ status: 201, description: 'The item has been successfully created.', type: GenericEntity })
+  @ApiResponse({ status: 201, description: 'The item has been successfully created.' })
   async create(@Body() createGenericDto: IGeneric): Promise<GenericEntity> {
     return await this.genericService.save(createGenericDto);
   }
@@ -56,7 +56,7 @@ export class GenericController {
    */
   @Post('query')
   @ApiOperation({ summary: 'Create a new newComponent item' })
-  @ApiResponse({ status: 201, description: 'The item has been successfully created.', type: GenericEntity })
+  @ApiResponse({ status: 201, description: 'The item has been successfully created.' })
   async query(@Body() filterConfig: FiltersConfig): Promise<IQueryResponse<GenericEntity>> {
     return await this.genericService.queryUsingFiltersConfig(filterConfig);
   }

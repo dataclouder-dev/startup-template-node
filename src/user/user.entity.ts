@@ -5,12 +5,6 @@ import { AppAuthClaims } from 'src/dc-claims-module/clams.class';
 
 @Schema({ collection: 'users' })
 export class UserEntity extends Document implements IUser {
-  @Prop({ type: mongoose.Schema.Types.ObjectId, required: true, auto: true })
-  _id: string;
-
-  @Prop({ type: mongoose.Schema.Types.String, required: false })
-  id: string;
-
   @Prop({ type: mongoose.Schema.Types.String, required: false })
   email: string;
 

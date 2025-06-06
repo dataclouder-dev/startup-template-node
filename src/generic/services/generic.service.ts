@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { GenericEntity, GenericDocument } from '../schemas/generic.schema';
-import { CreateGenericDto, IGeneric, UpdateGenericDto } from '../models/generic.models';
+import { CreateGenericDto, IGeneric } from '../models/generic.models';
 import { FiltersConfig, findAllObjectsWithPaths, flattenObject, IQueryResponse, MongoService } from '@dataclouder/nest-mongo';
 import { CloudStorageService } from '@dataclouder/nest-google-cloud';
 

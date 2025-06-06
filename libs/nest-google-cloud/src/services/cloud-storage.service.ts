@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Storage } from '@google-cloud/storage';
 import * as sharp from 'sharp';
-import { DataStorage } from './models/cloud.model';
+import { DataStorage } from '../models/cloud.model';
 
 export interface UploadWebpImageOptions {
   bucketName?: string; // Made optional

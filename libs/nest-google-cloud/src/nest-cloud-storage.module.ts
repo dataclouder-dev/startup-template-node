@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { CloudStorageService } from './nest-cloud-storage.service';
+import { CloudStorageService } from './services/cloud-storage.service';
 
 @Module({
   providers: [CloudStorageService],
