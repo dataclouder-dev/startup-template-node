@@ -9,10 +9,8 @@ import { NestCoreModule } from '@dataclouder/nest-core';
 
 import { AppController } from './app.controller';
 import envVariables from './config/environment';
-import { InitModule } from './init/init.module';
 import { UserModule } from './user/user.module';
 import { TestModule } from './test/test.module';
-import { AdminModule } from './admin/admin.module';
 
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
@@ -21,6 +19,7 @@ import { GenericModule } from './generic/generic.module';
 import { NestWhisperModule } from '@dataclouder/nest-whisper';
 import { NestVertexModule } from '@dataclouder/nest-vertex';
 import { NestUsersModule } from '@dataclouder/nest-users';
+import { InitModule } from './init/init.module';
 
 @Module({
   imports: [
@@ -43,6 +42,7 @@ import { NestUsersModule } from '@dataclouder/nest-users';
     NestAuthModule,
     NestWhisperModule,
     NestUsersModule,
+    InitModule,
   ],
   controllers: [AppController],
 })

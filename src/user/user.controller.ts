@@ -21,9 +21,6 @@ export class UserController {
   constructor(
     @InjectModel(UserEntity.name) private userModel: Model<UserEntity>,
     private userService: UserService
-    // private readonly firebaseService: FirebaseService,
-    // private userMetadataService: UserMetadataService,
-    // private notifierService: NotifierService,
   ) {}
 
   // This is replace by the one in init.controller
