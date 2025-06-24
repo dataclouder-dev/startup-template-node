@@ -58,6 +58,7 @@ export class UserService {
         firstname: token.name ?? token.email.split('@')[0],
       },
 
+      claims: claims, // no se porque en polilan no los agrego aquí.
       authStrategy: token.firebase.sign_in_provider,
     };
 

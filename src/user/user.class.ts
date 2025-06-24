@@ -9,6 +9,7 @@ export class PersonalData {
 }
 
 export interface IUser {
+  _id?: any;
   id?: string;
   urlPicture: string;
   email: string;

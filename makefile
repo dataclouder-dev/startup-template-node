@@ -12,7 +12,7 @@ REGION ?= us-central1
 # Main deploy target that runs all necessary steps
 deploy: build-push deploy-service
 
-# Enable required Google Cloud services
+# 🥇 To deploy RUN ONLY the First Time to garantee you have cloud build and cloud run. 
 gcp-enable-services:
 	@echo "🚀 Enabling required services for $(PROJECT_ID)...🔧"
 	gcloud config set project $(PROJECT_ID)
@@ -24,11 +24,11 @@ gcp-enable-services:
 # Build the Docker image and push to Google Container Registry Note gcr.io is the default artifact registry for docker now. can be expensive. better creaet a local one.
 build-push:
 	@echo " -> Building gcr.io/$(PROJECT_ID)/$(IMAGE_NAME) image and pushing to Google Container Registry..."
-	gcloud builds submit --tag gcr.io/$(PROJECT_ID)/$(IMAGE_NAME) .
+	gcloud builds submit --project $(PROJECT_ID) --tag gcr.io/$(PROJECT_ID)/$(IMAGE_NAME) .
 
 # Deploy to Cloud Run, use .env variables except GOOGLE_APPLICATION_CREDENTIALS
 deploy-service:
-	@echo "Deploying to Cloud Run..."
+	@echo " 🚀 Deploying to Cloud Run..."
 	@ENV_VARS=$$(node scripts/env_parser.js); \
 	echo "Environment Variables to be deployed:"; \
 	echo "$${ENV_VARS}" | tr ',' '\n'; \
