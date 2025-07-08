@@ -10,6 +10,13 @@ import { CloudStorageService } from '@dataclouder/nest-google-cloud';
  * Service for managing generic entities in the database
  * Provides CRUD operations and query capabilities for GenericEntity objects
  */
+/**
+ * Service for managing generic entities in the database
+ * Provides CRUD operations and query capabilities for GenericEntity objects
+ * @description
+ * This service provides methods for creating, retrieving, updating, and deleting generic entities
+ * It also provides a query method that takes a filters configuration object and returns a promise resolving to a query response containing results and metadata
+ */
 @Injectable()
 export class GenericService {
   constructor(

@@ -1,7 +1,7 @@
 import { Body, Controller, Param, Get, Post, Put, Delete, HttpStatus, HttpCode } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { GenericService } from '../services/generic.service';
-import { CreateGenericDto, IGeneric, UpdateGenericDto } from '../models/generic.models';
+import { IGeneric } from '../models/generic.models';
 import { GenericEntity } from '../schemas/generic.schema';
 import { FiltersConfig, IQueryResponse } from 'libs/nest-mongo/src';
 
@@ -10,7 +10,7 @@ import { FiltersConfig, IQueryResponse } from 'libs/nest-mongo/src';
  * Provides REST API endpoints for CRUD operations on generic entities
  */
 @ApiTags('generic')
-@Controller('api/generic')
+@Controller('api/generic') // NOT ENDPOINT Father will tell
 export class GenericController {
   constructor(private readonly genericService: GenericService) {}
 

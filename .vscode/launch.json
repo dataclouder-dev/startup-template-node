@@ -17,6 +17,7 @@
         "sourceMaps": true,
         "stopOnEntry": false,
         "console": "integratedTerminal",
+        "envFile": "${workspaceFolder}/.env",
       }
     ]
 }
