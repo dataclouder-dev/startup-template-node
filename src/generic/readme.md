@@ -1,10 +1,16 @@
-### How to add the generic.
+### How to use the generic
+
+Generic is just a scaffold to create a new entity in the database. Name Generic will be renamed to the name you want.
 
 1. get a project that use nest and install the library @dataclouder/nest-mongo
 
 2. copy folder and add to the modules
 
-### Endpoints
+### Entity T Framework
+
+Just a fancy name i use to create a standard way for CRUD operations. and little more.
+
+### Endpoints Provided in Entity T Framework
 
 - GET /api/generic
 - GET /api/generic/:id
