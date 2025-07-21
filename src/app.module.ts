@@ -20,6 +20,7 @@ import { NestWhisperModule } from '@dataclouder/nest-whisper';
 import { NestVertexModule } from '@dataclouder/nest-vertex';
 import { NestUsersModule } from '@dataclouder/nest-users';
 import { InitModule } from './init/init.module';
+import { DeckCommanderModule } from './deck-commander/deck-commander.module';
 
 @Module({
   imports: [
@@ -43,6 +44,7 @@ import { InitModule } from './init/init.module';
     NestWhisperModule,
     NestUsersModule,
     InitModule,
+    DeckCommanderModule,
   ],
   controllers: [AppController],
 })

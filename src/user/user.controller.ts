@@ -5,28 +5,30 @@ import { Model } from 'mongoose';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { DecodedToken } from 'src/common/token.decorator';
 import { DecodedIdToken } from 'firebase-admin/auth';
-import { UserService } from './user.service';
+import { AppUserService } from './user.service';
 import { AppHttpCode } from 'src/common/app-enums';
 import { IUser } from './user.class';
 import { AllExceptionsHandler } from 'src/common/exception-hanlder.filter';
 import { AuthGuard } from '@dataclouder/nest-auth';
-import { AppGuard } from '@dataclouder/nest-core';
+import { AppGuard, EntityController } from '@dataclouder/nest-core';
 
 @ApiTags('user')
 @ApiBearerAuth()
 @UseGuards(AppGuard, AuthGuard)
 @Controller('api/user')
 @UseFilters(AllExceptionsHandler)
-export class UserController {
+export class UserController extends EntityController<UserEntity> {
   constructor(
     @InjectModel(UserEntity.name) private userModel: Model<UserEntity>,
-    private userService: UserService
-  ) {}
+    private userService: AppUserService
+  ) {
+    super(userService);
+  }
 
   // This is replace by the one in init.controller
-  @Get('/')
+  @Get('/logged')
   async getLoggedUserDataOrRegister(@DecodedToken() token: DecodedIdToken, @Res({ passthrough: true }) res): Promise<any> {
-    console.log('Getting Data', token);
+    console.log('Getting user Data', token.uid);
     const user = await this.userService.findUserById(token.uid);
 
     if (user) {
@@ -38,20 +40,5 @@ export class UserController {
     }
   }
 
-  @Delete('/')
-  async deleteUser(@DecodedToken() token: DecodedIdToken): Promise<any> {
-    const user = await this.userService.deleteUser(token.uid);
-    return user;
-  }
-
-  @Post('/')
-  @ApiOperation({ summary: 'Update personal data', description: 'Actualiza solo los datos personales' })
-  async updateUser(@Body() user: IUser, @DecodedToken() token: DecodedIdToken): Promise<any> {
-    // NOTE: only personalData can be updated
-    const { personalData, conversationSettings } = user;
-    const userData: Partial<IUser> = { personalData, conversationSettings };
-
-    this.userService.updateUser(token.uid, userData);
-    return userData;
-  }
+  // This is replace by the one in init.controller
 }

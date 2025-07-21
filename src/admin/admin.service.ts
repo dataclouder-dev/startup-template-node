@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-import { UserService } from 'src/user/user.service';
+import { AppUserService } from 'src/user/user.service';
 import { AppException } from 'src/common/app-exception';
 // import { FirebaseService } from 'src/common/firebase.service';
 import { AppAuthClaims, FirebaseService } from '@dataclouder/nest-auth';
@@ -8,7 +8,7 @@ import { AppAuthClaims, FirebaseService } from '@dataclouder/nest-auth';
 @Injectable()
 export class AdminService {
   constructor(
-    private userService: UserService,
+    private userService: AppUserService,
     private firebaseService: FirebaseService
   ) {}
 

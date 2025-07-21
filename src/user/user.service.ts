@@ -8,17 +8,22 @@ import { FirebaseService, AppAuthClaims, PermissionClaim, PlanType, RolClaim } f
 
 import { DecodedIdToken } from 'firebase-admin/auth';
 import { IUser } from './user.class';
+import { EntityCommunicationService } from '@dataclouder/nest-core';
+import { MongoService } from '@dataclouder/nest-mongo';
 
 /**
  * Service for managing user data and authentication
  * Provides methods for user registration, retrieval, updates, and deletion
  */
 @Injectable()
-export class UserService {
+export class AppUserService extends EntityCommunicationService<UserEntity> {
   constructor(
     @InjectModel(UserEntity.name) private userModel: Model<UserEntity>,
-    private firebaseService: FirebaseService
-  ) {}
+    private firebaseService: FirebaseService,
+    mongoService: MongoService
+  ) {
+    super(userModel, mongoService, null);
+  }
 
   /**
    * Finds a user by their email address

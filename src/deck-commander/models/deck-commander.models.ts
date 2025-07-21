@@ -1,11 +1,18 @@
 import { IAuditable } from '@dataclouder/nest-core';
 
-export interface IGeneric {
+export enum CommandType {
+  Button = 'button',
+}
+
+export interface IDeckCommander {
   _id?: string;
   id?: string;
   name?: string;
   description?: string;
-  content?: string;
   img?: string;
+  type?: CommandType;
+  command?: string;
+  action?: string;
+  emoji?: string;
   auditable?: IAuditable;
 }
