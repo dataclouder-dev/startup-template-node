@@ -15,16 +15,6 @@
       "compilerOptions": {
         "tsConfigPath": "libs/nest-mongo/tsconfig.lib.json"
       }
-    },
-    "nest-google-cloud": {
-      "type": "library",
-      "root": "libs/nest-google-cloud",
-      "entryFile": "index",
-      "sourceRoot": "libs/nest-google-cloud/src",
-      "compilerOptions": {
-        "tsConfigPath": "libs/nest-google-cloud/tsconfig.lib.json",
-        "webpack": false
-      }
     }
   }
 }

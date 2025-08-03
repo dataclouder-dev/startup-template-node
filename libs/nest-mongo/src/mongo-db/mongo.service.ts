@@ -147,4 +147,14 @@ export class MongoService {
       skip,
     };
   }
+
+  async save(collectionName: string, document: any) {
+    const collection = this.connection.db.collection(collectionName);
+    return collection.insertOne(document);
+  }
+
+  async upsert(collectionName: string, filter: Record<string, any>, data: any) {
+    const collection = this.connection.db.collection(collectionName);
+    return collection.updateOne(filter, { $set: data }, { upsert: true });
+  }
 }

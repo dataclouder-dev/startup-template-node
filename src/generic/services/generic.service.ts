@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { GenericEntity, GenericDocument } from '../schemas/generic.schema';
 import { MongoService } from '@dataclouder/nest-mongo';
-import { CloudStorageService } from '@dataclouder/nest-google-cloud';
+import { CloudStorageService } from '@dataclouder/nest-storage';
 import { EntityCommunicationService } from '@dataclouder/nest-core';
 
 /**

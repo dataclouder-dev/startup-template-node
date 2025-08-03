@@ -9,14 +9,12 @@
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\" \"libs/**/*.ts\"",
     "start": "nest start",
-    "update:dc": "npm install @dataclouder/nest-core@latest @dataclouder/nest-lessons@latest @dataclouder/nest-agent-cards@latest @dataclouder/nest-mongo@latest @dataclouder/nest-google-cloud@latest @dataclouder/nest-whisper@latest @dataclouder/nest-vertex@latest @dataclouder/nest-users@latest @dataclouder/nest-auth@latest --force",
+    "update:dc": "npm install @dataclouder/nest-core@latest @dataclouder/nest-lessons@latest @dataclouder/nest-agent-cards@latest @dataclouder/nest-mongo@latest @dataclouder/nest-storage@latest @dataclouder/nest-whisper@latest @dataclouder/nest-vertex@latest @dataclouder/nest-users@latest @dataclouder/nest-auth@latest --force",
     "remove:mongo": "rm -rf dist/libs/nest-mongo && echo 'removed dist/libs/nest-mongo'",
     "patch:mongo": "cd libs/nest-mongo && npm version patch && echo 'patched nest-mongo'",
     "build:mongo": "cd libs/nest-mongo && npm run build && npm version patch && cp package.json ../../dist/libs/nest-mongo/ && echo 'built nest-mongo'",
     "publish:mongo": "npm run build:mongo && cd ./dist/libs/nest-mongo && npm publish && echo 'published nest-mongo'",
     "build-publish:mongo": "npm run remove:mongo && npm run patch:mongo && npm run build:mongo && npm publish:mongo",
-    "build:google-cloud": "cd libs/nest-google-cloud && npm run build && npm version patch && cp package.json ../../dist/libs/nest-google-cloud/",
-    "publish:google-cloud": "npm run build:google-cloud && cd ./dist/libs/nest-google-cloud && npm publish",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
@@ -29,15 +27,15 @@
   },
   "dependencies": {
     "@ai-sdk/openai": "^1.3.22",
-    "@dataclouder/nest-agent-cards": "^0.1.31",
+    "@dataclouder/nest-agent-cards": "^0.1.32",
     "@dataclouder/nest-auth": "^0.0.10",
-    "@dataclouder/nest-core": "^0.0.14",
-    "@dataclouder/nest-google-cloud": "^0.1.15",
+    "@dataclouder/nest-core": "^0.0.15",
     "@dataclouder/nest-knowledge": "^0.0.1",
-    "@dataclouder/nest-lessons": "^0.1.24",
-    "@dataclouder/nest-mongo": "^0.1.31",
+    "@dataclouder/nest-lessons": "^0.1.25",
+    "@dataclouder/nest-mongo": "^0.1.32",
+    "@dataclouder/nest-storage": "^0.0.2",
     "@dataclouder/nest-users": "^0.0.4",
-    "@dataclouder/nest-vertex": "^0.0.16",
+    "@dataclouder/nest-vertex": "^0.0.20",
     "@dataclouder/nest-whisper": "^0.0.6",
     "@dataclouder/notion": "^0.0.4",
     "@fastify/multipart": "^9.0.3",
@@ -61,6 +59,7 @@
     "firebase-admin": "^13.0.2",
     "google-auth-library": "^9.15.1",
     "groq-sdk": "^0.15.0",
+    "ioredis": "^5.6.1",
     "minio": "^8.0.5",
     "mongodb": "^6.16.0",
     "mongoose": "^8.15.0",
@@ -114,8 +113,7 @@
       "<rootDir>/libs/"
     ],
     "moduleNameMapper": {
-      "^@dataclouder/nest-mongo(|/.*)$": "<rootDir>/libs/nest-mongo/src/$1",
-      "^@dataclouder/nest-google-cloud(|/.*)$": "<rootDir>/libs/nest-google-cloud/src/$1"
+      "^@dataclouder/nest-mongo(|/.*)$": "<rootDir>/libs/nest-mongo/src/$1"
     }
   }
 }

@@ -10,7 +10,7 @@ export type GenericDocument = GenericEntity & Document;
 export class GenericEntity implements IGeneric {
   @Prop({ type: mongoose.Schema.Types.ObjectId, required: false })
   id: string;
-  @Prop({ required: true })
+  @Prop({ required: false })
   name: string;
 
   @Prop({ required: false })
