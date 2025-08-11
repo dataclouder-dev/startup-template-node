@@ -34,7 +34,7 @@
     "@dataclouder/nest-lessons": "^0.1.25",
     "@dataclouder/nest-mongo": "^0.1.32",
     "@dataclouder/nest-storage": "^0.0.2",
-    "@dataclouder/nest-users": "^0.0.4",
+    "@dataclouder/nest-users": "^0.0.5",
     "@dataclouder/nest-vertex": "^0.0.20",
     "@dataclouder/nest-whisper": "^0.0.6",
     "@dataclouder/notion": "^0.0.4",
