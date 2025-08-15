@@ -53,7 +53,7 @@ GCP_SERVICE_NAME     ?= $(PROJECT_ID)-node-server
 # Define paths for different environments
 ENV_FILE_QA          ?= .env.qa
 KEY_FILE_QA          ?= ./.cred/key-qa.json
-ENV_FILE_PRO         ?= .env.pro
+ENV_FILE_PRO         ?= .env
 KEY_FILE_PRO         ?= ./.cred/key-dev.json
 ENV_FILE_HOMELAB     ?= .env.homelab
 
@@ -104,6 +104,16 @@ deploy-homelab: TARGET_ENV_FILE = $(ENV_FILE_HOMELAB)
 deploy-homelab: TARGET_KEY_FILE = $(KEY_FILE_PRO)
 deploy-homelab: ._build-docker ._transfer-docker-image ._transfer-credentials ._deploy-remote ._local-cleanup
 	@echo "✅ Deployment to Homelab ($(TARGET_HOST)) completed successfully."
+
+# Deploy to AI Lab Server (AMD64)
+deploy-ailab: TARGET_USER = adamo
+deploy-ailab: TARGET_HOST = 192.168.2.2
+deploy-ailab: REMOTE_DEPLOY_PATH = /home/adamo/Documents
+deploy-ailab: PLATFORM = linux/amd64
+deploy-ailab: TARGET_ENV_FILE = $(ENV_FILE_PRO)
+deploy-ailab: TARGET_KEY_FILE = $(KEY_FILE_PRO)
+deploy-ailab: ._build-docker ._transfer-docker-image ._transfer-credentials ._deploy-remote ._local-cleanup
+	@echo "✅ Deployment to AI Lab http://$(TARGET_HOST):$(HOST_PORT) completed successfully."
 
 # Deploy to Google Cloud Platform (GCP)
 deploy-gcp: build-push deploy-service

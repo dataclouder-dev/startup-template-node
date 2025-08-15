@@ -14,13 +14,13 @@ import { TestModule } from './test/test.module';
 
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
-import { DCMongoDBModule } from 'libs/nest-mongo/src';
 import { GenericModule } from './generic/generic.module';
 import { NestWhisperModule } from '@dataclouder/nest-whisper';
 import { NestVertexModule } from '@dataclouder/nest-vertex';
 import { NestUsersModule } from '@dataclouder/nest-users';
 import { InitModule } from './init/init.module';
 import { DeckCommanderModule } from './deck-commander/deck-commander.module';
+import { DCMongoDBModule } from '@dataclouder/nest-mongo';
 
 @Module({
   imports: [
