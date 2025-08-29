@@ -39,15 +39,17 @@ NC   := \033[0m # No Color
 -include .env
 
 # --- Docker & Container ---
-IMAGE_NAME           ?= dataclouder-dev-node-image
-IMAGE_FILENAME       := $(IMAGE_NAME).tar
-CONTAINER_NAME       ?= $(IMAGE_NAME)-container
+PROJECT_NAME           ?= dataclouder-dev-node
+IMAGE_FILENAME       := $(PROJECT_NAME).tar
+CONTAINER_NAME       ?= $(PROJECT_NAME)-container
 HOST_PORT            ?= 7991
 
 # --- GCP Configuration ---
 PROJECT_ID           ?= dataclouder-dev
 GCP_REGION           ?= us-central1
-GCP_SERVICE_NAME     ?= $(PROJECT_ID)-node-server
+GCP_SERVICE_NAME     ?= $(PROJECT_NAME)-node
+ARTIFACT_REGISTRY_REPO        := us-central1-docker.pkg.dev/$(PROJECT_ID)/images/$(PROJECT_NAME)
+
 
 # --- Credential Configuration ---
 # Define paths for different environments
@@ -84,7 +86,7 @@ TARGET_KEY_FILE      := $(KEY_FILE_QA)
 # --- Computed Variables ---
 REMOTE_TAR_FILEPATH  := $(REMOTE_DEPLOY_PATH)/$(IMAGE_FILENAME)
 REMOTE_CONFIG_PATH   := $(REMOTE_DEPLOY_PATH)/config
-GCP_IMAGE_URL        := gcr.io/$(PROJECT_ID)/$(IMAGE_NAME)
+ARTIFACT_REGISTRY_REPO        := us-central1-docker.pkg.dev/$(PROJECT_ID)/images/$(PROJECT_NAME)
 
 # ==============================================================================
 # USER-FACING DEPLOYMENT TARGETS
@@ -116,7 +118,7 @@ deploy-ailab: ._build-docker ._transfer-docker-image ._transfer-credentials ._de
 	@echo "✅ Deployment to AI Lab http://$(TARGET_HOST):$(HOST_PORT) completed successfully."
 
 # Deploy to Google Cloud Platform (GCP)
-deploy-gcp: build-push deploy-service
+deploy-cloud-run: build-and-save-in-gcp-artifact-registry deploy-service
 	@echo "✅ Deployment to GCP completed successfully."
 
 
@@ -125,12 +127,12 @@ deploy-gcp: build-push deploy-service
 # ==============================================================================
 
 ._build-docker:
-	@echo "1) 🐳 Building Docker image [$(IMAGE_NAME):latest] for [$(PLATFORM)]..."
-	$(MAKE_VERBOSE) docker build --platform $(PLATFORM) -t $(IMAGE_NAME):latest .
+	@echo "1) 🐳 Building Docker image [$(PROJECT_NAME):latest] for [$(PLATFORM)]..."
+	$(MAKE_VERBOSE) docker build --platform $(PLATFORM) -t $(PROJECT_NAME):latest .
 
 ._transfer-docker-image:
 	@echo "2) 💾 Saving Docker image to [$(IMAGE_FILENAME)]..."
-	$(MAKE_VERBOSE) docker save $(IMAGE_NAME):latest -o $(IMAGE_FILENAME)
+	$(MAKE_VERBOSE) docker save $(PROJECT_NAME):latest -o $(IMAGE_FILENAME)
 	@echo "3) 🚚 Transferring [$(IMAGE_FILENAME)] to [$(TARGET_USER)@$(TARGET_HOST):$(REMOTE_TAR_FILEPATH)]..."
 	$(MAKE_VERBOSE) $(SCP_CMD) $(IMAGE_FILENAME) $(TARGET_USER)@$(TARGET_HOST):$(REMOTE_TAR_FILEPATH)
 
@@ -163,14 +165,14 @@ deploy-gcp: build-push deploy-service
 			-e GOOGLE_APPLICATION_CREDENTIALS=/usr/src/app/.cred/key.json \
 			-p $(HOST_PORT):8080 \
 			--restart unless-stopped \
-			$(IMAGE_NAME):latest; \
+			$(PROJECT_NAME):latest; \
 		echo "  -> 🧹 Cleaning up remote tarball..."; \
 		rm $(REMOTE_TAR_FILEPATH); \
 		echo "  -> ✅ Remote deployment finished check on http://$(TARGET_HOST):$(HOST_PORT)" '
 
 ._deploy-local:
 	@echo "2) 🚀 Deploying on local Docker..."
-	@echo "  -> 🛑 Stopping and removing existing container [$(CONTAINER_NAME)]..."
+	@echo "  -> 🛑 Stopping and removing existing container [$(CONTAINER_NAME)] IF EXISTS..."
 	-$(MAKE_VERBOSE) docker stop $(CONTAINER_NAME) || true
 	-$(MAKE_VERBOSE) docker rm $(CONTAINER_NAME) || true
 	@echo "  -> 🚀 Starting new container [$(CONTAINER_NAME)]..."
@@ -181,7 +183,7 @@ deploy-gcp: build-push deploy-service
 		--restart unless-stopped \
 		-v $(shell pwd)/.cred/key-qa.json:/usr/src/app/.cred/key-qa.json:ro \
 		-e GOOGLE_APPLICATION_CREDENTIALS=/usr/src/app/.cred/key-qa.json \
-		$(IMAGE_NAME):latest
+		$(PROJECT_NAME):latest
 	@echo "  -> ✅ Local deployment finished check on http://localhost:$(HOST_PORT)"
 
 ._local-cleanup:
@@ -199,20 +201,24 @@ gcp-enable-services:
 	gcloud services enable cloudbuild.googleapis.com
 	gcloud services enable artifactregistry.googleapis.com
 
+
+build-and-save-in-gcp-artifact-registry:
+	@echo " 🐳 -> Building docker in GCP with tag $(ARTIFACT_REGISTRY_REPO) and pushing to Google Container Registry..."
+	gcloud builds submit --project $(PROJECT_ID) --tag $(ARTIFACT_REGISTRY_REPO) .
+
 # Build the Docker image and push to Google Container Registry
-build-push:
-	@echo " -> Building $(GCP_IMAGE_URL) image and pushing to Google Container Registry..."
-	gcloud builds submit --project $(PROJECT_ID) --tag $(GCP_IMAGE_URL) .
+
 
 # Deploy to Cloud Run, use .env variables except GOOGLE_APPLICATION_CREDENTIALS
 deploy-service:
 	@echo " 🚀 Deploying to Cloud Run..."
-	@ENV_VARS=$$$$(node scripts/env_parser.js); \
-	echo "Environment Variables to be deployed:"; \
+	@echo " 🚨 NOTE: Your Current ENV variables will be parsed and deployed to Cloud Run. 🪪"
+	@ENV_VARS=$$(node scripts/env_parser.js); \
+	echo "🔑 Double check your Environment Variables to be deployed: 🔑"; \
 	echo "$${ENV_VARS}" | tr ',' '\n'; \
 	gcloud run deploy $(GCP_SERVICE_NAME) \
 		--project $(PROJECT_ID) \
-		--image $(GCP_IMAGE_URL) \
+		--image $(ARTIFACT_REGISTRY_REPO) \
 		--platform managed \
 		--region $(GCP_REGION) \
 		--allow-unauthenticated \
