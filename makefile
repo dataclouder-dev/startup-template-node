@@ -39,14 +39,14 @@ NC   := \033[0m # No Color
 -include .env
 
 # --- Docker & Container ---
-PROJECT_NAME           ?= dataclouder-dev-node
+PROJECT_NAME           ?= dataclouder-dev-node#❗️
 IMAGE_FILENAME       := $(PROJECT_NAME).tar
 CONTAINER_NAME       ?= $(PROJECT_NAME)-container
-HOST_PORT            ?= 7991
+HOST_PORT            ?= 7991#❗️
 
 # --- GCP Configuration ---
-PROJECT_ID           ?= dataclouder-dev
-GCP_REGION           ?= us-central1
+PROJECT_ID           ?= dataclouder-dev#❗️
+GCP_REGION           ?= us-central1#❗️
 GCP_SERVICE_NAME     ?= $(PROJECT_NAME)-node
 ARTIFACT_REGISTRY_REPO        := us-central1-docker.pkg.dev/$(PROJECT_ID)/images/$(PROJECT_NAME)
 

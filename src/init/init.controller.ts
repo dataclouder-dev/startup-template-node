@@ -1,4 +1,4 @@
-import { AllExceptionsHandler, PlanType } from '@dataclouder/nest-core';
+import { AllExceptionsHandler } from '@dataclouder/nest-core';
 import { Controller, Get, Param, Res, UseFilters } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { DecodedIdToken } from 'firebase-admin/auth';
@@ -6,7 +6,7 @@ import { AppHttpCode } from 'src/common/app-enums';
 import { DecodedToken } from 'src/common/token.decorator';
 import { AppUserService } from 'src/user/user.service';
 import { NestUsersService, UpdateUserClaims } from '@dataclouder/nest-users';
-import { AppAuthClaims, PermissionClaim, RolClaim, RolType } from '@dataclouder/nest-auth';
+import { AppAuthClaims, PermissionClaim, PlanType, RolClaim, RolType } from '@dataclouder/nest-auth';
 
 @ApiTags('init')
 @Controller('api/init/user')

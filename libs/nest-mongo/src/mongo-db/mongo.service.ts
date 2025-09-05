@@ -9,6 +9,7 @@ export class FiltersConfig {
   page: number; // page number
   rowsPerPage: number; // limit
   sort: Record<string, any>;
+  seed?: number; // For randomization
   filters: Record<string, any>; // Mongo filters for query.
   text?: string; // if text is provided, will do text search in all indexed fields.
   returnProps?: Record<string, boolean>; // This will be deprecated in future. by projection.
