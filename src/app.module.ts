@@ -21,12 +21,14 @@ import { NestUsersModule } from '@dataclouder/nest-users';
 import { InitModule } from './init/init.module';
 import { DeckCommanderModule } from './deck-commander/deck-commander.module';
 import { DCMongoDBModule } from '@dataclouder/nest-mongo';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ load: [envVariables], isGlobal: true }),
     DCMongoDBModule.forRoot(),
     GenericModule,
+    EventEmitterModule.forRoot(),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'public'),
       serveRoot: '/public/',
