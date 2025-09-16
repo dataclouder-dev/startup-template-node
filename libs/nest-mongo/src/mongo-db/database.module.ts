@@ -16,6 +16,7 @@ export class DCMongoDBModule {
         MongooseModule.forRootAsync({
           imports: [ConfigModule],
           useFactory: (configService: ConfigService) => {
+            console.log('connectiong to mongo with...', configService);
             const user = configService.get<string>('MONGO_USER');
             const pass = configService.get<string>('MONGO_PASS');
             const host = configService.get<string>('MONGO_HOST');
