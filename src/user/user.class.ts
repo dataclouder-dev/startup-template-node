@@ -16,7 +16,7 @@ export interface IUser {
   personalData: Partial<PersonalData>;
   claims: AppAuthClaims;
   authStrategy: string;
-  conversationSettings: IConversationSettings;
+  settings: UserSettings;
 }
 
 export interface IConversationSettings {
@@ -31,4 +31,12 @@ export interface IConversationSettings {
   provider: string;
   speed: string;
   speedRate: number; // Temporal only 0 to 100.
+}
+
+export class UserSettings {
+  baseLanguage: string;
+  targetLanguage: string;
+  enableNotifications: boolean;
+  wordsNumber: number;
+  conversation: IConversationSettings;
 }
