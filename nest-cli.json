@@ -9,14 +9,6 @@
 
   },
   "projects": {
-    "nest-mongo": {
-      "type": "library",
-      "root": "libs/nest-mongo",
-      "entryFile": "index",
-      "sourceRoot": "libs/nest-mongo/src",
-      "compilerOptions": {
-        "tsConfigPath": "libs/nest-mongo/tsconfig.lib.json"
-      }
-    }
+
   }
 }

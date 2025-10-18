@@ -1,8 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { Document } from 'mongoose';
-import { IConversationSettings, IUser, PersonalData, UserSettings } from './user.class';
-import { AppAuthClaims } from 'src/dc-claims-module/clams.class';
-import { AudioSpeed } from '@dataclouder/nest-auth';
+import { IUser, PersonalData, UserSettings } from './user.class';
+import { AppAuthClaims, AudioSpeed } from '@dataclouder/nest-auth';
 
 @Schema({ collection: 'users' })
 export class UserEntity extends Document implements IUser {

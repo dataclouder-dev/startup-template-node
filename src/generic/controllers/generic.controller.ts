@@ -2,7 +2,7 @@ import { Controller } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { GenericService } from '../services/generic.service';
 
-import { EntityController } from '@dataclouder/nest-core';
+import { EntityController } from '@dataclouder/nest-mongo';
 import { GenericDocument } from '../schemas/generic.schema';
 
 @ApiTags('generic')

@@ -1,4 +1,4 @@
-import { AppAuthClaims } from 'src/dc-claims-module/clams.class';
+import { AppAuthClaims } from '@dataclouder/nest-auth';
 
 export class PersonalData {
   firstname: string;

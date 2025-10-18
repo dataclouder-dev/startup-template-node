@@ -4,7 +4,7 @@ import { DeckCommanderService } from '../services/deck-commander.service';
 import * as notifier from 'node-notifier';
 import { exec } from 'child_process';
 
-import { EntityController } from '@dataclouder/nest-core';
+import { EntityController } from '@dataclouder/nest-mongo';
 import { DeckCommanderDocument } from '../schemas/deck-commander.schema';
 
 @ApiTags('DeckCommander')

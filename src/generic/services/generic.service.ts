@@ -4,7 +4,7 @@ import { Model } from 'mongoose';
 import { GenericEntity, GenericDocument } from '../schemas/generic.schema';
 import { MongoService } from '@dataclouder/nest-mongo';
 import { CloudStorageService } from '@dataclouder/nest-storage';
-import { EntityCommunicationService } from '@dataclouder/nest-core';
+import { EntityCommunicationService } from '@dataclouder/nest-mongo';
 
 /**
  * Service for managing generic entities in the database
@@ -22,9 +22,8 @@ export class GenericService extends EntityCommunicationService<GenericDocument> 
   constructor(
     @InjectModel(GenericEntity.name)
     genericModel: Model<GenericDocument>,
-    mongoService: MongoService,
-    cloudStorageService: CloudStorageService
+    mongoService: MongoService
   ) {
-    super(genericModel, mongoService, cloudStorageService);
+    super(genericModel, mongoService);
   }
 }

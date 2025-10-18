@@ -8,7 +8,7 @@ import { FirebaseService, AppAuthClaims, PermissionClaim, PlanType, RolClaim } f
 
 import { DecodedIdToken } from 'firebase-admin/auth';
 import { IUser } from './user.class';
-import { EntityCommunicationService } from '@dataclouder/nest-core';
+import { EntityCommunicationService } from '@dataclouder/nest-mongo';
 import { MongoService } from '@dataclouder/nest-mongo';
 
 /**
@@ -22,7 +22,7 @@ export class AppUserService extends EntityCommunicationService<UserEntity> {
     private firebaseService: FirebaseService,
     mongoService: MongoService
   ) {
-    super(userModel, mongoService, null);
+    super(userModel, mongoService);
   }
 
   /**

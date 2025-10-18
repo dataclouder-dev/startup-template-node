@@ -4,7 +4,7 @@ import { Model } from 'mongoose';
 import { DeckCommanderEntity, DeckCommanderDocument } from '../schemas/deck-commander.schema';
 import { MongoService } from '@dataclouder/nest-mongo';
 import { CloudStorageService } from '@dataclouder/nest-storage';
-import { EntityCommunicationService } from '@dataclouder/nest-core';
+import { EntityCommunicationService } from '@dataclouder/nest-mongo';
 
 /**
  * Service for managing DeckCommander entities in the database
@@ -22,9 +22,8 @@ export class DeckCommanderService extends EntityCommunicationService<DeckCommand
   constructor(
     @InjectModel(DeckCommanderEntity.name)
     DeckCommanderModel: Model<DeckCommanderDocument>,
-    mongoService: MongoService,
-    cloudStorageService: CloudStorageService
+    mongoService: MongoService
   ) {
-    super(DeckCommanderModel, mongoService, cloudStorageService);
+    super(DeckCommanderModel, mongoService);
   }
 }

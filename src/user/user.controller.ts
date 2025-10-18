@@ -10,7 +10,8 @@ import { AppHttpCode } from 'src/common/app-enums';
 import { IUser } from './user.class';
 import { AllExceptionsHandler } from 'src/common/exception-hanlder.filter';
 import { AuthGuard } from '@dataclouder/nest-auth';
-import { AppGuard, EntityController } from '@dataclouder/nest-core';
+import { AppGuard } from '@dataclouder/nest-core';
+import { EntityController } from '@dataclouder/nest-mongo';
 
 @ApiTags('user')
 @ApiBearerAuth()
