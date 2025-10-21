@@ -1,7 +1,7 @@
 import { forwardRef, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 
-import { AgentCardsModule } from '@dataclouder/nest-agent-cards';
+import { AgentCardsModule, ConversationRuleModule } from '@dataclouder/nest-agent-cards';
 import { NestAuthModule } from '@dataclouder/nest-auth';
 // import { NotionModule } from '@dataclouder/notion';
 import { LessonsModule } from '@dataclouder/nest-lessons';
@@ -47,6 +47,7 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
     NestUsersModule,
     InitModule,
     DeckCommanderModule,
+    ConversationRuleModule,
   ],
   controllers: [AppController],
 })

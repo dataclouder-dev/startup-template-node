@@ -9,10 +9,7 @@ import multipart from '@fastify/multipart'; // Import the multipart plugin
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter(), {
     rawBody: true,
-    logger: new ConsoleLogger({
-      json: true,
-      colors: true,
-    }),
+    logger: new ConsoleLogger({ json: false, colors: true }),
   });
 
   app.register(multipart);
