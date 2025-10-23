@@ -15,7 +15,7 @@ export class AppController {
   @Header('content-type', 'text/html')
   getHello(): string {
     return `
-    <h1>Bievenido al proyecto / Welcome </h1>
+    <h1>Bievenido / Welcome  Dataclouder's Template </h1>
     <ul>
       <li><a href="/public/index.html"> Main Page </a></li>
       <li><a href="/docs"> Swagger Documentation </a></li>

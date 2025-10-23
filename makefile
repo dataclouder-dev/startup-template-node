@@ -163,7 +163,7 @@ deploy-cloud-run: build-and-save-in-gcp-artifact-registry deploy-service
 			--env-file $(REMOTE_CONFIG_PATH)/.env \
 			-v $(REMOTE_CONFIG_PATH)/key.json:/usr/src/app/.cred/key.json:ro \
 			-e GOOGLE_APPLICATION_CREDENTIALS=/usr/src/app/.cred/key.json \
-			-p $(HOST_PORT):8080 \
+			-p $(HOST_PORT):7991 \
 			--restart unless-stopped \
 			$(PROJECT_NAME):latest; \
 		echo "  -> 🧹 Cleaning up remote tarball..."; \
@@ -179,7 +179,7 @@ deploy-cloud-run: build-and-save-in-gcp-artifact-registry deploy-service
 	$(MAKE_VERBOSE) docker run -d \
 		--env-file .env \
 		--name $(CONTAINER_NAME) \
-		-p $(HOST_PORT):8080 \
+		-p $(HOST_PORT):7991 \
 		--restart unless-stopped \
 		-v $(shell pwd)/.cred/key-qa.json:/usr/src/app/.cred/key-qa.json:ro \
 		-e GOOGLE_APPLICATION_CREDENTIALS=/usr/src/app/.cred/key-qa.json \

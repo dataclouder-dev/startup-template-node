@@ -32,7 +32,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);
 
-  const port = 8080;
+  const port = 7991;
   await app.listen(port, '0.0.0.0');
   console.log('Server is running on port ' + port);
 }
