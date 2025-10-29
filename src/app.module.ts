@@ -41,7 +41,10 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
     TestModule,
     AgentCardsModule,
     LessonsModule,
-    NestVertexModule,
+    NestVertexModule.forRoot({
+      apiBaseUrl: 'http://192.168.2.6:3330',
+      apiKey: 'changeme',
+    }),
     NestAuthModule,
     NestWhisperModule,
     NestUsersModule,
