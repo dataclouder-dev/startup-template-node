@@ -9,7 +9,7 @@ import { AppUserService } from './user.service';
 import { AppHttpCode } from 'src/common/app-enums';
 import { IUser } from './user.class';
 import { AllExceptionsHandler } from 'src/common/exception-hanlder.filter';
-import { AuthGuard } from '@dataclouder/nest-auth';
+import { AppToken, AuthGuard } from '@dataclouder/nest-auth';
 import { AppGuard } from '@dataclouder/nest-core';
 import { EntityController } from '@dataclouder/nest-mongo';
 
@@ -28,9 +28,9 @@ export class UserController extends EntityController<UserEntity> {
 
   // This is replace by the one in init.controller
   @Get('/logged')
-  async getLoggedUserDataOrRegister(@DecodedToken() token: DecodedIdToken, @Res({ passthrough: true }) res): Promise<any> {
+  async getLoggedUserDataOrRegister(@DecodedToken() token: AppToken, @Res({ passthrough: true }) res): Promise<any> {
     console.log('Getting user Data', token.uid);
-    const user = await this.userService.findUserById(token.uid);
+    const user = await this.userService.findUserByEmail(token.email);
 
     if (user) {
       return user;

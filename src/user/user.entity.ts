@@ -8,6 +8,9 @@ export class UserEntity extends Document implements IUser {
   @Prop()
   id: string = '';
 
+  @Prop()
+  fbId: string = '';
+
   @Prop({ type: mongoose.Schema.Types.String, required: false })
   email: string;
 

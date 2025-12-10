@@ -12,7 +12,7 @@ async function bootstrap() {
     logger: new ConsoleLogger({ json: false, colors: true }),
   });
 
-  app.register(multipart);
+  app.register(multipart as any);
 
   app.useGlobalFilters(new AllExceptionsHandler());
 
@@ -34,7 +34,7 @@ async function bootstrap() {
 
   const port = 7991;
   await app.listen(port, '0.0.0.0');
-  console.log('Server is running on port ' + port);
+  console.log(`Server is running on port ${port} http://0.0.0.0:${port}`);
 }
 
 bootstrap();

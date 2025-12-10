@@ -4,7 +4,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { UserEntity } from './user.entity';
 import { Model } from 'mongoose';
 
-import { FirebaseService, AppAuthClaims, PermissionClaim, PlanType, RolClaim } from '@dataclouder/nest-auth';
+import { FirebaseService, AppAuthClaims, PermissionClaim, PlanType, RolClaim, AppToken } from '@dataclouder/nest-auth';
 
 import { DecodedIdToken } from 'firebase-admin/auth';
 import { IUser } from './user.class';
@@ -51,11 +51,16 @@ export class AppUserService extends EntityCommunicationService<UserEntity> {
    * @param token - The decoded Firebase ID token containing user information
    * @returns Promise resolving to the newly created user
    */
-  public async registerWithToken(token: DecodedIdToken): Promise<any> {
-    const claims: AppAuthClaims = { plan: { type: PlanType.Basic }, permissions: {} as PermissionClaim, roles: {} as RolClaim };
+  public async registerWithToken(token: AppToken): Promise<any> {
+    const claims: AppAuthClaims = {
+      plan: { type: PlanType.Basic },
+      permissions: {} as PermissionClaim,
+      roles: {} as RolClaim,
+      userId: token.uid,
+    };
 
     const user: Partial<IUser> = {
-      id: token.uid,
+      fbId: token.uid,
       email: token.email,
       urlPicture: token.picture ?? '',
 
@@ -74,7 +79,10 @@ export class AppUserService extends EntityCommunicationService<UserEntity> {
 
     const newUser = new this.userModel(user);
     const userSaved = await newUser.save();
-    this.firebaseService.setClaims(userSaved.id, claims);
+    const firstUserId = userSaved.id || newUser._id.toString();
+    claims.userId = firstUserId;
+
+    this.firebaseService.setClaimsFirstTime(userSaved.fbId, claims);
 
     return userSaved;
   }
