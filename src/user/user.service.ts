@@ -95,7 +95,7 @@ export class AppUserService extends EntityCommunicationService<UserEntity> {
   public async deleteUser(userId: string): Promise<any> {
     const users = await this.userModel.deleteOne({ id: userId }).exec();
 
-    await this.firebaseService.deleteUser(userId);
+    await this.firebaseService.deleteUserByFbId(userId);
     return users;
   }
 
