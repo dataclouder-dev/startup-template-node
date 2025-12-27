@@ -1,0 +1,14 @@
+# Ignore heavy/unnecessary files
+node_modules
+dist
+.git
+.env
+.env.*
+*.tar
+.cred
+docs
+comfyui_workflows_output
+scripts
+test
+diagram.excalidraw
+cloudbuild.yaml

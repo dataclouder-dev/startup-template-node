@@ -40,7 +40,9 @@ NC   := \033[0m # No Color
 
 # --- Docker & Container ---
 PROJECT_NAME           ?= dataclouder-dev-node#❗️
-IMAGE_FILENAME       := $(PROJECT_NAME).tar
+VERSION                := $(shell node -p "require('./package.json').version")
+GIT_HASH               := $(shell git rev-parse --short HEAD 2>/dev/null || echo "no-git")
+IMAGE_FILENAME       := $(PROJECT_NAME)-$(VERSION).tar
 CONTAINER_NAME       ?= $(PROJECT_NAME)-container
 HOST_PORT            ?= 7991#❗️
 INNER_PORT           ?= 7991
@@ -51,6 +53,9 @@ GCP_REGION           ?= us-central1#❗️
 GCP_SERVICE_NAME     ?= $(PROJECT_NAME)-node
 ARTIFACT_REGISTRY_REPO        := us-central1-docker.pkg.dev/$(PROJECT_ID)/images/$(PROJECT_NAME)
 
+# --- GHCR Configuration ---
+GHCR_USER            ?= adamofig
+GHCR_REPO            := ghcr.io/$(GHCR_USER)/$(PROJECT_NAME)
 
 # --- Credential Configuration ---
 # Define paths for different environments
@@ -122,18 +127,47 @@ deploy-ailab: ._build-docker ._transfer-docker-image ._transfer-credentials ._de
 deploy-cloud-run: build-and-save-in-gcp-artifact-registry deploy-service
 	@echo "✅ Deployment to GCP completed successfully."
 
+# Deploy to GitHub Container Registry (GHCR)
+push-ghcr: PLATFORM = linux/amd64
+push-ghcr: ._build-and-push-ghcr
+	@echo "✅ Deployment to GHCR ($(GHCR_REPO)) completed successfully."
+
+# Build Docker Image Locally
+build-docker: PLATFORM = linux/amd64
+build-docker: ._build-docker
+	@echo "✅ Docker image [$(PROJECT_NAME):latest] built successfully."
+
 
 # ==============================================================================
 # INTERNAL HELPER TARGETS
 # ==============================================================================
 
 ._build-docker:
-	@echo "1) 🐳 Building Docker image [$(PROJECT_NAME):latest] for [$(PLATFORM)]..."
-	$(MAKE_VERBOSE) docker build --platform $(PLATFORM) -t $(PROJECT_NAME):latest .
+	@echo "1) 🐳 Building Docker image [$(PROJECT_NAME):$(VERSION)] for [$(PLATFORM)]..."
+	$(MAKE_VERBOSE) docker build --platform $(PLATFORM) \
+		--build-arg VERSION=$(VERSION) \
+		--build-arg GIT_HASH=$(GIT_HASH) \
+		-t $(PROJECT_NAME):$(VERSION) \
+		-t $(PROJECT_NAME):latest .
+
+._ghcr-login-check:
+	@echo "🔑 Checking GHCR login status..."
+	@echo "🚨 If the next step fails, please run: echo \$$CR_PAT | docker login ghcr.io -u $(GHCR_USER) --password-stdin"
+
+._build-and-push-ghcr: ._ghcr-login-check
+	@echo "1) 🐳 Building Docker image for GHCR [$(GHCR_REPO):$(VERSION)]..."
+	$(MAKE_VERBOSE) docker build --platform $(PLATFORM) \
+		--build-arg VERSION=$(VERSION) \
+		--build-arg GIT_HASH=$(GIT_HASH) \
+		-t $(GHCR_REPO):$(VERSION) \
+		-t $(GHCR_REPO):latest .
+	@echo "2) 🚀 Pushing to GHCR... COMMAND: __docker push $(GHCR_REPO):$(VERSION)__"
+	$(MAKE_VERBOSE) docker push $(GHCR_REPO):$(VERSION)
+	$(MAKE_VERBOSE) docker push $(GHCR_REPO):latest
 
 ._transfer-docker-image:
 	@echo "2) 💾 Saving Docker image to [$(IMAGE_FILENAME)]..."
-	$(MAKE_VERBOSE) docker save $(PROJECT_NAME):latest -o $(IMAGE_FILENAME)
+	$(MAKE_VERBOSE) docker save $(PROJECT_NAME):$(VERSION) -o $(IMAGE_FILENAME)
 	@echo "3) 🚚 Transferring [$(IMAGE_FILENAME)] to [$(TARGET_USER)@$(TARGET_HOST):$(REMOTE_TAR_FILEPATH)]..."
 	$(MAKE_VERBOSE) $(SCP_CMD) $(IMAGE_FILENAME) $(TARGET_USER)@$(TARGET_HOST):$(REMOTE_TAR_FILEPATH)
 
@@ -166,7 +200,7 @@ deploy-cloud-run: build-and-save-in-gcp-artifact-registry deploy-service
 			-e GOOGLE_APPLICATION_CREDENTIALS=/usr/src/app/.cred/key.json \
 			-p $(HOST_PORT):$(INNER_PORT) \
 			--restart unless-stopped \
-			$(PROJECT_NAME):latest; \
+			$(PROJECT_NAME):$(VERSION); \
 		echo "  -> 🧹 Cleaning up remote tarball..."; \
 		rm $(REMOTE_TAR_FILEPATH); \
 		echo "  -> ✅ Remote deployment finished check on http://$(TARGET_HOST):$(HOST_PORT)" '
@@ -184,7 +218,7 @@ deploy-cloud-run: build-and-save-in-gcp-artifact-registry deploy-service
 		--restart unless-stopped \
 		-v $(shell pwd)/.cred/key-qa.json:/usr/src/app/.cred/key-qa.json:ro \
 		-e GOOGLE_APPLICATION_CREDENTIALS=/usr/src/app/.cred/key-qa.json \
-		$(PROJECT_NAME):latest
+		$(PROJECT_NAME):$(VERSION)
 	@echo "  -> ✅ Local deployment finished check on http://localhost:$(HOST_PORT)"
 
 ._local-cleanup:
@@ -204,8 +238,11 @@ gcp-enable-services:
 
 
 build-and-save-in-gcp-artifact-registry:
-	@echo " 🐳 -> Building docker in GCP with tag $(ARTIFACT_REGISTRY_REPO) and pushing to Google Container Registry..."
-	gcloud builds submit --project $(PROJECT_ID) --tag $(ARTIFACT_REGISTRY_REPO) .
+	@echo " 🐳 -> Building docker in GCP with tag $(ARTIFACT_REGISTRY_REPO):$(VERSION) and pushing to Google Container Registry..."
+	gcloud builds submit --project $(PROJECT_ID) \
+		--tag $(ARTIFACT_REGISTRY_REPO):$(VERSION) \
+		--tag $(ARTIFACT_REGISTRY_REPO):latest \
+		--substitutions _VERSION=$(VERSION),_GIT_HASH=$(GIT_HASH) .
 
 # Build the Docker image and push to Google Container Registry
 
@@ -219,7 +256,7 @@ deploy-service:
 	echo "$${ENV_VARS}" | tr ',' '\n'; \
 	gcloud run deploy $(GCP_SERVICE_NAME) \
 		--project $(PROJECT_ID) \
-		--image $(ARTIFACT_REGISTRY_REPO) \
+		--image $(ARTIFACT_REGISTRY_REPO):$(VERSION) \
 		--platform managed \
 		--region $(GCP_REGION) \
 		--allow-unauthenticated \
@@ -244,6 +281,15 @@ publish-mongo:
 
 publish-google-cloud:
 	npm run publish:google-cloud
+
+patch:
+	npm version patch
+
+minor:
+	npm version minor
+
+major:
+	npm version major
 
 clean:
 	@echo "🧹 Removing node_modules..."
@@ -276,6 +322,16 @@ help:
 	@echo "  $(BLUE)make deploy-local$(NC)      - Build and deploy the app to your local Docker."
 	@echo "  $(BLUE)make deploy-homelab$(NC)    - Build and deploy the app to the Homelab server."
 	@echo "  $(BLUE)make deploy-gcp$(NC)        - Build and deploy the app to Google Cloud Run."
+	@echo "  $(BLUE)make push-ghcr$(NC)       - Build and push the app to GHCR."
+	@echo "                             (Note: Requires 'docker login ghcr.io')"
+	@echo "  $(BLUE)make build-docker$(NC)      - Build the Docker image locally for testing."
+	@echo ""
+	@echo "----------------------------------------------------------------------"
+	@echo "  Versioning"
+	@echo "----------------------------------------------------------------------"
+	@echo "  $(BLUE)make patch$(NC)             - Bump version (0.0.x) and tag."
+	@echo "  $(BLUE)make minor$(NC)             - Bump version (0.x.0) and tag."
+	@echo "  $(BLUE)make major$(NC)             - Bump version (x.0.0) and tag."
 	@echo ""
 	@echo "----------------------------------------------------------------------"
 	@echo "  Development"

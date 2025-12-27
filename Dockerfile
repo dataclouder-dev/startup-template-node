@@ -1,6 +1,10 @@
 # Stage 1: Build the application
 FROM node:22-alpine AS builder
+ARG VERSION
+ARG GIT_HASH
 LABEL stage="builder"
+LABEL version=$VERSION
+LABEL git_hash=$GIT_HASH
 
 WORKDIR /app
 
@@ -16,7 +20,11 @@ RUN pnpm run build
 
 # Stage 2: Production image
 FROM node:22-alpine AS production
+ARG VERSION
+ARG GIT_HASH
 LABEL stage="production"
+LABEL version=$VERSION
+LABEL git_hash=$GIT_HASH
 
 WORKDIR /app
 

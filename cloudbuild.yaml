@@ -31,7 +31,15 @@ steps:
 
   - id: building-docker-image
     name: gcr.io/cloud-builders/docker
-    args: ["build", "-t", "${_ARTIFACT_REPOSITORY}/${REPO_NAME}:${BRANCH_NAME}${TAG_NAME}", "."]
+    args:
+      - "build"
+      - "-t"
+      - "${_ARTIFACT_REPOSITORY}/${REPO_NAME}:${BRANCH_NAME}${TAG_NAME}"
+      - "--build-arg"
+      - "VERSION=${_VERSION}"
+      - "--build-arg"
+      - "GIT_HASH=${_GIT_HASH}"
+      - "."
   
   - id: pushing-image-to-repo
     name: gcr.io/cloud-builders/docker
@@ -53,6 +61,8 @@ steps:
 # Add substitutions section
 substitutions:
   _ARTIFACT_REPOSITORY: us-central1-docker.pkg.dev/${PROJECT_ID}/images
+  _VERSION: "0.0.0"
+  _GIT_HASH: "none"
   
 
 options:
