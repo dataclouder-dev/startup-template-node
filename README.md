@@ -113,6 +113,19 @@ docker build -t dc-template-node .
 docker run -p 8080:8080 --env-file ./.env dc-template-node
 ```
 
+### Docker Compose
+
+For a quick setup using the pre-built image from GHCR:
+
+```bash
+docker-compose up -d
+```
+
+This will start the container using `ghcr.io/adamofig/dataclouder-dev-node:latest`.
+
+- **Port**: Access the app at `http://localhost:7991` (configurable via `HOST_PORT` in `.env`).
+- **Configuration**: Ensure you have your `.env` file and `.cred/key-qa.json` ready.
+
 ### Cloud Deployment
 
 #### Manual Deployment Steps

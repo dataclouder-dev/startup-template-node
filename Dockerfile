@@ -34,6 +34,9 @@ COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/public ./public
 
+# Create credentials directory
+RUN mkdir -p /app/.cred
+
 # Expose the application port
 EXPOSE 3000
 

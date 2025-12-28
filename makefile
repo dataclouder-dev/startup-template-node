@@ -60,10 +60,9 @@ GHCR_REPO            := ghcr.io/$(GHCR_USER)/$(PROJECT_NAME)
 # --- Credential Configuration ---
 # Define paths for different environments
 ENV_FILE_QA          ?= .env.qa
-KEY_FILE_QA          ?= ./.cred/key-qa.json
 ENV_FILE_PRO         ?= .env
-KEY_FILE_PRO         ?= ./.cred/key-dev.json
 ENV_FILE_HOMELAB     ?= .env.homelab
+KEY_FILE             ?= ./.cred/key.json
 
 # If your remote user needs a password for sudo, set it here or in your .env file.
 # It will be piped to sudo -S. Leave empty to use passwordless sudo.
@@ -87,7 +86,7 @@ REMOTE_DEPLOY_PATH   ?= ~/Documents
 PLATFORM             ?= linux/amd64 # Default platform
 # These will be overridden by deploy targets
 TARGET_ENV_FILE      := $(ENV_FILE_QA)
-TARGET_KEY_FILE      := $(KEY_FILE_QA)
+TARGET_KEY_FILE      := $(KEY_FILE)
 
 # --- Computed Variables ---
 REMOTE_TAR_FILEPATH  := $(REMOTE_DEPLOY_PATH)/$(IMAGE_FILENAME)
@@ -109,7 +108,6 @@ deploy-homelab: TARGET_HOST = home.lab
 deploy-homelab: REMOTE_DEPLOY_PATH = /home/adamo/Documents
 deploy-homelab: PLATFORM = linux/arm64
 deploy-homelab: TARGET_ENV_FILE = $(ENV_FILE_HOMELAB)
-deploy-homelab: TARGET_KEY_FILE = $(KEY_FILE_PRO)
 deploy-homelab: ._build-docker ._transfer-docker-image ._transfer-credentials ._deploy-remote ._local-cleanup
 	@echo "✅ Deployment to Homelab ($(TARGET_HOST)) completed successfully."
 
@@ -119,7 +117,6 @@ deploy-ailab: TARGET_HOST = 192.168.2.2
 deploy-ailab: REMOTE_DEPLOY_PATH = /home/adamo/Documents
 deploy-ailab: PLATFORM = linux/amd64
 deploy-ailab: TARGET_ENV_FILE = $(ENV_FILE_PRO)
-deploy-ailab: TARGET_KEY_FILE = $(KEY_FILE_PRO)
 deploy-ailab: ._build-docker ._transfer-docker-image ._transfer-credentials ._deploy-remote ._local-cleanup
 	@echo "✅ Deployment to AI Lab http://$(TARGET_HOST):$(HOST_PORT) completed successfully."
 
@@ -133,9 +130,14 @@ push-ghcr: ._build-and-push-ghcr
 	@echo "✅ Deployment to GHCR ($(GHCR_REPO)) completed successfully."
 
 # Build Docker Image Locally
-build-docker: PLATFORM = linux/amd64
-build-docker: ._build-docker
+docker-build: PLATFORM = linux/amd64
+docker-build: ._build-docker
 	@echo "✅ Docker image [$(PROJECT_NAME):latest] built successfully."
+
+# Run existing Local Docker Container (without building)
+docker-run: PLATFORM = linux/arm64
+docker-run: ._deploy-local
+	@echo "✅ Container [$(CONTAINER_NAME)] is running on http://localhost:$(HOST_PORT)"
 
 
 # ==============================================================================
@@ -196,8 +198,8 @@ build-docker: ._build-docker
 		eval $$SUDO_CMD docker run -d \
 			--name $(CONTAINER_NAME) \
 			--env-file $(REMOTE_CONFIG_PATH)/.env \
-			-v $(REMOTE_CONFIG_PATH)/key.json:/usr/src/app/.cred/key.json:ro \
-			-e GOOGLE_APPLICATION_CREDENTIALS=/usr/src/app/.cred/key.json \
+			-v $(REMOTE_CONFIG_PATH)/key.json:/app/.cred/key.json:ro \
+			-e GOOGLE_APPLICATION_CREDENTIALS=/app/.cred/key.json \
 			-p $(HOST_PORT):$(INNER_PORT) \
 			--restart unless-stopped \
 			$(PROJECT_NAME):$(VERSION); \
@@ -216,8 +218,8 @@ build-docker: ._build-docker
 		--name $(CONTAINER_NAME) \
 		-p $(HOST_PORT):$(INNER_PORT) \
 		--restart unless-stopped \
-		-v $(shell pwd)/.cred/key-qa.json:/usr/src/app/.cred/key-qa.json:ro \
-		-e GOOGLE_APPLICATION_CREDENTIALS=/usr/src/app/.cred/key-qa.json \
+		-v $(shell pwd)/$(TARGET_KEY_FILE):/app/.cred/key.json:ro \
+		-e GOOGLE_APPLICATION_CREDENTIALS=/app/.cred/key.json \
 		$(PROJECT_NAME):$(VERSION)
 	@echo "  -> ✅ Local deployment finished check on http://localhost:$(HOST_PORT)"
 
