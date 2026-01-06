@@ -16,7 +16,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { GenericModule } from './generic/generic.module';
 import { NestWhisperModule } from '@dataclouder/nest-whisper';
-import { NestVertexModule } from '@dataclouder/nest-vertex';
+import { NestAiServicesSdkModule } from '@dataclouder/nest-ai-services-sdk';
 import { NestUsersModule } from '@dataclouder/nest-users';
 import { InitModule } from './init/init.module';
 import { DeckCommanderModule } from './deck-commander/deck-commander.module';
@@ -41,16 +41,16 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
     TestModule,
     AgentCardsModule,
     LessonsModule,
-    NestVertexModule.forRoot({
-      apiBaseUrl: 'http://192.168.2.6:3330',
-      apiKey: 'changeme',
-    }),
     NestAuthModule,
     NestWhisperModule,
     NestUsersModule,
     InitModule,
     DeckCommanderModule,
     ConversationRuleModule,
+    NestAiServicesSdkModule.forRoot({
+      apiBaseUrl: process.env.AI_SERVICES_HOST || 'https://api.dataclouder.com',
+      apiKey: process.env.AI_SERVICES_API_KEY || '',
+    }),
   ],
   controllers: [AppController],
 })
