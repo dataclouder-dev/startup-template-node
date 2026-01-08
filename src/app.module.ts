@@ -22,6 +22,7 @@ import { InitModule } from './init/init.module';
 import { DeckCommanderModule } from './deck-commander/deck-commander.module';
 import { DCMongoDBModule } from '@dataclouder/nest-mongo';
 import { EventEmitterModule } from '@nestjs/event-emitter';
+import { NestConversationsModule } from '@dataclouder/nest-conversations';
 
 @Module({
   imports: [
@@ -47,6 +48,7 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
     InitModule,
     DeckCommanderModule,
     ConversationRuleModule,
+    NestConversationsModule,
     NestAiServicesSdkModule.forRoot({
       apiBaseUrl: process.env.AI_SERVICES_HOST || 'https://api.dataclouder.com',
       apiKey: process.env.AI_SERVICES_API_KEY || '',
