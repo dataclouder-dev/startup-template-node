@@ -12,8 +12,11 @@ async function bootstrap() {
     logger: new ConsoleLogger({ json: false, colors: true }),
   });
 
-  app.register(multipart as any);
-
+  app.register(multipart as any, {
+    limits: {
+      fileSize: 104857600, // 100MB
+    },
+  });
   app.useGlobalFilters(new AllExceptionsHandler());
 
   app.enableCors({
