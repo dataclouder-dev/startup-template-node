@@ -5,9 +5,10 @@ import { GenericService } from './services/generic.service';
 import { GenericEntity, GenericSchema } from './schemas/generic.schema';
 import { DCMongoDBModule } from '@dataclouder/nest-mongo';
 import { NestStorageModule } from '@dataclouder/nest-storage';
+import { NestAuthModule } from '@dataclouder/nest-auth';
 
 @Module({
-  imports: [MongooseModule.forFeature([{ name: GenericEntity.name, schema: GenericSchema }]), DCMongoDBModule, NestStorageModule],
+  imports: [MongooseModule.forFeature([{ name: GenericEntity.name, schema: GenericSchema }]), DCMongoDBModule, NestStorageModule, NestAuthModule],
   controllers: [GenericController],
   providers: [GenericService],
   exports: [GenericService],

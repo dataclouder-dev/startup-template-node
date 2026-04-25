@@ -19,8 +19,8 @@ export class GenericEntity implements IGeneric {
   @Prop({ required: false })
   content: string;
 
-  @Prop({ required: false })
-  img: string;
+  @Prop({ required: false, type: Object })
+  image: any;
 
   @Prop({ type: AuditDataSchema, required: false, default: {} })
   auditable: IAuditable;

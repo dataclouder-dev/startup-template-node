@@ -6,6 +6,6 @@ export interface IGeneric {
   name?: string;
   description?: string;
   content?: string;
-  img?: string;
+  image?: string;
   auditable?: IAuditable;
 }
