@@ -19,6 +19,9 @@ COPY . .
 # Build the application for production
 RUN pnpm run build
 
+# Remove development dependencies to keep the image small
+RUN pnpm prune --prod
+
 # Stage 2: Production image
 FROM --platform=$TARGETPLATFORM node:22-alpine AS production
 ARG VERSION
