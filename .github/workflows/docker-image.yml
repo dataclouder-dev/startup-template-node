@@ -27,10 +27,21 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Get app version
+        id: version
+        run: echo "version=$(jq -r .version public/config.json)" >> $GITHUB_OUTPUT
+
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
           context: .
           push: true
           platforms: linux/amd64,linux/arm64
-          tags: ghcr.io/${{ github.repository }}:latest
+          tags: |
+            ghcr.io/${{ github.repository }}:latest
+            ghcr.io/${{ github.repository }}:${{ steps.version.outputs.version }}
+
+      - name: Trigger Coolify Deployment
+        run: |
+          curl -X GET "http://coolify-home.polito.casa/api/v1/deploy?uuid=k1cfnn8bte8lamfxesvg15cp&force=false" \
+               -H "Authorization: Bearer bbvPvAo5CLaFRbmmCGwoobYbmOAwhn3mmHKqPOvi8e41e5f0"
