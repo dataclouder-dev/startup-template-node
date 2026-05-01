@@ -39,7 +39,7 @@ COPY --from=builder /app/public ./public
 RUN mkdir -p /app/.cred
 
 # Expose the application port
-EXPOSE 3000
+EXPOSE 7991
 
 # Start the application
 CMD [ "node", "dist/main.js" ]

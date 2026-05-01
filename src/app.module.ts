@@ -15,7 +15,6 @@ import { TestModule } from './test/test.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { GenericModule } from './generic/generic.module';
-import { NestWhisperModule } from '@dataclouder/nest-whisper';
 import { NestAiServicesSdkModule } from '@dataclouder/nest-ai-services-sdk';
 import { NestUsersModule } from '@dataclouder/nest-users';
 import { InitModule } from './init/init.module';
@@ -45,7 +44,6 @@ import { Live2dModule } from './live2d/live2d.module';
     AgentCardsModule,
     LessonsModule,
     NestAuthModule,
-    NestWhisperModule,
     NestUsersModule,
     InitModule,
     DeckCommanderModule,
