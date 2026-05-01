@@ -1,5 +1,6 @@
 # Stage 1: Build the application
-FROM node:22-alpine AS builder
+# Build natively on the runner's platform to avoid QEMU crashes during pnpm install
+FROM --platform=$BUILDPLATFORM node:22-alpine AS builder
 ARG VERSION
 ARG GIT_HASH
 LABEL stage="builder"
@@ -19,7 +20,7 @@ COPY . .
 RUN pnpm run build
 
 # Stage 2: Production image
-FROM node:22-alpine AS production
+FROM --platform=$TARGETPLATFORM node:22-alpine AS production
 ARG VERSION
 ARG GIT_HASH
 LABEL stage="production"
