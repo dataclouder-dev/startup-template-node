@@ -26,15 +26,15 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
-    "@dataclouder/nest-agent-cards": "^0.1.44",
+    "@dataclouder/nest-agent-cards": "^0.1.49",
     "@dataclouder/nest-ai-services-sdk": "^0.0.7",
     "@dataclouder/nest-auth": "^1.0.0",
     "@dataclouder/nest-conversations": "^0.1.4",
     "@dataclouder/nest-core": "^1.0.0",
     "@dataclouder/nest-knowledge": "^0.0.1",
     "@dataclouder/nest-lessons": "^0.1.30",
-    "@dataclouder/nest-mongo": "^1.1.0",
-    "@dataclouder/nest-storage": "^1.0.1",
+    "@dataclouder/nest-mongo": "^1.1.2",
+    "@dataclouder/nest-storage": "^1.0.4",
     "@dataclouder/nest-users": "^0.0.10",
     "@dataclouder/notion": "^0.0.4",
     "@fastify/multipart": "^9.2.1",
