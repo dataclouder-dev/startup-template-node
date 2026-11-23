@@ -5,7 +5,6 @@
     "test",
     "dist",
     "**/*spec.ts",
-    "libs/nest-dataclouder/nest-payments",
     "libs/nest-dataclouder/nest-agentic-chat"
   ]
 }

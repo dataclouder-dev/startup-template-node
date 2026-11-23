@@ -26,8 +26,13 @@ async function bootstrap() {
   });
   app.useGlobalFilters(new AllExceptionsHandler());
 
+  const corsOrigins = (process.env.CORS_ORIGINS || '')
+    .split(',')
+    .map(s => s.trim())
+    .filter(Boolean);
+
   app.enableCors({
-    origin: true, // Or specify your frontend origin like 'http://localhost:4200'
+    origin: corsOrigins.length > 0 ? corsOrigins : true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
   });
@@ -42,7 +47,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);
 
-  const port = 7991;
+  const port = Number(process.env.PORT) || 7991;
   await app.listen(port, '0.0.0.0');
   console.log(`Server is running on port ${port} http://0.0.0.0:${port}`);
 }

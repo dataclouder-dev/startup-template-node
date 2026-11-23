@@ -3,6 +3,8 @@ import { ConfigModule } from '@nestjs/config';
 
 import { AgentCardsModule, ConversationRuleModule } from '@dataclouder/nest-agent-cards';
 import { NestAuthModule } from '@dataclouder/nest-auth';
+import { NestAnalyticsModule } from '@dataclouder/nest-analytics';
+import { NestPaymentsModule } from '@dataclouder/nest-payments';
 // import { NotionModule } from '@dataclouder/notion';
 import { LessonsModule } from '@dataclouder/nest-lessons';
 import { NestCoreModule } from '@dataclouder/nest-core';
@@ -33,8 +35,38 @@ import { NestStorageModule } from '@dataclouder/nest-storage';
     TestModule,
     AgentCardsModule,
     LessonsModule,
-    NestAuthModule,
+    NestAuthModule.forRoot({
+      firebase: false,
+      localJwt: {
+        secret: process.env.JWT_SECRET,
+        appName: process.env.APP_NAME || 'Startup Template',
+        fromEmail: process.env.AUTH_FROM_EMAIL,
+        resendApiKey: process.env.RESEND_API_KEY,
+        googleClientIds: (process.env.GOOGLE_CLIENT_ID || '')
+          .split(',')
+          .map(s => s.trim())
+          .filter(Boolean),
+        cookieSameSite: (process.env.COOKIE_SAME_SITE as 'Lax' | 'Strict' | 'None') || 'Lax',
+        cookieSecure: process.env.COOKIE_SECURE ? process.env.COOKIE_SECURE === 'true' : process.env.NODE_ENV === 'production',
+        cookieDomain: process.env.COOKIE_DOMAIN || undefined,
+      },
+    }),
     NestUsersModule,
+    NestAnalyticsModule.forRoot({
+      appId: process.env.APP_ID || 'startup-template',
+    }),
+    ...(process.env.STRIPE_SECRET_KEY
+      ? [
+          NestPaymentsModule.forRoot({
+            planHolderStoreMode: 'mongo',
+            appId: process.env.APP_ID || 'startup-template',
+            statementDescriptorSuffix: process.env.STRIPE_STATEMENT_SUFFIX || 'DATACLOUDER',
+            webUrl: process.env.WEB_URL,
+            stripeSecretKey: process.env.STRIPE_SECRET_KEY,
+            stripeWebhookSecret: process.env.STRIPE_WEBHOOK_SECRET,
+          }),
+        ]
+      : []),
     InitModule,
     DeckCommanderModule,
     ConversationRuleModule,

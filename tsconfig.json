@@ -114,6 +114,12 @@
       ],
       "@dataclouder/nest-payments/*": [
         "./libs/nest-dataclouder/nest-payments/src/*"
+      ],
+      "@dataclouder/nest-analytics": [
+        "./libs/nest-dataclouder/nest-analytics/src"
+      ],
+      "@dataclouder/nest-analytics/*": [
+        "./libs/nest-dataclouder/nest-analytics/src/*"
       ]
     },
     "types": [

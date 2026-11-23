@@ -55,6 +55,7 @@
     "reflect-metadata": "0.2.2",
     "rxjs": "7.8.2",
     "sharp": "0.34.5",
+    "stripe": "15.12.0",
     "tsconfig-paths": "4.2.0",
     "zod": "4.6.5"
   },
@@ -127,7 +128,8 @@
       "^@dataclouder/nest-lessons(|/.*)$": "<rootDir>/libs/nest-dataclouder/nest-lessons/src/$1",
       "^@dataclouder/nest-ai-services-sdk(|/.*)$": "<rootDir>/libs/nest-dataclouder/nest-ai-services-sdk/src/$1",
       "^@dataclouder/nest-ai-services-mongodb(|/.*)$": "<rootDir>/libs/nest-dataclouder/nest-ai-services-mongodb/src/$1",
-      "^@dataclouder/nest-payments(|/.*)$": "<rootDir>/libs/nest-dataclouder/nest-payments/src/$1"
+      "^@dataclouder/nest-payments(|/.*)$": "<rootDir>/libs/nest-dataclouder/nest-payments/src/$1",
+      "^@dataclouder/nest-analytics(|/.*)$": "<rootDir>/libs/nest-dataclouder/nest-analytics/src/$1"
     }
   }
 }

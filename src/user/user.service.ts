@@ -1,12 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable, Optional } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 
 import { UserEntity } from './user.entity';
 import { Model } from 'mongoose';
 
-import { FirebaseService, AppAuthClaims, PermissionClaim, PlanType, RolClaim, AppToken } from '@dataclouder/nest-auth';
+import { FirebaseService, AppAuthClaims, PermissionClaim, PlanType, RolClaim, AppToken, DC_FIREBASE_ENABLED } from '@dataclouder/nest-auth';
 
-import { DecodedIdToken } from 'firebase-admin/auth';
 import { IUser } from './user.class';
 import { EntityCommunicationService } from '@dataclouder/nest-mongo';
 import { MongoService } from '@dataclouder/nest-mongo';
@@ -20,7 +19,8 @@ export class AppUserService extends EntityCommunicationService<UserEntity> {
   constructor(
     @InjectModel(UserEntity.name) private userModel: Model<UserEntity>,
     private firebaseService: FirebaseService,
-    mongoService: MongoService
+    mongoService: MongoService,
+    @Optional() @Inject(DC_FIREBASE_ENABLED) private readonly firebaseEnabled = true
   ) {
     super(userModel, mongoService);
   }
@@ -69,7 +69,7 @@ export class AppUserService extends EntityCommunicationService<UserEntity> {
       },
 
       claims: claims, // no se porque en polilan no los agrego aquí.
-      authStrategy: token.firebase.sign_in_provider,
+      authStrategy: token.firebase?.sign_in_provider || token.authMethod || 'local-jwt',
     };
 
     // TODO: se envia desde el frontend, solo necesito modificar las notificaciones del usuario.
@@ -82,20 +82,24 @@ export class AppUserService extends EntityCommunicationService<UserEntity> {
     const firstUserId = userSaved.id || newUser._id.toString();
     claims.userId = firstUserId;
 
-    this.firebaseService.setClaimsFirstTime(userSaved.fbId, claims);
+    if (this.firebaseEnabled) {
+      this.firebaseService.setClaimsFirstTime(userSaved.fbId, claims);
+    }
 
     return userSaved;
   }
 
   /**
-   * Deletes a user from both the database and Firebase
+   * Deletes a user from the database (and Firebase if enabled)
    * @param userId - The ID of the user to delete
    * @returns Promise resolving to the deletion result
    */
   public async deleteUser(userId: string): Promise<any> {
     const users = await this.userModel.deleteOne({ id: userId }).exec();
 
-    await this.firebaseService.deleteUserByFbId(userId);
+    if (this.firebaseEnabled) {
+      await this.firebaseService.deleteUserByFbId(userId);
+    }
     return users;
   }
 

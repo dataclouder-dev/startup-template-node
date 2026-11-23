@@ -1,20 +1,24 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable, Optional } from '@nestjs/common';
 
 import { AppUserService } from 'src/user/user.service';
 import { AppException } from 'src/common/app-exception';
 // import { FirebaseService } from 'src/common/firebase.service';
-import { AppAuthClaims, FirebaseService } from '@dataclouder/nest-auth';
+import { AppAuthClaims, DC_FIREBASE_ENABLED, FirebaseService } from '@dataclouder/nest-auth';
 
 @Injectable()
 export class AdminService {
   constructor(
     private userService: AppUserService,
-    private firebaseService: FirebaseService
+    private firebaseService: FirebaseService,
+    @Optional() @Inject(DC_FIREBASE_ENABLED) private readonly firebaseEnabled = true
   ) {}
 
   public async deleteUserByEmail(email: string): Promise<any> {
     const user = await this.userService.findUserByEmail(email);
     if (!user) {
+      if (!this.firebaseEnabled) {
+        throw new AppException({ error_message: 'No se encontro el usuario', explanation: `Email ${email} no registrado en MongoDB` });
+      }
       try {
         const userFB = await this.firebaseService.getUserByEmail(email);
         if (userFB) {
@@ -23,7 +27,6 @@ export class AdminService {
         }
       } catch (error) {
         console.log('Error', error);
-        // error.toString();
         throw new AppException({ error_message: 'No se encontro el usuario', explanation: error?.toString() });
       }
     }
@@ -32,9 +35,10 @@ export class AdminService {
   }
 
   public async updateClaimsByEmail(email: string, claims: AppAuthClaims): Promise<any> {
-    // overrites all claims, check updateClaims from userService to update only some claims
-    const response = await this.firebaseService.updateClaimsByEmail(email, claims);
-    console.log('response', response);
+    if (this.firebaseEnabled) {
+      const response = await this.firebaseService.updateClaimsByEmail(email, claims);
+      console.log('response', response);
+    }
     const update = await this.userService.updateUserByEmail(email, { claims: claims });
     return update;
   }
