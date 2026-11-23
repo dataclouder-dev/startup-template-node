@@ -1,3 +1,4 @@
+import './common/node-slowbuffer.shim';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
@@ -5,6 +6,7 @@ import { AllExceptionsHandler } from './common/exception-hanlder.filter';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ConsoleLogger } from '@nestjs/common';
 import multipart from '@fastify/multipart'; // Import the multipart plugin
+import { join } from 'path';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter(), {
@@ -16,6 +18,11 @@ async function bootstrap() {
     limits: {
       fileSize: 104857600, // 100MB
     },
+  });
+  app.useStaticAssets({
+    root: join(__dirname, '..', 'public'),
+    prefix: '/public/',
+    index: false,
   });
   app.useGlobalFilters(new AllExceptionsHandler());
 

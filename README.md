@@ -20,15 +20,35 @@ A NestJS-based backend API template designed to power AI learning and conversati
 
 ## Getting Started 🚀
 
-Clone the Project
+Clone the project **with submodules** (required for `@dataclouder/nest-*` in `libs/nest-dataclouder`):
 
-`git clone https://github.com/dataclouder-dev/startup-template-node [your-project-name]`
+```bash
+git clone --recurse-submodules https://github.com/dataclouder-dev/startup-template-node [your-project-name]
+```
 
-or use the button on github right top corner CREATE TEMPLATE
+If you already cloned without `--recurse-submodules`, initialize the submodule:
+
+```bash
+git submodule update --init --recursive
+```
+
+To pull the latest shared `@dataclouder/nest-*` libraries from `main`:
+
+```bash
+pnpm run update:dc
+```
+
+### Stack
+
+- **NestJS 12** (`@nestjs/platform-fastify`, Fastify 5.12+, `@fastify/multipart` 10, `@fastify/static` 10)
+- **Mongoose 9** + MongoDB driver 7
+- **TypeScript 6** + Webpack (`webpack.config.js` bundles `@dataclouder/nest-*` from `libs/nest-dataclouder`)
+- **pnpm** (`pnpm-lock.yaml`)
 
 ## ✅ Prerequisites
 
-- node >= 22.0.0
+- Node.js >= 22.0.0 (includes `src/common/node-slowbuffer.shim.ts` for Node 25+ compatibility)
+- pnpm >= 10
 - Make >= 3.0.0 (Optional but highly recommended)
 - Docker (Optional)
 - Env File, rename .env.example to .env and add your environment variables
@@ -58,33 +78,34 @@ or use the button on github right top corner CREATE TEMPLATE
 ### Install Dependencies
 
 ```bash
-npm install
+pnpm install
 ```
 
 ### Run the Project
 
 ```bash
 # Development mode
-npm run start
+pnpm run start
 
 # Watch mode (recommended for development)
-npm run start:dev
+pnpm run start:dev
 
-# Production mode
-npm run start:prod
+# Production build & run
+pnpm run build
+pnpm run start:prod
 ```
 
 ### Testing 🧪
 
 ```bash
 # Unit tests
-npm run test
+pnpm test
 
 # End-to-end tests
-npm run test:e2d
+pnpm run test:e2e
 
 # Test coverage
-npm run test:cov
+pnpm run test:cov
 ```
 
 ## Customization 🛠️

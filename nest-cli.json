@@ -4,11 +4,14 @@
   "sourceRoot": "src",
   "compilerOptions": {
     "deleteOutDir": true,
+    "plugins": [
+      "@nestjs/swagger"
+    ],
     "webpack": true,
-    "builder": "swc"
-
+    "builder": {
+      "type": "swc",
+      "options": {}
+    }
   },
-  "projects": {
-
-  }
+  "projects": {}
 }

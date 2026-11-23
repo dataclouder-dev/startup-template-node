@@ -1,0 +1,4 @@
+[submodule "libs/nest-dataclouder"]
+	path = libs/nest-dataclouder
+	url = https://github.com/adamofig/dataclouder-nest-libs.git
+	branch = main

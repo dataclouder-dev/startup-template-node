@@ -10,8 +10,25 @@
   "transform": {
     "^.+\\.(t|j)s$": "ts-jest"
   },
+  "setupFiles": [
+    "<rootDir>/../src/common/node-slowbuffer.shim.ts"
+  ],
   "moduleNameMapper": {
-    "@dataclouder/nest-mongo": "<rootDir>/../libs/nest-mongo/src",
-    "@dataclouder/nest-mongo/(.*)": "<rootDir>/../libs/nest-mongo/src/$1"
+    "^src/(.*)$": "<rootDir>/../src/$1",
+    "^@dataclouder/nest-core(|/.*)$": "<rootDir>/../libs/nest-dataclouder/nest-core/src/$1",
+    "^@dataclouder/nest-auth(|/.*)$": "<rootDir>/../libs/nest-dataclouder/nest-auth/src/$1",
+    "^@dataclouder/nest-mongo(|/.*)$": "<rootDir>/../libs/nest-dataclouder/nest-mongo/src/$1",
+    "^@dataclouder/nest-storage(|/.*)$": "<rootDir>/../libs/nest-dataclouder/nest-storage/src/$1",
+    "^@dataclouder/nest-users(|/.*)$": "<rootDir>/../libs/nest-dataclouder/nest-users/src/$1",
+    "^@dataclouder/nest-agent-cards(|/.*)$": "<rootDir>/../libs/nest-dataclouder/nest-agent-cards/src/$1",
+    "^@dataclouder/nest-agentic-chat(|/.*)$": "<rootDir>/../libs/nest-dataclouder/nest-agentic-chat/src/$1",
+    "^@dataclouder/nest-conversations(|/.*)$": "<rootDir>/../libs/nest-dataclouder/nest-conversations/src/$1",
+    "^@dataclouder/nest-roleplay(|/.*)$": "<rootDir>/../libs/nest-dataclouder/nest-roleplay/src/$1",
+    "^@dataclouder/nest-theatre(|/.*)$": "<rootDir>/../libs/nest-dataclouder/nest-theatre/src/$1",
+    "^@dataclouder/nest-knowledge(|/.*)$": "<rootDir>/../libs/nest-dataclouder/nest-knowledge/src/$1",
+    "^@dataclouder/nest-lessons(|/.*)$": "<rootDir>/../libs/nest-dataclouder/nest-lessons/src/$1",
+    "^@dataclouder/nest-ai-services-sdk(|/.*)$": "<rootDir>/../libs/nest-dataclouder/nest-ai-services-sdk/src/$1",
+    "^@dataclouder/nest-ai-services-mongodb(|/.*)$": "<rootDir>/../libs/nest-dataclouder/nest-ai-services-mongodb/src/$1",
+    "^@dataclouder/nest-payments(|/.*)$": "<rootDir>/../libs/nest-dataclouder/nest-payments/src/$1"
   }
 }

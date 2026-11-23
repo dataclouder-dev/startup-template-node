@@ -12,8 +12,6 @@ import envVariables from './config/environment';
 import { UserModule } from './user/user.module';
 import { TestModule } from './test/test.module';
 
-import { ServeStaticModule } from '@nestjs/serve-static';
-import { join } from 'path';
 import { GenericModule } from './generic/generic.module';
 import { NestAiServicesSdkModule } from '@dataclouder/nest-ai-services-sdk';
 import { NestUsersModule } from '@dataclouder/nest-users';
@@ -23,7 +21,6 @@ import { DCMongoDBModule } from '@dataclouder/nest-mongo';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { NestConversationsModule } from '@dataclouder/nest-conversations';
 import { NestStorageModule } from '@dataclouder/nest-storage';
-import { Live2dModule } from './live2d/live2d.module';
 
 @Module({
   imports: [
@@ -31,13 +28,6 @@ import { Live2dModule } from './live2d/live2d.module';
     DCMongoDBModule.forRoot(),
     GenericModule,
     EventEmitterModule.forRoot(),
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'public'),
-      serveRoot: '/public/',
-      serveStaticOptions: {
-        index: false,
-      },
-    }),
     UserModule,
     NestCoreModule,
     TestModule,
@@ -54,7 +44,6 @@ import { Live2dModule } from './live2d/live2d.module';
       apiBaseUrl: process.env.AI_SERVICES_HOST || 'https://api.dataclouder.com',
       apiKey: process.env.AI_SERVICES_API_KEY || '',
     }),
-    Live2dModule,
   ],
   controllers: [AppController],
 })

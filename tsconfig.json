@@ -5,11 +5,12 @@
     "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": false,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
     "target": "ES2023",
     "sourceMap": true,
+    "rootDir": ".",
     "outDir": "./dist",
-    "baseUrl": "./",
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": false,
@@ -18,12 +19,113 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": true,
     "paths": {
+      "src/*": [
+        "./src/*"
+      ],
+      "libs/*": [
+        "./libs/*"
+      ],
+      "@dataclouder/nest-core": [
+        "./libs/nest-dataclouder/nest-core/src"
+      ],
+      "@dataclouder/nest-core/*": [
+        "./libs/nest-dataclouder/nest-core/src/*"
+      ],
+      "@dataclouder/nest-auth": [
+        "./libs/nest-dataclouder/nest-auth/src"
+      ],
+      "@dataclouder/nest-auth/*": [
+        "./libs/nest-dataclouder/nest-auth/src/*"
+      ],
       "@dataclouder/nest-mongo": [
-        "libs/nest-mongo/src"
+        "./libs/nest-dataclouder/nest-mongo/src"
       ],
       "@dataclouder/nest-mongo/*": [
-        "libs/nest-mongo/src/*"
+        "./libs/nest-dataclouder/nest-mongo/src/*"
+      ],
+      "@dataclouder/nest-storage": [
+        "./libs/nest-dataclouder/nest-storage/src"
+      ],
+      "@dataclouder/nest-storage/*": [
+        "./libs/nest-dataclouder/nest-storage/src/*"
+      ],
+      "@dataclouder/nest-users": [
+        "./libs/nest-dataclouder/nest-users/src"
+      ],
+      "@dataclouder/nest-users/*": [
+        "./libs/nest-dataclouder/nest-users/src/*"
+      ],
+      "@dataclouder/nest-agent-cards": [
+        "./libs/nest-dataclouder/nest-agent-cards/src"
+      ],
+      "@dataclouder/nest-agent-cards/*": [
+        "./libs/nest-dataclouder/nest-agent-cards/src/*"
+      ],
+      "@dataclouder/nest-agentic-chat": [
+        "./libs/nest-dataclouder/nest-agentic-chat/src"
+      ],
+      "@dataclouder/nest-agentic-chat/*": [
+        "./libs/nest-dataclouder/nest-agentic-chat/src/*"
+      ],
+      "@dataclouder/nest-conversations": [
+        "./libs/nest-dataclouder/nest-conversations/src"
+      ],
+      "@dataclouder/nest-conversations/*": [
+        "./libs/nest-dataclouder/nest-conversations/src/*"
+      ],
+      "@dataclouder/nest-roleplay": [
+        "./libs/nest-dataclouder/nest-roleplay/src"
+      ],
+      "@dataclouder/nest-roleplay/*": [
+        "./libs/nest-dataclouder/nest-roleplay/src/*"
+      ],
+      "@dataclouder/nest-theatre": [
+        "./libs/nest-dataclouder/nest-theatre/src"
+      ],
+      "@dataclouder/nest-theatre/*": [
+        "./libs/nest-dataclouder/nest-theatre/src/*"
+      ],
+      "@dataclouder/nest-knowledge": [
+        "./libs/nest-dataclouder/nest-knowledge/src"
+      ],
+      "@dataclouder/nest-knowledge/*": [
+        "./libs/nest-dataclouder/nest-knowledge/src/*"
+      ],
+      "@dataclouder/nest-lessons": [
+        "./libs/nest-dataclouder/nest-lessons/src"
+      ],
+      "@dataclouder/nest-lessons/*": [
+        "./libs/nest-dataclouder/nest-lessons/src/*"
+      ],
+      "@dataclouder/nest-ai-services-sdk": [
+        "./libs/nest-dataclouder/nest-ai-services-sdk/src"
+      ],
+      "@dataclouder/nest-ai-services-sdk/*": [
+        "./libs/nest-dataclouder/nest-ai-services-sdk/src/*"
+      ],
+      "@dataclouder/nest-ai-services-mongodb": [
+        "./libs/nest-dataclouder/nest-ai-services-mongodb/src"
+      ],
+      "@dataclouder/nest-ai-services-mongodb/*": [
+        "./libs/nest-dataclouder/nest-ai-services-mongodb/src/*"
+      ],
+      "@dataclouder/nest-payments": [
+        "./libs/nest-dataclouder/nest-payments/src"
+      ],
+      "@dataclouder/nest-payments/*": [
+        "./libs/nest-dataclouder/nest-payments/src/*"
       ]
-    }
-  }
+    },
+    "types": [
+      "node",
+      "jest"
+    ],
+    "strict": false
+  },
+  "exclude": [
+    "node_modules",
+    "dist",
+    "libs/nest-dataclouder/nest-payments",
+    "libs/nest-dataclouder/nest-agentic-chat"
+  ]
 }

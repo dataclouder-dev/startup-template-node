@@ -1,5 +1,6 @@
 # Ignore heavy/unnecessary files
 node_modules
+libs/**/node_modules
 dist
 .git
 .env

@@ -10,10 +10,10 @@ LABEL git_hash=$GIT_HASH
 WORKDIR /app
 
 # Copy package files and install dependencies
-COPY package.json ./
-RUN npm install -g pnpm && pnpm i
+COPY package.json pnpm-lock.yaml ./
+RUN npm install -g pnpm && pnpm install --frozen-lockfile
 
-# Copy the rest of the application source code
+# Copy the rest of the application source code (including libs/nest-dataclouder submodule)
 COPY . .
 
 # Build the application for production
