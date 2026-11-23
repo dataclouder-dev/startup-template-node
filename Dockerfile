@@ -1,6 +1,5 @@
 # Stage 1: Build the application
-# Build natively on the runner's platform to avoid QEMU crashes during pnpm install
-FROM --platform=$BUILDPLATFORM node:22-alpine AS builder
+FROM node:22-alpine AS builder
 ARG VERSION
 ARG GIT_HASH
 LABEL stage="builder"
@@ -9,9 +8,18 @@ LABEL git_hash=$GIT_HASH
 
 WORKDIR /app
 
+ENV PNPM_HOME=/pnpm
+ENV PATH=$PNPM_HOME:$PATH
+ENV PNPM_CONFIG_STRICT_DEP_BUILDS=false
+ENV PNPM_CONFIG_VERIFY_DEPS_BEFORE_RUN=false
+
+RUN corepack enable && corepack prepare pnpm@10.15.0 --activate
+
 # Copy package files and install dependencies
 COPY package.json pnpm-lock.yaml ./
-RUN npm install -g pnpm && pnpm install --frozen-lockfile
+RUN --mount=type=cache,id=pnpm-store,target=/pnpm/store \
+    pnpm config set store-dir /pnpm/store && \
+    pnpm install --frozen-lockfile
 
 # Copy the rest of the application source code (including libs/nest-dataclouder submodule)
 COPY . .
@@ -23,7 +31,7 @@ RUN pnpm run build
 RUN pnpm prune --prod
 
 # Stage 2: Production image
-FROM --platform=$TARGETPLATFORM node:22-alpine AS production
+FROM node:22-alpine AS production
 ARG VERSION
 ARG GIT_HASH
 LABEL stage="production"
