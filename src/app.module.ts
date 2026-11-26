@@ -23,6 +23,7 @@ import { DCMongoDBModule } from '@dataclouder/nest-mongo';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { NestConversationsModule } from '@dataclouder/nest-conversations';
 import { NestStorageModule } from '@dataclouder/nest-storage';
+import { templatePaymentsOptions } from './payments/payments.config';
 
 @Module({
   imports: [
@@ -55,18 +56,7 @@ import { NestStorageModule } from '@dataclouder/nest-storage';
     NestAnalyticsModule.forRoot({
       appId: process.env.APP_ID || 'startup-template',
     }),
-    ...(process.env.STRIPE_SECRET_KEY
-      ? [
-          NestPaymentsModule.forRoot({
-            planHolderStoreMode: 'mongo',
-            appId: process.env.APP_ID || 'startup-template',
-            statementDescriptorSuffix: process.env.STRIPE_STATEMENT_SUFFIX || 'DATACLOUDER',
-            webUrl: process.env.WEB_URL,
-            stripeSecretKey: process.env.STRIPE_SECRET_KEY,
-            stripeWebhookSecret: process.env.STRIPE_WEBHOOK_SECRET,
-          }),
-        ]
-      : []),
+    NestPaymentsModule.forRoot(templatePaymentsOptions),
     InitModule,
     DeckCommanderModule,
     ConversationRuleModule,

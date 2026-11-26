@@ -2,7 +2,7 @@ import './common/node-slowbuffer.shim';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
-import { AllExceptionsHandler } from './common/exception-hanlder.filter';
+import { AllExceptionsHandler } from '@dataclouder/nest-core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ConsoleLogger } from '@nestjs/common';
 import multipart from '@fastify/multipart'; // Import the multipart plugin

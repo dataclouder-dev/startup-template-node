@@ -1,13 +1,14 @@
 import { Body, Controller, Param, Get, Post, UseFilters, UseGuards, Delete } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags, ApiOperation } from '@nestjs/swagger';
 
-import { AllExceptionsHandler } from 'src/common/exception-hanlder.filter';
+import { AllExceptionsHandler, AppGuard } from '@dataclouder/nest-core';
 import { UserClaimsDto } from './admin.dto';
 import { AdminService } from './admin.service';
-import { AppAuthClaims, FirebaseService } from '@dataclouder/nest-auth';
+import { AdminGuard, AppAuthClaims, AuthGuard, FirebaseService } from '@dataclouder/nest-auth';
 
 @ApiTags('admin')
 @ApiBearerAuth()
+@UseGuards(AppGuard, AuthGuard, AdminGuard)
 @Controller('api/admin')
 @UseFilters(AllExceptionsHandler)
 export class AdminController {
